@@ -5,4 +5,4 @@ Feature: Worker Logout
 Scenario: Worker logs out
   Given a worker is logged in
   When worker logs out
-  User is no longer logged in
+  Then User is no longer logged in
