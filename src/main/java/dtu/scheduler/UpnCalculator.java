@@ -1,4 +1,4 @@
-package dtu.calculator;
+package dtu.scheduler;
 
 import java.util.ArrayList;
 import java.util.List;

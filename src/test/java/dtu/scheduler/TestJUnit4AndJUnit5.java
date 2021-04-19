@@ -1,4 +1,4 @@
-package dtu.calculator;
+package dtu.scheduler;
 
 /**
  * A test class to check which tests are run with which framework.

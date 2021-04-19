@@ -1,4 +1,4 @@
-package dtu.calculator;
+package dtu.scheduler;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,7 +8,8 @@ public class ProjectTest {
 	@Given("that a worker is logged in")
 	public void that_a_worker_is_logged_in() {
 	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		assert(true);
+	    //throw new io.cucumber.java.PendingException();
 	}
 
 	@When("the worker creates a new project")
