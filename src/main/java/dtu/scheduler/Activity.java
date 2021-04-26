@@ -1,3 +1,7 @@
+// Author: Kristian Sofus Knudsen
+//
+// Simple implementation to pass the tests in which it is involved
+
 package dtu.scheduler;
 
 public class Activity {
@@ -14,9 +18,5 @@ public class Activity {
 
 	public double getHoursSpent() {
 		return hoursSpent;
-	}
-
-	public void test_SetHours(double new_hours) {
-		hoursSpent = new_hours;
 	}
 }

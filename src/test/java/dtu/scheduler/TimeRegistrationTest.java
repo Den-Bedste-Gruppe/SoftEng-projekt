@@ -1,3 +1,7 @@
+// Author: Kristian Sofus Knudsen
+//
+// Tests for the register_hours and change_hours use cases/feature files
+
 package dtu.scheduler;
 
 import static org.junit.Assert.assertTrue;
@@ -11,9 +15,11 @@ public class TimeRegistrationTest {
 	private SchedulingApp schedulingApp;
 	private Worker test_worker;
 	private Activity test_activity;
+	private ErrorMessageHolder errorMessageHolder;
 
-	public TimeRegistrationTest(SchedulingApp schedulingApp, Worker test_worker) {
+	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder, Worker test_worker) {
 		this.schedulingApp = schedulingApp;
+		this.errorMessageHolder = errorMessageHolder;
 		this.test_worker = test_worker;
 	}
 
@@ -36,7 +42,11 @@ public class TimeRegistrationTest {
 
 	@When("the worker registers {double} hours on the activity")
 	public void theWorkerRegistersHoursOnTheActivity(double hours) {
-		test_worker.registerHours(hours, test_activity);
+		try {
+			test_worker.registerHours(hours, test_activity);
+		} catch (Exception e) {
+			errorMessageHolder.setErrorMessage(e.getMessage());
+		}
 	}
 
 	@Then("the activity has a total of {double} hours spent")
