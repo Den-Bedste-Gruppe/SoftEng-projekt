@@ -1,5 +1,5 @@
 # cucumber ignore
-*target/cucumber/wikipedia.html
+**/wikipedia.html
 
 # Compiled class file
 *.class
