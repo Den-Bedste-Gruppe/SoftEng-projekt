@@ -21,7 +21,7 @@ public class ProjectTest {
 
 	@Given("that a worker is logged in")
 	public void that_a_worker_is_logged_in() {
-	    test_worker = new Worker();
+	    test_worker = new Worker("HH");
 		System.out.println("TEST STEP IMPLEMENTATION INCOMPLETE, FIX IT");
 	}
 
