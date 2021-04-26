@@ -1,8 +1,10 @@
 package dtu.scheduler;
 
+//Philip Hviid
 public class Worker {
     private String workerId;
     private double week_hours;
+    
 	public Worker(String workerId) {
 		this.workerId = workerId;
 		week_hours = 0;

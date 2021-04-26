@@ -4,6 +4,7 @@ public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerDAO workerDAO = new WorkerDAO();
 	
+	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
 	    currentUser = workerDAO.getWorkerbyId(workerId);		
 	}
@@ -27,5 +28,13 @@ public class SchedulingApp {
 	
 
 	public SchedulingApp() {
+	}
+
+	public double getWeeklyRegisteredHours() {
+		return currentUser.getWeeklyRegisteredHours();
+	}
+
+	public void registerHours(double hours, Activity test_activity) throws Exception {
+		currentUser.registerHours(hours, test_activity);
 	}
 }

@@ -13,19 +13,18 @@ import io.cucumber.java.en.When;
 public class TimeRegistrationTest {
 
 	private SchedulingApp schedulingApp;
-	private Worker test_worker;
+	private String test_worker;
 	private Activity test_activity;
 	private ErrorMessageHolder errorMessageHolder;
 
-	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder, Worker test_worker) {
+	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
 		this.schedulingApp = schedulingApp;
 		this.errorMessageHolder = errorMessageHolder;
-		this.test_worker = test_worker;
 	}
 
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) {
-		assertTrue(test_worker.getWeeklyRegisteredHours() == hours);
+		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
 	}
 
 	@Given("that there is a project activity")
@@ -43,7 +42,7 @@ public class TimeRegistrationTest {
 	@When("the worker registers {double} hours on the activity")
 	public void theWorkerRegistersHoursOnTheActivity(double hours) {
 		try {
-			test_worker.registerHours(hours, test_activity);
+			schedulingApp.registerHours(hours, test_activity);
 		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
@@ -56,6 +55,6 @@ public class TimeRegistrationTest {
 
 	@Then("the worker has a total of {double} hours spent that week")
 	public void theWorkerHasATotalOfHoursSpentThatWeek(double hours) {
-		assertTrue(test_worker.getWeeklyRegisteredHours() == hours);
+		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
 	}
 }
