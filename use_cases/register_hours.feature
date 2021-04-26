@@ -5,7 +5,7 @@ Feature: Register Hours
 	Actor: Worker
 
 Background:
-	Given there is a worker with ID "LMAA"
+	Given that a worker is logged in
 	And the worker has a total of 0 hours spent that week
 
 Scenario: The worker registers some hours spent on an activity

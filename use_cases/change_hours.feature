@@ -5,7 +5,7 @@ Feature: Change Hours
 	Actor: Worker
 
 Background:
-	Given there is a worker with ID "LMAA"
+	Given that a worker is logged in
 	And there is a project activity
 	And the worker registers 5 hours on the activity
 	And the activity adds 5 hours to the total time spent
