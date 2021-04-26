@@ -5,11 +5,20 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class ProjectTest {
+
+	private SchedulingApp schedulingApp;
+	private Worker test_worker;
+
+	public ProjectTest(SchedulingApp schedulingApp, Worker test_worker) {
+		this.schedulingApp = schedulingApp;
+		this.test_worker = test_worker;
+	}
+
+
 	@Given("that a worker is logged in")
 	public void that_a_worker_is_logged_in() {
-	    // Write code here that turns the phrase above into concrete actions
-		assert(true);
-	    //throw new io.cucumber.java.PendingException();
+	    test_worker = new Worker();
+		System.out.println("TEST STEP IMPLEMENTATION INCOMPLETE, FIX IT");
 	}
 
 	@When("the worker creates a new project")
