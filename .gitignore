@@ -1,3 +1,5 @@
+# cucumber ignore
+**/wikipedia.html
 
 # Compiled class file
 *.class
@@ -89,3 +91,4 @@ local.properties
 .settings/
 .classpath
 .project
+/target/

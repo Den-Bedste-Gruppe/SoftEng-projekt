@@ -4,9 +4,9 @@
 #	Actor: Worker
 #	
 #Background:
-#	Given there is a worker with ID "LMAA"
+#	Given that a worker is logged in
 #	And a project with ID 150905
-#	And "LMAA" is assigned to the project
+#	And the worker is assigned to the project
 #	And there is a project activity with 10 hours spent
 #	And there is a non-project activity with 5 hours spent
 #	And the worker has a total of 30 hours spent that week
