@@ -5,15 +5,17 @@ import static org.junit.Assert.assertTrue;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+//Philip Hviid
 public class LoginLogoutSteps {
 	private String workerId;
 	private SchedulingApp app;
 	private ErrorMessageHolder msg;
+	private WorkerDAO workerDAO;
 	
-	public LoginLogoutSteps(SchedulingApp app, ErrorMessageHolder msg) {
+	public LoginLogoutSteps(SchedulingApp app, ErrorMessageHolder msg, WorkerDAO  workerDAO) {
 		this.app = app;
 		this.msg = msg;
+		this.workerDAO = workerDAO;
 	}
 	@Given("a workerID exists with signature {string}")
 	public void aWorkerIDExistsWithSignature(String string) {
@@ -27,7 +29,7 @@ public class LoginLogoutSteps {
 
 	@Given("the workerID is in the system")
 	public void theWorkerIDIsInTheSystem() {
-	    assertTrue(app.isUserInDatabase(workerId));
+	    assertTrue(workerDAO.isUserInDatabase(workerId));
 	}
 
 	@When("worker logs in")
@@ -47,7 +49,7 @@ public class LoginLogoutSteps {
 	
 	@Given("the workerID is not in the system")
 	public void theWorkerIDIsNotInTheSystem() {
-		assertTrue(!app.isUserInDatabase(workerId));
+		assertTrue(!workerDAO.isUserInDatabase(workerId));
 	}
 
 	@Then("worker with ID {string} is not logged in")
