@@ -7,8 +7,9 @@ public class ErrorMessageHolder {
 	public void setErrorMessage(String message) {
 		errorMessage = message;
 	}
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-
 }
+

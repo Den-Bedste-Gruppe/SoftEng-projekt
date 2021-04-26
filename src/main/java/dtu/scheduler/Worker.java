@@ -2,13 +2,18 @@ package dtu.scheduler;
 
 public class Worker {
 
-	private double week_hours;
-
-	public Worker() {
-		week_hours = 0; //We don't want to store this as a variable, that would make it work only for the current week
-						//Temporary solution to pass the tests
+	String workerId;
+  private double week_hours;
+  
+	public Worker(String workerId) {
+		this.workerId = workerId;
+    week_hours = 0;
 	}
 	
+	public String getWorkerId() {
+		return workerId;
+	}
+
 	public double getWeeklyRegisteredHours() {
 		return week_hours;
 	}
@@ -21,4 +26,5 @@ public class Worker {
 		week_hours += hours;
 		activity.registerHours(hours);
 	}
+
 }
