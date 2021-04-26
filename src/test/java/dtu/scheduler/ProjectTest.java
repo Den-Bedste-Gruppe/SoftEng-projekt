@@ -17,11 +17,6 @@ public class ProjectTest {
 	}
 
 
-	@Given("that a worker is logged in")
-	public void that_a_worker_is_logged_in() throws WorkerDoesNotExistException {
-	    schedulingApp.logIn("ASDF");
-	    schedulingApp.getCurrentUser();
-	}
 
 	@When("the worker creates a new project")
 	public void the_worker_creates_a_new_project() {
