@@ -8,9 +8,10 @@ Scenario: Worker logs in
   When worker logs in
   Then worker is logged in
 
-#Scenario: Worker logs in with invalid signature
-#  Given a workerID exists
-#  And the workerID is not in the system
-#  When worker logs in
-#  Then worker is not logged in
-#  And "Signature not in system" Error is thrown
+Scenario: Worker logs in with invalid signature
+  Given a workerID exists with signature "ASBR"
+  And the workerID is not in the system
+  When worker logs in
+  Then worker with ID "ASBR" is not logged in
+  And "Signature not in system" Error is thrown
+  
