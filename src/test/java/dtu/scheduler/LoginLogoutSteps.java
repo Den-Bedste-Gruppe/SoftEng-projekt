@@ -10,12 +10,11 @@ public class LoginLogoutSteps {
 	private String workerId;
 	private SchedulingApp app;
 	private ErrorMessageHolder msg;
-	private WorkerDAO workerDAO;
+
 	
-	public LoginLogoutSteps(SchedulingApp app, ErrorMessageHolder msg, WorkerDAO  workerDAO) {
+	public LoginLogoutSteps(SchedulingApp app, ErrorMessageHolder msg) {
 		this.app = app;
 		this.msg = msg;
-		this.workerDAO = workerDAO;
 	}
 	@Given("a workerID exists with signature {string}")
 	public void aWorkerIDExistsWithSignature(String string) {
@@ -29,7 +28,7 @@ public class LoginLogoutSteps {
 
 	@Given("the workerID is in the system")
 	public void theWorkerIDIsInTheSystem() {
-	    assertTrue(workerDAO.isUserInDatabase(workerId));
+	    assertTrue(app.isUserInDatabase(workerId));
 	}
 
 	@When("worker logs in")
@@ -49,7 +48,7 @@ public class LoginLogoutSteps {
 	
 	@Given("the workerID is not in the system")
 	public void theWorkerIDIsNotInTheSystem() {
-		assertTrue(!workerDAO.isUserInDatabase(workerId));
+		assertTrue(!app.isUserInDatabase(workerId));
 	}
 
 	@Then("worker with ID {string} is not logged in")

@@ -19,6 +19,12 @@ public class SchedulingApp {
 		currentUser = null;
 	}
 	
+	public boolean isUserInDatabase(String workerId) {
+		return workerDAO.isUserInDatabase(workerId);
+	}
+	
+	
+	
 
 	public SchedulingApp() {
 	}
