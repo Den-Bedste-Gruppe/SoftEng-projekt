@@ -1,4 +1,4 @@
-//Philip Hviid
+#Philip Hviid
 Feature: Worker Login
   Description: A worker logs in with signature
   Actors: Worker
