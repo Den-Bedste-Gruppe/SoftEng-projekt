@@ -34,6 +34,11 @@ public class SchedulingApp {
 		return currentUser.getWorkerId();
 
 	}
+
+	public void logOut() {
+		currentUser = null;
+		
+	}
 	
 
 }

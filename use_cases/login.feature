@@ -15,3 +15,7 @@ Scenario: Worker logs in with invalid signature
   Then worker with ID "ASBR" is not logged in
   And "Signature not in system" Error is thrown
   
+Scenario: Worker logs out
+  Given a worker is logged in
+  When the worker logs out
+  Then no worker is logged in

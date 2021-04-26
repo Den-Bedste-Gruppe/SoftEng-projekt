@@ -59,4 +59,19 @@ public class LoginLogoutSteps {
 	public void errorIsThrown(String string) {
 	    assert(msg.getErrorMessage().equals(string));
 	}
+	
+	@Given("a worker is logged in")
+	public void aWorkerIsLoggedIn() throws WorkerDoesNotExistException {
+		app.logIn("ASDF");
+	}
+
+	@When("the worker logs out")
+	public void theWorkerLogsOut() {
+	    app.logOut();
+	}
+
+	@Then("no worker is logged in")
+	public void noWorkerIsLoggedIn() {
+		assert(app.getCurrentUser()==null);
+	}
 }
