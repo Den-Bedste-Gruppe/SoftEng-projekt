@@ -20,4 +20,6 @@ public class SchedulingApp {
 	}
 	
 
+	public SchedulingApp() {
+	}
 }
