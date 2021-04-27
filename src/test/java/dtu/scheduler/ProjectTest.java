@@ -10,20 +10,13 @@ public class ProjectTest {
 
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder errorMessageHolder;
-	private Worker test_worker;
 
-	public ProjectTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder, Worker test_worker) {
+	public ProjectTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
 		this.schedulingApp = schedulingApp;
 		this.errorMessageHolder = errorMessageHolder;
-		this.test_worker = test_worker;
 	}
 
 
-	@Given("that a worker is logged in")
-	public void that_a_worker_is_logged_in() {
-	    test_worker = new Worker();
-		System.out.println("TEST STEP IMPLEMENTATION INCOMPLETE, FIX IT");
-	}
 
 	@When("the worker creates a new project")
 	public void the_worker_creates_a_new_project() {
