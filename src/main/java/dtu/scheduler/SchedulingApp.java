@@ -10,10 +10,15 @@ public class SchedulingApp {
 	}
 	
 	public String getCurrentUser() {
-		if(currentUser==null) {
-			return null;
+		if(isUserLoggedIn()) {
+			return currentUser.getWorkerId();
 		}
-		return currentUser.getWorkerId();
+		return null;
+
+	}
+	
+	public Boolean isUserLoggedIn() {
+		return !(currentUser==null);
 	}
 
 	public void logOut() {

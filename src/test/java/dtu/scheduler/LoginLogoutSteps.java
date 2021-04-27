@@ -1,5 +1,6 @@
 package dtu.scheduler;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import io.cucumber.java.en.Given;
@@ -20,7 +21,6 @@ public class LoginLogoutSteps {
 	@Given("that a worker is logged in")
 	public void that_a_worker_is_logged_in() throws WorkerDoesNotExistException {
 	    schedulingApp.logIn("ASDF");
-	    schedulingApp.getCurrentUser();
 	}
 	
 	
@@ -81,6 +81,6 @@ public class LoginLogoutSteps {
 
 	@Then("no worker is logged in")
 	public void noWorkerIsLoggedIn() {
-		assert(schedulingApp.getCurrentUser()==null);
+		assertFalse(schedulingApp.isUserLoggedIn());
 	}
 }
