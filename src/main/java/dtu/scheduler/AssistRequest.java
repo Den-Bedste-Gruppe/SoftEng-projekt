@@ -16,7 +16,7 @@ public class AssistRequest {
 		return senderId;
 	}
 	
-	public void changeStatus() {
+	public void toggleStatus() {
 		accepted =! accepted;
 	}
 	
