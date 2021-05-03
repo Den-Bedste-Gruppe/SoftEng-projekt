@@ -1,13 +1,13 @@
 package dtu.scheduler;
 //Philip Hviid
 public class WorkerDatabase {
-	private static Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV")};
+	private Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV")};
 	
-	public static Worker getWorkerAt(int index) {
+	public Worker getWorkerAt(int index) {
 		return workers[index];
 	}
 	
-	public static boolean isWorkerInDatabase(String workerId) {
+	public boolean isWorkerInDatabase(String workerId) {
 		for(Worker worker : workers) {
 			if(worker.getWorkerId().equals(workerId)) {
 				return true;
@@ -16,7 +16,7 @@ public class WorkerDatabase {
 		return false;
 	}
 	
-	public static Worker getWorkerById(String id) {
+	public Worker getWorkerById(String id) {
 		for(Worker worker: workers) {
 			if(worker.getWorkerId().equals(id) ) {
 				return worker;
