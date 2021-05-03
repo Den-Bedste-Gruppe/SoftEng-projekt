@@ -54,7 +54,7 @@ public class ProjectTest {
 		if (schedulingApp.searchProject(name) == null) {
 			// TODO write a better error
 			System.out.println("hello");
-			//throw new Exception("Error! project \"" + name + "\" does not exists");
+			throw new Exception("Error! project \"" + name + "\" does not exists");
 		};
 	}
 
