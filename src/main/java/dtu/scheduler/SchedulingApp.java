@@ -1,7 +1,7 @@
 package dtu.scheduler;
 
 import java.util.List;
-
+//Philip Hviid
 public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerDAO workerDAO;

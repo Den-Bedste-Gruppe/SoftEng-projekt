@@ -1,5 +1,5 @@
 package dtu.scheduler;
-
+//Philip Hviid
 public class WorkerDatabase {
 	private static Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV")};
 	
