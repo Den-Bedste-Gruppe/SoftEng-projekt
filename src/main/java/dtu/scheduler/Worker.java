@@ -1,10 +1,10 @@
 package dtu.scheduler;
 
+// By Mads Harder
 public class Worker {
 	private String workerId;
 	private double week_hours;
-  
-	// By Mads Harder
+
 	public Worker(String workerId) {
 		// Input validation checking
 		if (workerId.length() == 0) throw new IllegalArgumentException("The ID must be at least one character");
