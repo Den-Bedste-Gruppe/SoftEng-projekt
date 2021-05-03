@@ -1,5 +1,7 @@
 package dtu.scheduler;
 
+import org.junit.internal.ExactComparisonCriteria;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -27,28 +29,27 @@ public class ProjectLeaderTest {
 
 	@Then("the project {string} has a project leader with id {string}")
 	public void theProjectHasAProjectLeaderWithId(String projectID, String leaderID) throws Exception {
-		System.out.println(schedulingApp.searchProject(projectID).getProjectLeader());
-		System.out.println(leaderID);
 		if (!schedulingApp.searchProject(projectID).getProjectLeader().getWorkerId().equals(leaderID)) {
 			throw new Exception("Error! the project does now have a project leader");
 		}
 	}
 
 	@Given("the project {string} has a project leader")
-	public void theProjectHasAProjectLeader(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void theProjectHasAProjectLeader(String projectID) throws Exception {
+		Worker worker = schedulingApp.getCurrentUser();
+		schedulingApp.searchProject(projectID).assignLeader(worker);
+		
+	}
+
+	@Given("there is a project with name {string}")
+	public void thereIsAProjectWithName(String name) throws ProjectAlreadyExistException {
+		schedulingApp.addProject(new Project(name));
 	}
 
 	@When("a worker change the project leader on project {string}")
-	public void aWorkerChangeTheProjectLeaderOnProject(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
-	}
-
-	@Then("the project {string} has a new project leader")
-	public void theProjectHasANewProjectLeader(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void aWorkerChangeTheProjectLeaderOnProject(String projectID) {
+		// TODO fix the new random user
+		Worker newWorker = new Worker("TEST");
+		schedulingApp.searchProject(projectID).assignLeader(newWorker);
 	}
 }
