@@ -1,13 +1,21 @@
 package dtu.scheduler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //Philip Hviid
 public class Worker {
     private String workerId;
     private double week_hours;
+    private List<AssistRequest> requests;
+    private List<Activity> activities;
+    
     
 	public Worker(String workerId) {
 		this.workerId = workerId;
 		week_hours = 0;
+		this.activities = new ArrayList<>();
+		this.requests = new ArrayList<>();
 	}
 	
 	public String getWorkerId() {
@@ -25,6 +33,18 @@ public class Worker {
 		}
 		week_hours += hours;
 		activity.registerHours(hours);
+	}
+
+	public List<Activity> getActivities() {
+		return activities;
+	}
+	
+	public void addActivity(Activity activity) {
+		activities.add(activity);
+	}
+	
+	public void addRequest(AssistRequest request) {
+		requests.add(request);
 	}
 
 }

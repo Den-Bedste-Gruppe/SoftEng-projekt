@@ -2,11 +2,7 @@ package dtu.scheduler;
 //Philip Hviid
 public class WorkerDAO {
 	public boolean isUserInDatabase(String workerID) {
-		if(workerID.equals("ASDF")) {
-			return true;
-		} else {
-			return false;
-		}
+		return WorkerDatabase.isWorkerInDatabase(workerID);
 		
 	}
 	

@@ -2,7 +2,13 @@ package dtu.scheduler;
 
 public class SchedulingApp {
 	private Worker currentUser;
-	private WorkerDAO workerDAO = new WorkerDAO();
+	private WorkerDAO workerDAO;
+	private ActivityAssigner activityAssigner;
+	
+	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner) {
+		this.workerDAO = workerDAO;
+		this.activityAssigner = activityAssigner;
+	}
 	
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
@@ -29,7 +35,9 @@ public class SchedulingApp {
 		return workerDAO.isUserInDatabase(workerId);
 	}
 	
-	
+	public void assignActivity(String worker, Activity activity) throws WorkerDoesNotExistException {
+		activityAssigner.assignActivity(workerDAO.getWorkerbyId(worker), activity);
+	}
 	
 
 	public SchedulingApp() {
