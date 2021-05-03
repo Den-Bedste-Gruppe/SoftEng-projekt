@@ -76,8 +76,6 @@ public class TimeRegistrationTest {
 
 	@Then("the worker has a total of {double} hours spent that week")
 	public void theWorkerHasATotalOfHoursSpentThatWeek(double hours) {
-		System.out.println(hours);
-		System.out.println(schedulingApp.getWeeklyRegisteredHours());
 		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
 	}
 }
