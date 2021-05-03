@@ -12,16 +12,16 @@ Background:
 Scenario: The worker changes their hours on the activity to a valid amount
 	When the worker changes the amount of hours registered on the activity to 2 hours
 	Then the activity has a total of 2 hours spent
-	And the worker has a total of 7 hours spent that week
+	And the worker has a total of 12 hours spent that week
 
-#Scenario: The worker changes their hours on the activity to a negative amount
-#	When the worker changes the amount of hours on the activity to -2 hours
-#	Then the error message "Invalid amount of hours" is given
-#
-#Scenario: The worker changes their hours on the activity to zero hours
-#	When the worker changes the amount of hours on the activity to 0 hours
-#	Then the error message "Invalid amount of hours" is given
-#
-#Scenario: The worker changes their hours on the activity to more than 24 hours
-#	When the worker changes the amount of hours on the activity to 25 hours
-#	Then the error message "Invalid amount of hours" is given
+Scenario: The worker changes their hours on the activity to a negative amount
+	When the worker changes the amount of hours registered on the activity to -2 hours
+	Then the error message "Invalid amount of hours" is given
+
+Scenario: The worker changes their hours on the activity to zero hours
+	When the worker changes the amount of hours registered on the activity to 0 hours
+	Then the error message "Invalid amount of hours" is given
+
+Scenario: The worker changes their hours on the activity to more than 24 hours
+	When the worker changes the amount of hours registered on the activity to 25 hours
+	Then the error message "Invalid amount of hours" is given

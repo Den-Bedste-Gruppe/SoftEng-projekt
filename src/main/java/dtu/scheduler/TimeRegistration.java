@@ -1,6 +1,4 @@
 //	Author: Kristian Sofus Knudsen
-//
-//	This is unused as of right now, will be put to use once we start taking different dates and weeks into account
 
 package dtu.scheduler;
 
@@ -26,6 +24,10 @@ public class TimeRegistration {
 
 	public double getHours() {
 		return hours;
+	}
+	public void changeHours(double new_hours) {
+		hours = new_hours;
+		parent.updateTotalHoursSpent();
 	}
 	public Activity getActivity() {
 		return parent;

@@ -18,10 +18,10 @@ public class Worker {
 	public String getWorkerId() {
 		return workerId;
 	}
-
 	public double getWeeklyRegisteredHours() {
 		return week_hours;
 	}
+
 
 	public void registerHours(double hours, Activity activity) throws Exception {
 		// By Kristian Sofus Knudsen
@@ -35,7 +35,20 @@ public class Worker {
 		registrationList.add(new_registration);
 	}
 
+
+	public void changeHours(double new_hours, Activity activity) throws Exception {
+		// By Kristian Sofus Knudsen
+		TimeRegistration registration = getTimeRegistrationByActivity(activity);
+		if (new_hours <= 0 || new_hours > 24) {
+			throw new Exception("Invalid amount of hours");
+		}
+		week_hours += new_hours - registration.getHours();
+		registration.changeHours(new_hours);
+	}
+
+
 	public TimeRegistration getTimeRegistrationByActivity(Activity activity) throws Exception {
+		// By Kristian Sofus Knudsen
 		for (TimeRegistration r : registrationList) {
 			if (r.getActivity().equals(activity)) {
 				return r;

@@ -61,19 +61,23 @@ public class TimeRegistrationTest {
 	}
 
 	@When("the worker changes the amount of hours registered on the activity to {double} hours")
-	public void theWorkerChangesTheAmountOfHoursRegisteredOnTheActivityToHours(double new_hours) {
-		throw new io.cucumber.java.PendingException();
+	public void theWorkerChangesTheAmountOfHoursRegisteredOnTheActivityToHours(double new_hours) throws Exception {
+		try {
+			schedulingApp.changeHoursOnActivity(new_hours, test_activity);
+		} catch (Exception e) {
+			errorMessageHolder.setErrorMessage(e.getMessage());
+		}
 	}
 
 	@Then("the activity has a total of {double} hours spent")
 	public void theActivityHasATotalOfHoursSpent(double hours) {
-		System.out.println(hours);
-		System.out.println(test_activity.getTotalHoursSpent());
 		assertTrue(test_activity.getTotalHoursSpent() == hours);
 	}
 
 	@Then("the worker has a total of {double} hours spent that week")
 	public void theWorkerHasATotalOfHoursSpentThatWeek(double hours) {
+		System.out.println(hours);
+		System.out.println(schedulingApp.getWeeklyRegisteredHours());
 		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
 	}
 }
