@@ -20,7 +20,6 @@ public class SchedulingApp {
 			return currentUser.getWorkerId();
 		}
 		return null;
-
 	}
 	
 	public Boolean isUserLoggedIn() {
@@ -44,12 +43,8 @@ public class SchedulingApp {
 		if (searchProject(project.getProjectID()) != null) {
 			throw new ProjectAlreadyExistException("Project already exist");
 		}
-
-		System.out.println(this.projectArray.toString());
+		
 		projectArray.add(project);
-		System.out.println(project.getProjectID());
-		System.out.println(this.projectArray);
-		System.out.println("size: " + projectArray.size());
 	}
 	
 	public Project searchProject(String ID) {
@@ -62,8 +57,8 @@ public class SchedulingApp {
 		return null;
 	};
 	
-	public Object[] getProjects() {
-		return projectArray.toArray();
+	public  List<Project> getProjects() {
+		return projectArray;
 	}
 
 	public void registerHours(double hours, Activity test_activity) throws Exception {
