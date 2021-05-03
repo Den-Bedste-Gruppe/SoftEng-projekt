@@ -7,28 +7,31 @@ import java.util.List;
 
 
 public class Activity {
-	double budgetedTime ;
-	Date[] timeframe ;
-	String Name ;
-	double hoursSpent ;
+	private double budgetedTime;
+	private Date[] timeframe;
+	private String Name;
+	private double hoursSpent;
 	
 	public Activity() {
 		
 	}
+
 	public Activity(String Name) {
-		this.Name = Name ;
+		this.Name = Name;
 	}
 	
 	public void setActivityName (String name) {
-		this.Name = name ;
+		this.Name = name;
 	}
+
 	public void setTimeFrame (Date[] timeframe) {
-		this.timeframe = timeframe ; 
+		this.timeframe = timeframe; 
 	}
 
 	public void addHoursSpent (double hoursSpent) {
-		this.hoursSpent += hoursSpent ;
+		this.hoursSpent += hoursSpent;
 	}
+
 	public String getName() {
 		return Name;
 	}

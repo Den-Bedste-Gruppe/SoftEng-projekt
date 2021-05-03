@@ -15,33 +15,33 @@ public class Create_ActivityTest {
 	
 	@Given("A project exist")
 	public void a_project_exist () {
+		// TODO change this
 		assert(true) ;
-		//insert project feature here
 	}
 	
 	@And("Worker is the project leader of current project")
 	public void worker_is_PL() {
+		// TODO change this
 		assert(true) ;
-		//insert project leader assign here
 	}
 	
 	@When("Worker creates an activity")
 	public void worker_create_activity() {
-		hello= new Activity(); 
-		// Write code here that turns the phrase above into concrete actions
+		// TODO change this to sit on the project
+		hello = new Activity(); 
 	}
 	
 	@Then("An activity is created by the worker")
 	public void the_activity_is_created() {
+		// TODO check on the project if there is a activity created
 	    activities.add(hello);
 		
 	}
 	
 	@And("Activity with the name {string} exist")
 	public void activity_already_exist(String name) {
-
+		// TODO maybe change the scenario, but check on the project if the activity exist
 		assert(true) ;
-	    // Write code here that turns the phrase above into concrete actions
 	}
 	
 	@When("Worker creates activity with name {string}")

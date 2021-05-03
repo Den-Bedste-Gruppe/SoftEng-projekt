@@ -14,6 +14,5 @@ Scenario: Worker creates existing activity
 	Given A project exist
 	And Worker is the project leader of current project
 	And Activity with the name "helloworld" exist
-	When Worker creates activity with name "helloworld"
-	Then The activity is not created by the worker
-	And the error message "The form of activity already exist" is given
+	When Worker creates a new activity with name "helloworld"
+	Then the error message "The form of activity already exist" is given
