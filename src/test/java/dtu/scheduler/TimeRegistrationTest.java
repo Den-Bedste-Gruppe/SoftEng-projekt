@@ -13,7 +13,6 @@ import io.cucumber.java.en.When;
 public class TimeRegistrationTest {
 
 	private SchedulingApp schedulingApp;
-	private String test_worker;
 	private Activity test_activity;
 	private ErrorMessageHolder errorMessageHolder;
 
@@ -24,6 +23,9 @@ public class TimeRegistrationTest {
 
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) {
+		double diff = hours - schedulingApp.getWeeklyRegisteredHours();
+		Activity dummy_activity = new Activity();
+		dummy_activity.registerHours(diff);
 		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
 	}
 
