@@ -32,4 +32,10 @@ public class Worker {
 		week_hours += hours;
 		activity.registerHours(hours);
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return workerId;
+	}
 }

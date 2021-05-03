@@ -23,4 +23,12 @@ public class Project {
 		// TODO Auto-generated method stub
 		return "Project ID: " + projectID;
 	}
+
+	public void assignLeader(Worker projectLeader) {
+		this.projectLeader = projectLeader;
+	}
+	
+	public Worker getProjectLeader() {
+		return projectLeader;
+	}
 }

@@ -15,9 +15,16 @@ public class SchedulingApp {
 	    currentUser = workerDAO.getWorkerbyId(workerId);		
 	}
 	
-	public String getCurrentUser() {
+	public String getCurrentUserID() {
 		if(isUserLoggedIn()) {
 			return currentUser.getWorkerId();
+		}
+		return null;
+	}
+
+	public Worker getCurrentUser() {
+		if(isUserLoggedIn()) {
+			return currentUser;
 		}
 		return null;
 	}
@@ -63,5 +70,9 @@ public class SchedulingApp {
 
 	public void registerHours(double hours, Activity test_activity) throws Exception {
 		currentUser.registerHours(hours, test_activity);
+	}
+
+	public void assingProjectLeader(String projectID, Worker projectLeader) {
+		searchProject(projectID).assignLeader(projectLeader);
 	}
 }
