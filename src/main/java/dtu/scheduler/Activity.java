@@ -1,6 +1,10 @@
 package dtu.scheduler;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+
 
 public class Activity {
 	double budgetedTime ;
@@ -22,14 +26,17 @@ public class Activity {
 		this.timeframe = timeframe ; 
 	}
 
-	public void setHoursSpent (double hoursSpent) {
-		this.hoursSpent = hoursSpent ;
+	public void addHoursSpent (double hoursSpent) {
+		this.hoursSpent += hoursSpent ;
 	}
-
-	public void resetActivity() {
-		this.budgetedTime = (Double) null ;
-		this.timeframe = null ;
-		this.Name = null ;
-		this.hoursSpent = (Double) null; 
+	public String getName() {
+		return Name;
 	}
+	
+//	public void resetActivity() {
+//		this.budgetedTime = (Double) null ;
+//		this.timeframe = null ;
+//		this.Name = null ;
+//		this.hoursSpent = (Double) null; 
+//	}
 }

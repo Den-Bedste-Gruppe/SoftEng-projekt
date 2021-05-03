@@ -3,10 +3,16 @@ package dtu.scheduler;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.cucumber.java.en.And;
 
 public class Create_ActivityTest {
-
+	private Activity hello, world;
+	private List<Activity> activities = new ArrayList<>();
+	
 	@Given("A project exist")
 	public void a_project_exist () {
 		assert(true) ;
@@ -21,40 +27,39 @@ public class Create_ActivityTest {
 	
 	@When("Worker creates an activity")
 	public void worker_create_activity() {
-	    Activity hello; 
+		hello= new Activity(); 
 		// Write code here that turns the phrase above into concrete actions
 	}
 	
 	@Then("An activity is created by the worker")
 	public void the_activity_is_created() {
-		Activity hello = new Activity();
-	    // Write code here that turns the phrase above into concrete actions
-//	    throw new io.cucumber.java.PendingException();
+	    activities.add(hello);
+		
 	}
 	
-	@And("Activity with the name \"helloworld\" exist")
-	public void activity_already_exist() {
-	    assert(true) ;
+	@And("Activity with the name {string} exist")
+	public void activity_already_exist(String name) {
+
+		assert(true) ;
 	    // Write code here that turns the phrase above into concrete actions
 	}
 	
-	@When("Worker creates activity with name \"helloworld\"")
-	public void worker_create_existing_activity() {
+	@When("Worker creates activity with name {string}")
+	public void worker_create_existing_activity(String name) {
 	    // Write code here that turns the phrase above into concrete actions
-		Activity world = new Activity("helloworld");
+		//world = new Activity(name);
+		activities.add(world= new Activity(name));
+		
 	}
 	
 	@Then("The activity is not created by the worker")
 	public void activity_not_created() {
-		String name = "helloworld" ;
-		Activity activity = new Activity(name);
-		Activity hello = new Activity(name);
-		activity.setActivityName(name);
 		
-		if(hello.equals(activity)) {
-			activity.resetActivity();
+		if(world.equals(hello)) {
+			activities.remove(world);
 		}
-		 // Write code here that turns the phrase above into concrete actions
+		// change code so it removes activity instead of resetting it. 
+
 	}
 	
 	@And("the error message {string} is given")
