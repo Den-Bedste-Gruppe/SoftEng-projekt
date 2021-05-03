@@ -61,7 +61,16 @@ public class SchedulingApp {
 		return projectArray;
 	}
 
+	public double getHoursRegisteredOnActivity(Activity activity) throws Exception {
+		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
+		return registration.getHours();
+	}
+
 	public void registerHours(double hours, Activity test_activity) throws Exception {
 		currentUser.registerHours(hours, test_activity);
+	}
+
+	public void changeHoursOnActivity(double new_hours, Activity activity) throws Exception {
+		currentUser.changeHours(new_hours, activity);
 	}
 }
