@@ -1,18 +1,22 @@
 package dtu.scheduler;
 
+import java.util.List;
+
 public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerDAO workerDAO;
 	private ActivityAssigner activityAssigner;
+	private AssistRequestHandler requestHandler;
 	
-	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner) {
+	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner, AssistRequestHandler requestHandler) {
 		this.workerDAO = workerDAO;
 		this.activityAssigner = activityAssigner;
+		this.requestHandler = requestHandler;
 	}
 	
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
-	    currentUser = workerDAO.getWorkerbyId(workerId);		
+	    currentUser = workerDAO.getWorkerById(workerId);		
 	}
 	
 	public String getCurrentUser() {
@@ -35,8 +39,8 @@ public class SchedulingApp {
 		return workerDAO.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String worker, Activity activity) throws WorkerDoesNotExistException {
-		activityAssigner.assignActivity(workerDAO.getWorkerbyId(worker), activity);
+	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException {
+		activityAssigner.assignActivity(getWorkerById(workerId), activity);
 	}
 	
 
@@ -49,5 +53,19 @@ public class SchedulingApp {
 
 	public void registerHours(double hours, Activity test_activity) throws Exception {
 		currentUser.registerHours(hours, test_activity);
+	}
+	
+	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
+		return workerDAO.getWorkerById(workerId);
+	}
+
+	public void requestAssistance(Activity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
+		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
+		
+	}
+	
+	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
+		return getWorkerById(workerId).getRequests();
 	}
 }

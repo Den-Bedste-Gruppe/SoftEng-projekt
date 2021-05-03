@@ -15,4 +15,13 @@ public class WorkerDatabase {
 		}
 		return false;
 	}
+	
+	public static Worker getWorkerById(String id) {
+		for(Worker worker: workers) {
+			if(worker.getWorkerId().equals(id) ) {
+				return worker;
+			}
+		}
+		return null;
+	}
 }

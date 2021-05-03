@@ -1,5 +1,7 @@
 package dtu.scheduler;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +14,7 @@ public class ActivitySteps {
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder msg;
 	private ActivityAssigner activityAssigner;
+	private Activity activity;
 
 	
 	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg, ActivityAssigner activityAssigner) {
@@ -23,7 +26,8 @@ public class ActivitySteps {
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException {
 		String currUser = schedulingApp.getCurrentUser();
-		schedulingApp.assignActivity(currUser, new Activity());
+		activity = new Activity();
+		schedulingApp.assignActivity(currUser, activity);
 	}
 
 	@Given("there is another worker")
@@ -32,20 +36,21 @@ public class ActivitySteps {
 	}
 
 	@When("the user requests assistance")
-	public void theUserRequestsAssistance() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void theUserRequestsAssistance() throws WorkerDoesNotExistException {
+	    schedulingApp.requestAssistance(activity, targetWorkerId);
 	}
 
 	@Then("the other worker has a request for assistance")
-	public void theOtherWorkerHasARequestForAssistance() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void theOtherWorkerHasARequestForAssistance() throws WorkerDoesNotExistException {
+	    assertTrue((schedulingApp.getWorkerRequests(targetWorkerId).size()==1));
 	}
 
 	@When("the worker requests assistance from invalid signature")
 	public void theWorkerRequestsAssistanceFromInvalidSignature() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    try {
+			schedulingApp.requestAssistance(activity, "ASDFG");
+		} catch (WorkerDoesNotExistException e) {
+			msg.setErrorMessage(e.getMessage());
+		}
 	}
 }

@@ -1,8 +1,9 @@
 package dtu.scheduler;
 
 public class AssistRequestHandler {
-	public void deliverRequest(AssistRequest request, Wor) {
-		
+	public void deliverRequest(AssistRequest request, Worker worker) {
+		System.out.println(worker.getWorkerId());
+		worker.addRequest(request);
 	}
 	
 	public void acceptRequest(AssistRequest request) {

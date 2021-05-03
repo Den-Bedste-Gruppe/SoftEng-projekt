@@ -6,9 +6,11 @@ public class WorkerDAO {
 		
 	}
 	
-	public Worker getWorkerbyId(String id) throws WorkerDoesNotExistException {
+
+	
+	public Worker getWorkerById(String id) throws WorkerDoesNotExistException {
 		if(isUserInDatabase(id)) {
-			return new Worker(id);
+			return WorkerDatabase.getWorkerById(id);
 		} else {
 			throw new WorkerDoesNotExistException("Signature not in system");
 		}

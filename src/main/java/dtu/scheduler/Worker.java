@@ -46,5 +46,9 @@ public class Worker {
 	public void addRequest(AssistRequest request) {
 		requests.add(request);
 	}
+	
+	public List<AssistRequest> getRequests() {
+		return requests;
+	}
 
 }
