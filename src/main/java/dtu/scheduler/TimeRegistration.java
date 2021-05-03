@@ -8,12 +8,14 @@ public class TimeRegistration {
 
 	private double hours;
 	private Date date;
-	private Activity parent;
+	private Activity parent_activity;
+	private String parent_worker_id;
 
-	public TimeRegistration(double hours, Activity parent) {
-		this.parent = parent;
+	public TimeRegistration(double hours, Activity parent_activity, String parent_worker_id) {
+		this.parent_activity = parent_activity;
 		this.hours = hours;
-		parent.addRegistration(this);
+		this.parent_worker_id = parent_worker_id;
+		parent_activity.addRegistration(this);
 	}
 
 	/*
@@ -27,9 +29,9 @@ public class TimeRegistration {
 	}
 	public void changeHours(double new_hours) {
 		hours = new_hours;
-		parent.updateTotalHoursSpent();
+		parent_activity.updateTotalHoursSpent();
 	}
 	public Activity getActivity() {
-		return parent;
+		return parent_activity;
 	}
 }
