@@ -6,13 +6,17 @@ import java.util.List;
 //Philip Hviid
 public class Worker {
     private String workerId;
-    private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
 
+    private List<AssistRequest> requests;
+    private List<Activity> activities;
+    private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
 	private List<TimeRegistration> registrationList = new ArrayList<>();
     
 	public Worker(String workerId) {
 		this.workerId = workerId;
 		week_hours = 0;
+		this.activities = new ArrayList<>();
+		this.requests = new ArrayList<>();
 	}
 	
 	public String getWorkerId() {
@@ -60,6 +64,22 @@ public class Worker {
 			}
 		}
 		throw new Exception("No registration found for given activity: " + activity.getName());
+	}
+
+	public List<Activity> getActivities() {
+		return activities;
+	}
+	
+	public void addActivity(Activity activity) {
+		activities.add(activity);
+	}
+	
+	public void addRequest(AssistRequest request) {
+		requests.add(request);
+	}
+	
+	public List<AssistRequest> getRequests() {
+		return requests;
 	}
 
 }
