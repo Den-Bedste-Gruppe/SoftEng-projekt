@@ -10,7 +10,6 @@ public class Worker {
     private List<AssistRequest> requests;
     private List<Activity> activities;
     private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
-
 	private List<TimeRegistration> registrationList = new ArrayList<>();
     
 	public Worker(String workerId) {

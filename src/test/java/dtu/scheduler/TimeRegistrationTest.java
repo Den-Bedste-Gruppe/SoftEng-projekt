@@ -4,6 +4,10 @@
 
 package dtu.scheduler;
 
+
+
+
+
 import static org.junit.Assert.assertTrue;
 
 import io.cucumber.java.en.Given;
@@ -23,6 +27,7 @@ public class TimeRegistrationTest {
 
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) throws Exception {
+		System.out.println(schedulingApp.getWeeklyRegisteredHours());
 		double diff = hours - schedulingApp.getWeeklyRegisteredHours();
 		Activity dummy_activity = new Activity();
 		try {
