@@ -51,10 +51,15 @@ public class SchedulingApp {
 		return currentUser.getWeeklyRegisteredHours();
 	}
 
+	public double getHoursRegisteredOnActivity(Activity activity) throws Exception {
+		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
+		return registration.getHours();
+	}
+
 	public void registerHours(double hours, Activity test_activity) throws Exception {
 		currentUser.registerHours(hours, test_activity);
 	}
-	
+
 	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
 		return workerDAO.getWorkerById(workerId);
 	}
@@ -67,5 +72,10 @@ public class SchedulingApp {
 	
 	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
 		return getWorkerById(workerId).getRequests();
+	}
+		
+	public void changeHoursOnActivity(double new_hours, Activity activity) throws Exception {
+		currentUser.changeHours(new_hours, activity);
+
 	}
 }
