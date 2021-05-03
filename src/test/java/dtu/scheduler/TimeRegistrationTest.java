@@ -41,12 +41,13 @@ public class TimeRegistrationTest {
 	@Given("that the activity has {double} hours spent")
 	public void thatTheActivityHasHoursSpent(double hours) {
 		double diff = hours - test_activity.getTotalHoursSpent();
-		test_activity.registerHours(diff);
+		TimeRegistration dummy_registration = new TimeRegistration(diff, test_activity);
 		assertTrue(test_activity.getTotalHoursSpent() == hours);
 	}
 
 	@Given("that the worker has {double} hours registered on the activity")
 	public void thatTheWorkerHasHoursRegisteredOnTheActivity(double hours) throws Exception {
+		schedulingApp.registerHours(hours, test_activity);
 		assertTrue(schedulingApp.getHoursRegisteredOnActivity(test_activity) == hours);
 	}
 
@@ -66,6 +67,8 @@ public class TimeRegistrationTest {
 
 	@Then("the activity has a total of {double} hours spent")
 	public void theActivityHasATotalOfHoursSpent(double hours) {
+		System.out.println(hours);
+		System.out.println(test_activity.getTotalHoursSpent());
 		assertTrue(test_activity.getTotalHoursSpent() == hours);
 	}
 

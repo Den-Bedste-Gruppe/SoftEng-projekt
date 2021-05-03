@@ -7,7 +7,6 @@ Background:
 	Given that a worker is logged in
 	And that there is a project activity
 	And that the worker has 10 hours spent that week
-	And that the activity has 5 hours spent
 	And that the worker has 5 hours registered on the activity
 
 Scenario: The worker changes their hours on the activity to a valid amount

@@ -29,7 +29,10 @@ public class Worker {
 			throw new Exception("Invalid amount of hours");
 		}
 		week_hours += hours;
-		activity.registerHours(hours);
+		//adds itself to the activity registration-list automatically in constructor
+		TimeRegistration new_registration = new TimeRegistration(hours, activity);
+		//manually add to worker registration-list
+		registrationList.add(new_registration);
 	}
 
 	public TimeRegistration getTimeRegistrationByActivity(Activity activity) throws Exception {

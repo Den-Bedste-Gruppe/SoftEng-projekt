@@ -12,13 +12,17 @@ public class TimeRegistration {
 	private Date date;
 	private Activity parent;
 
-	public TimeRegistration(double hours, Activity parent_activity) {
-
+	public TimeRegistration(double hours, Activity parent) {
+		this.parent = parent;
+		this.hours = hours;
+		parent.addRegistration(this);
 	}
 
+	/*
 	public TimeRegistration(double hours, Activity parent_activity, Date date) {
 
 	}
+	*/
 
 	public double getHours() {
 		return hours;
@@ -26,5 +30,4 @@ public class TimeRegistration {
 	public Activity getActivity() {
 		return parent;
 	}
-
 }
