@@ -39,6 +39,11 @@ public class SchedulingApp {
 		return currentUser.getWeeklyRegisteredHours();
 	}
 
+	public double getHoursRegisteredOnActivity(Activity activity) throws Exception {
+		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
+		return registration.getHours();
+	}
+
 	public void registerHours(double hours, Activity test_activity) throws Exception {
 		currentUser.registerHours(hours, test_activity);
 	}

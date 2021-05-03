@@ -22,23 +22,32 @@ public class TimeRegistrationTest {
 	}
 
 	@Given("that the worker has {double} hours spent that week")
-	public void thatTheWorkerHasHoursSpentThatWeek(double hours) {
+	public void thatTheWorkerHasHoursSpentThatWeek(double hours) throws Exception {
 		double diff = hours - schedulingApp.getWeeklyRegisteredHours();
 		Activity dummy_activity = new Activity();
-		dummy_activity.registerHours(diff);
+		try {
+			schedulingApp.registerHours(diff, dummy_activity);
+		} catch (Exception e) {
+			errorMessageHolder.setErrorMessage(e.getMessage());
+		}
 		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
 	}
 
 	@Given("that there is a project activity")
 	public void thatThereIsAProjectActivity() {
-		test_activity = new Activity();
+		test_activity = new Activity("test activity");
 	}
 
 	@Given("that the activity has {double} hours spent")
 	public void thatTheActivityHasHoursSpent(double hours) {
-		double diff = hours - test_activity.getHoursSpent();
+		double diff = hours - test_activity.getTotalHoursSpent();
 		test_activity.registerHours(diff);
-		assertTrue(test_activity.getHoursSpent() == hours);
+		assertTrue(test_activity.getTotalHoursSpent() == hours);
+	}
+
+	@Given("that the worker has {double} hours registered on the activity")
+	public void thatTheWorkerHasHoursRegisteredOnTheActivity(double hours) throws Exception {
+		assertTrue(schedulingApp.getHoursRegisteredOnActivity(test_activity) == hours);
 	}
 
 	@When("the worker registers {double} hours on the activity")
@@ -50,9 +59,14 @@ public class TimeRegistrationTest {
 		}
 	}
 
+	@When("the worker changes the amount of hours registered on the activity to {double} hours")
+	public void theWorkerChangesTheAmountOfHoursRegisteredOnTheActivityToHours(double new_hours) {
+		throw new io.cucumber.java.PendingException();
+	}
+
 	@Then("the activity has a total of {double} hours spent")
 	public void theActivityHasATotalOfHoursSpent(double hours) {
-		assertTrue(test_activity.getHoursSpent() == hours);
+		assertTrue(test_activity.getTotalHoursSpent() == hours);
 	}
 
 	@Then("the worker has a total of {double} hours spent that week")

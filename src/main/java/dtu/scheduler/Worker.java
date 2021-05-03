@@ -1,9 +1,14 @@
 package dtu.scheduler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //Philip Hviid
 public class Worker {
     private String workerId;
     private double week_hours;
+
+	private List<TimeRegistration> registrationList = new ArrayList<>();
     
 	public Worker(String workerId) {
 		this.workerId = workerId;
@@ -25,6 +30,15 @@ public class Worker {
 		}
 		week_hours += hours;
 		activity.registerHours(hours);
+	}
+
+	public TimeRegistration getTimeRegistrationByActivity(Activity activity) throws Exception {
+		for (TimeRegistration r : registrationList) {
+			if (r.getActivity().equals(activity)) {
+				return r;
+			}
+		}
+		throw new Exception("No registration found for given activity: " + activity.getName());
 	}
 
 }
