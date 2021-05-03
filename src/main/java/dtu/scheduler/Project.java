@@ -1,19 +1,25 @@
 package dtu.scheduler;
 
 public class Project {
-	private String ProjectID;
+	private String projectID;
 	private Worker projectLeader;
 
 	public Project(String ID) {
-		this.ProjectID = ID;
+		this.projectID = ID;
 	}
 
 	public Project(String ID, Worker projectLeader) {
-		this.ProjectID = ID;
+		this.projectID = ID;
 		this.projectLeader = projectLeader;
 	}
 	
 	public String getProjectID() {
-		return ProjectID;
+		return projectID;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Project ID: " + projectID;
 	}
 }
