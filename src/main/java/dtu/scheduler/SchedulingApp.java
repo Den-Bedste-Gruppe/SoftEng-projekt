@@ -1,19 +1,21 @@
 package dtu.scheduler;
 
 import java.util.List;
+import java.util.ArrayList;
+
 //Philip Hviid
 public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerDAO workerDAO;
+	private List<Project> projectArray = new ArrayList<>();
 	private ActivityAssigner activityAssigner;
 	private AssistRequestHandler requestHandler;
-	
+
 	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner, AssistRequestHandler requestHandler) {
 		this.workerDAO = workerDAO;
 		this.activityAssigner = activityAssigner;
 		this.requestHandler = requestHandler;
 	}
-	
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
 	    currentUser = workerDAO.getWorkerById(workerId);		
@@ -24,11 +26,10 @@ public class SchedulingApp {
 			return currentUser.getWorkerId();
 		}
 		return null;
-
 	}
 	
 	public Boolean isUserLoggedIn() {
-		return !(currentUser==null);
+		return currentUser != null;
 	}
 
 	public void logOut() {
@@ -43,12 +44,26 @@ public class SchedulingApp {
 		activityAssigner.assignActivity(getWorkerById(workerId), activity);
 	}
 	
-
-	public SchedulingApp() {
-	}
-
 	public double getWeeklyRegisteredHours() {
 		return currentUser.getWeeklyRegisteredHours();
+	}
+	
+	public void addProject(Project project) throws ProjectAlreadyExistsException {
+		// Test if project already exists
+		if (searchProject(project.getProjectID()) != null) {
+			throw new ProjectAlreadyExistsException("Project already exist");
+		}
+		
+		projectArray.add(project);
+	}
+	
+	public Project searchProject(String ID) {
+		ProjectSearch projectSearcher = new ProjectSearch(projectArray);
+		return projectSearcher.search(ID);
+	};
+	
+	public  List<Project> getProjects() {
+		return projectArray;
 	}
 
 	public double getHoursRegisteredOnActivity(Activity activity) throws Exception {
