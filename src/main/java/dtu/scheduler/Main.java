@@ -18,10 +18,6 @@ public class Main {
 		gui.clearScreen();
 
 		loginScene();
-		
-		gui.clearScreen();
-		gui.println("Successfully logged in!");
-		gui.inputString();
 	}
 
 	public static void loginScene() throws WorkerDoesNotExistException {
@@ -36,5 +32,9 @@ public class Main {
 			gui.clearScreen();
 			gui.println("No user exists with given id, please try again:");
 		}}
+
+		gui.clearScreen();
+		gui.println("Successfully logged in!");
+		gui.inputString();
 	}
 }
