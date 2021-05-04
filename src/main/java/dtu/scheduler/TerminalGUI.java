@@ -5,10 +5,21 @@ import java.util.Scanner;
 public class TerminalGUI {
 
 	Scanner input;
+	final String inputMarker = ">> ";
 
 
 	TerminalGUI() {
 		input = new Scanner(System.in);
+	}
+
+	public String inputString() {
+		System.out.print(inputMarker);
+		return input.next();
+	}
+
+	public int inputInt() {
+		System.out.print(inputMarker);
+		return input.nextInt();
 	}
 
 	//Displays menu, takes integer answer
@@ -19,9 +30,9 @@ public class TerminalGUI {
 			i++;
 		}
 		// !! Does no input validation !! only bounds checking
-		int answer = input.nextInt();
+		int answer = inputInt();
 		while (answer < 1 || answer > options.length) {
-			answer = input.nextInt();
+			answer = inputInt();
 		}
 		return answer;
 	}
