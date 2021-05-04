@@ -52,7 +52,7 @@ public class LoginLogoutSteps {
 
 	@Then("worker is logged in")
 	public void workerIsLoggedIn() {
-	    assert(schedulingApp.getCurrentUser().equals(workerId));
+	    assert(schedulingApp.getCurrentUserID().equals(workerId));
 	}
 	
 	@Given("the workerID is not in the system")
@@ -62,7 +62,7 @@ public class LoginLogoutSteps {
 
 	@Then("worker with ID {string} is not logged in")
 	public void workerWithIDIsNotLoggedIn(String string) {
-	    assert(!(schedulingApp.getCurrentUser()==string));
+	    assert(!(schedulingApp.getCurrentUserID()==string));
 	}
 
 	@Then("{string} Error is thrown")

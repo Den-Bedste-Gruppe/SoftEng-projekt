@@ -10,7 +10,7 @@ public class Worker {
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<AssistRequest> requests;
 	private List<Activity> activities;
-
+ 
 	public Worker(String workerId) {
 		// Input validation checking
 		if (workerId.length() == 0) throw new IllegalArgumentException("The ID must be at least one character");
@@ -70,6 +70,12 @@ public class Worker {
 			}
 		}
 		throw new Exception("No registration found for given activity: " + activity.getName());
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return workerId;
 	}
 
 	public List<Activity> getActivities() {

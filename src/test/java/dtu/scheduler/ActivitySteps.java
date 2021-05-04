@@ -25,7 +25,7 @@ public class ActivitySteps {
 	
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException {
-		String currUser = schedulingApp.getCurrentUser();
+		String currUser = schedulingApp.getCurrentUserID();
 		activity = new Activity();
 		schedulingApp.assignActivity(currUser, activity);
 	}

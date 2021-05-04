@@ -21,13 +21,20 @@ public class SchedulingApp {
 	    currentUser = workerDAO.getWorkerById(workerId);		
 	}
 	
-	public String getCurrentUser() {
+	public String getCurrentUserID() {
 		if(isUserLoggedIn()) {
 			return currentUser.getWorkerId();
 		}
 		return null;
 	}
-	
+
+	public Worker getCurrentUser() {
+		if(isUserLoggedIn()) {
+			return currentUser;
+		}
+		return null;
+	}	
+
 	public Boolean isUserLoggedIn() {
 		return currentUser != null;
 	}
@@ -60,7 +67,7 @@ public class SchedulingApp {
 	public Project searchProject(String ID) {
 		ProjectSearch projectSearcher = new ProjectSearch(projectArray);
 		return projectSearcher.search(ID);
-	};
+	}
 	
 	public  List<Project> getProjects() {
 		return projectArray;
@@ -75,6 +82,10 @@ public class SchedulingApp {
 		currentUser.registerHours(hours, test_activity);
 	}
 
+	public void assingProjectLeader(String projectID, Worker projectLeader) {
+		searchProject(projectID).assignLeader(projectLeader);
+	}
+  
 	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
 		return workerDAO.getWorkerById(workerId);
 	}
