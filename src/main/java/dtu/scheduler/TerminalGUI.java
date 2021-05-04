@@ -1,3 +1,5 @@
+// Author: Kristian Sofus Knudsen
+
 package dtu.scheduler;
 
 import java.util.Scanner;
@@ -12,13 +14,20 @@ public class TerminalGUI {
 		input = new Scanner(System.in);
 	}
 
+	public void println(String msg) {
+		System.out.println(msg);
+	}
+	public void print(String msg) {
+		System.out.print(msg);
+	}
+
 	public String inputString() {
-		System.out.print(inputMarker);
+		print(inputMarker);
 		return input.next();
 	}
 
 	public int inputInt() {
-		System.out.print(inputMarker);
+		print(inputMarker);
 		return input.nextInt();
 	}
 
@@ -26,7 +35,7 @@ public class TerminalGUI {
 	public int numericalMenu(String[] options) {
 		Integer i = 1;
 		for (String option : options) {
-			System.out.println(i.toString() + ": " + option);
+			println(i.toString() + ": " + option);
 			i++;
 		}
 		// !! Does no input validation !! only bounds checking
