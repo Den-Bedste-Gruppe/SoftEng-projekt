@@ -21,7 +21,7 @@ public class ProjectLeaderTest {
 		schedulingApp.logIn(workerID);
 	}
 	
-	@When("a worker assign the project {string} a project leader")
+	@When("a worker assigns the project {string} a project leader")
 	public void aWorkerAssignTheProjectAProjectLeader(String projectID) {
 		Worker projectLeader = schedulingApp.getCurrentUser();
 		schedulingApp.assingProjectLeader(projectID, projectLeader);
@@ -46,7 +46,7 @@ public class ProjectLeaderTest {
 		schedulingApp.addProject(new Project(name));
 	}
 
-	@When("a worker change the project leader on project {string}")
+	@When("a worker changes the project leader on project {string}")
 	public void aWorkerChangeTheProjectLeaderOnProject(String projectID) {
 		// TODO fix the new random user
 		Worker newWorker = new Worker("TEST");
