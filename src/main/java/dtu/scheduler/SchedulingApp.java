@@ -3,16 +3,22 @@ package dtu.scheduler;
 import java.util.List;
 import java.util.ArrayList;
 
+//Philip Hviid
 public class SchedulingApp {
 	private Worker currentUser;
-	private WorkerDAO workerDAO = new WorkerDAO();
+	private WorkerDAO workerDAO;
 	private List<Project> projectArray = new ArrayList<>();
-	
-	public SchedulingApp() {
+	private ActivityAssigner activityAssigner;
+	private AssistRequestHandler requestHandler;
+
+	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner, AssistRequestHandler requestHandler) {
+		this.workerDAO = workerDAO;
+		this.activityAssigner = activityAssigner;
+		this.requestHandler = requestHandler;
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
-	    currentUser = workerDAO.getWorkerbyId(workerId);		
+	    currentUser = workerDAO.getWorkerById(workerId);		
 	}
 	
 	public String getCurrentUserID() {
@@ -27,8 +33,8 @@ public class SchedulingApp {
 			return currentUser;
 		}
 		return null;
-	}
-	
+	}	
+
 	public Boolean isUserLoggedIn() {
 		return currentUser != null;
 	}
@@ -41,28 +47,27 @@ public class SchedulingApp {
 		return workerDAO.isUserInDatabase(workerId);
 	}
 	
+	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException {
+		activityAssigner.assignActivity(getWorkerById(workerId), activity);
+	}
+	
 	public double getWeeklyRegisteredHours() {
 		return currentUser.getWeeklyRegisteredHours();
 	}
 	
-	public void addProject(Project project) throws ProjectAlreadyExistException {
+	public void addProject(Project project) throws ProjectAlreadyExistsException {
 		// Test if project already exists
 		if (searchProject(project.getProjectID()) != null) {
-			throw new ProjectAlreadyExistException("Project already exist");
+			throw new ProjectAlreadyExistsException("Project already exist");
 		}
 		
 		projectArray.add(project);
 	}
 	
 	public Project searchProject(String ID) {
-		for (int i = 0; i < projectArray.size(); i++) {
-			Project p = projectArray.get(i);
-			if (p.getProjectID().equals(ID)) {
-				return p;
-			}
-		}
-		return null;
-	};
+		ProjectSearch projectSearcher = new ProjectSearch(projectArray);
+		return projectSearcher.search(ID);
+	}
 	
 	public  List<Project> getProjects() {
 		return projectArray;
@@ -79,9 +84,24 @@ public class SchedulingApp {
 
 	public void assingProjectLeader(String projectID, Worker projectLeader) {
 		searchProject(projectID).assignLeader(projectLeader);
-  }
+	}
   
+	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
+		return workerDAO.getWorkerById(workerId);
+	}
+
+	public void requestAssistance(Activity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
+		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
+		
+	}
+	
+	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
+		return getWorkerById(workerId).getRequests();
+	}
+		
 	public void changeHoursOnActivity(double new_hours, Activity activity) throws Exception {
 		currentUser.changeHours(new_hours, activity);
+
 	}
 }

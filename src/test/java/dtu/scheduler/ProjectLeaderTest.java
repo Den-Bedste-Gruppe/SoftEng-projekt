@@ -42,7 +42,7 @@ public class ProjectLeaderTest {
 	}
 
 	@Given("there is a project with name {string}")
-	public void thereIsAProjectWithName(String name) throws ProjectAlreadyExistException {
+	public void thereIsAProjectWithName(String name) throws ProjectAlreadyExistsException {
 		schedulingApp.addProject(new Project(name));
 	}
 
