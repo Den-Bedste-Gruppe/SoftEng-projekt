@@ -17,9 +17,6 @@ public class SchedulingApp {
 		this.requestHandler = requestHandler;
 	}
 	
-	public SchedulingApp() {
-	}
-	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
 	    currentUser = workerDAO.getWorkerById(workerId);		
 	}
@@ -51,23 +48,18 @@ public class SchedulingApp {
 		return currentUser.getWeeklyRegisteredHours();
 	}
 	
-	public void addProject(Project project) throws ProjectAlreadyExistException {
+	public void addProject(Project project) throws ProjectAlreadyExistsException {
 		// Test if project already exists
 		if (searchProject(project.getProjectID()) != null) {
-			throw new ProjectAlreadyExistException("Project already exist");
+			throw new ProjectAlreadyExistsException("Project already exist");
 		}
 		
 		projectArray.add(project);
 	}
 	
 	public Project searchProject(String ID) {
-		for (int i = 0; i < projectArray.size(); i++) {
-			Project p = projectArray.get(i);
-			if (p.getProjectID().equals(ID)) {
-				return p;
-			}
-		}
-		return null;
+		ProjectSearch projectSearcher = new ProjectSearch(projectArray);
+		return projectSearcher.search(ID);
 	};
 	
 	public  List<Project> getProjects() {

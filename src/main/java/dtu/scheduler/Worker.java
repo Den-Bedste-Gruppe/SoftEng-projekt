@@ -8,8 +8,8 @@ public class Worker {
 	private String workerId;
 	private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
 	private List<TimeRegistration> registrationList = new ArrayList<>();
-    private List<AssistRequest> requests;
-    private List<Activity> activities;
+	private List<AssistRequest> requests;
+	private List<Activity> activities;
 
 	public Worker(String workerId) {
 		// Input validation checking
@@ -27,6 +27,7 @@ public class Worker {
 	public String getWorkerId() {
 		return workerId;
 	}
+
 	public double getWeeklyRegisteredHours() {
 		return week_hours;
 	}
