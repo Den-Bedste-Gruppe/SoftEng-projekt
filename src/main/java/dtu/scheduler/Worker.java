@@ -3,16 +3,21 @@ package dtu.scheduler;
 import java.util.ArrayList;
 import java.util.List;
 
-//Philip Hviid
+// By Mads Harder
 public class Worker {
-    private String workerId;
-
-    private List<AssistRequest> requests;
-    private List<Activity> activities;
-    private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
+	private String workerId;
+	private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
 	private List<TimeRegistration> registrationList = new ArrayList<>();
-    
+	private List<AssistRequest> requests;
+	private List<Activity> activities;
+
 	public Worker(String workerId) {
+		// Input validation checking
+		if (workerId.length() == 0) throw new IllegalArgumentException("The ID must be at least one character");
+		if (workerId.length() > 4) throw new IllegalArgumentException("The ID can max be 4 characters");
+		
+		workerId = workerId.toUpperCase();
+
 		this.workerId = workerId;
 		week_hours = 0;
 		this.activities = new ArrayList<>();
@@ -22,6 +27,7 @@ public class Worker {
 	public String getWorkerId() {
 		return workerId;
 	}
+
 	public double getWeeklyRegisteredHours() {
 		return week_hours;
 	}
@@ -81,5 +87,4 @@ public class Worker {
 	public List<AssistRequest> getRequests() {
 		return requests;
 	}
-
 }
