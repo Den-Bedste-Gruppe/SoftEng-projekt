@@ -1,16 +1,22 @@
 package dtu.scheduler;
 
+import static org.junit.Assert.assertTrue;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class ProjectTest {
-	@Given("that a worker is logged in")
-	public void that_a_worker_is_logged_in() {
-	    // Write code here that turns the phrase above into concrete actions
-		assert(true);
-	    //throw new io.cucumber.java.PendingException();
+
+	private SchedulingApp schedulingApp;
+	private ErrorMessageHolder errorMessageHolder;
+
+	public ProjectTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
+		this.schedulingApp = schedulingApp;
+		this.errorMessageHolder = errorMessageHolder;
 	}
+
+
 
 	@When("the worker creates a new project")
 	public void the_worker_creates_a_new_project() {
@@ -43,8 +49,7 @@ public class ProjectTest {
 	//}
 
 	@Then("the error message {string} is given")
-	public void the_error_message_is_given(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void theErrorMessageIsGiven(String message) {
+	    assertTrue(errorMessageHolder.getErrorMessage().equals(message));
 	}
 }
