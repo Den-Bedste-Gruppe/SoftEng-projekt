@@ -10,12 +10,12 @@ import io.cucumber.java.en.When;
 public class LoginLogoutSteps {
 	private String workerId;
 	private SchedulingApp schedulingApp;
-	private ErrorMessageHolder msg;
+	private ErrorMessageHolder errorMessageHolder;
 
 	
-	public LoginLogoutSteps(SchedulingApp app, ErrorMessageHolder msg) {
+	public LoginLogoutSteps(SchedulingApp app) {
+		this.errorMessageHolder = ErrorMessageHolder.getInstance();
 		this.schedulingApp = app;
-		this.msg = msg;
 	}
 	
 	@Given("that a worker is logged in")
@@ -45,7 +45,7 @@ public class LoginLogoutSteps {
 		try {
 		    schedulingApp.logIn(workerId);
 		} catch (WorkerDoesNotExistException e) {
-			msg.setErrorMessage(e.getMessage());
+			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
 
 	}
@@ -67,7 +67,7 @@ public class LoginLogoutSteps {
 
 	@Then("{string} Error is thrown")
 	public void errorIsThrown(String string) {
-	    assert(msg.getErrorMessage().equals(string));
+	    assert(errorMessageHolder.getErrorMessage().equals(string));
 	}
 	
 	@Given("a worker is logged in")

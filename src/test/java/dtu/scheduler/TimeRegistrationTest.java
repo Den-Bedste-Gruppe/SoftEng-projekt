@@ -20,9 +20,9 @@ public class TimeRegistrationTest {
 	private Activity test_activity;
 	private ErrorMessageHolder errorMessageHolder;
 
-	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
+	public TimeRegistrationTest(SchedulingApp schedulingApp) {
 		this.schedulingApp = schedulingApp;
-		this.errorMessageHolder = errorMessageHolder;
+		this.errorMessageHolder = ErrorMessageHolder.getInstance();
 	}
 
 	@Given("that the worker has {double} hours spent that week")

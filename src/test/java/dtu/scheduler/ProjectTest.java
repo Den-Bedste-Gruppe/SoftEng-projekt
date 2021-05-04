@@ -11,7 +11,8 @@ public class ProjectTest {
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder errorMessageHolder;
 
-	public ProjectTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
+	public ProjectTest(SchedulingApp schedulingApp) {
+		this.errorMessageHolder = ErrorMessageHolder.getInstance();
 		this.schedulingApp = schedulingApp;
 		this.errorMessageHolder = errorMessageHolder;
 	}

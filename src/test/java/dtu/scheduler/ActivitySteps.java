@@ -12,14 +12,14 @@ import io.cucumber.java.en.When;
 public class ActivitySteps {
 	private String targetWorkerId;
 	private SchedulingApp schedulingApp;
-	private ErrorMessageHolder msg;
+	private ErrorMessageHolder errorMessageHolder;
 	private ActivityAssigner activityAssigner;
 	private Activity activity;
 
 	
-	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg, ActivityAssigner activityAssigner) {
+	public ActivitySteps(SchedulingApp app, ActivityAssigner activityAssigner) {
 		this.schedulingApp = app;
-		this.msg = msg;
+		this.errorMessageHolder = ErrorMessageHolder.getInstance();;
 		this.activityAssigner = activityAssigner;
 	}
 	
@@ -50,7 +50,7 @@ public class ActivitySteps {
 	    try {
 			schedulingApp.requestAssistance(activity, "ASDFG");
 		} catch (WorkerDoesNotExistException e) {
-			msg.setErrorMessage(e.getMessage());
+			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
 	}
 }
