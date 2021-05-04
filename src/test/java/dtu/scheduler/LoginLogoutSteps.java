@@ -20,7 +20,8 @@ public class LoginLogoutSteps {
 	
 	@Given("that a worker is logged in")
 	public void that_a_worker_is_logged_in() throws WorkerDoesNotExistException {
-	    schedulingApp.logIn("ASDF");
+		workerId = "ASDF";
+	    schedulingApp.logIn(workerId);
 	}
 	
 	
@@ -51,7 +52,7 @@ public class LoginLogoutSteps {
 
 	@Then("worker is logged in")
 	public void workerIsLoggedIn() {
-	    assert(schedulingApp.getCurrentUser().equals("ASDF"));
+	    assert(schedulingApp.getCurrentUser().equals(workerId));
 	}
 	
 	@Given("the workerID is not in the system")

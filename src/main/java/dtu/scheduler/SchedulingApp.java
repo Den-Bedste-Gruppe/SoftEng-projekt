@@ -3,16 +3,25 @@ package dtu.scheduler;
 import java.util.List;
 import java.util.ArrayList;
 
+//Philip Hviid
 public class SchedulingApp {
 	private Worker currentUser;
-	private WorkerDAO workerDAO = new WorkerDAO();
+	private WorkerDAO workerDAO;
 	private List<Project> projectArray = new ArrayList<>();
+	private ActivityAssigner activityAssigner;
+	private AssistRequestHandler requestHandler;
+
+	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner, AssistRequestHandler requestHandler) {
+		this.workerDAO = workerDAO;
+		this.activityAssigner = activityAssigner;
+		this.requestHandler = requestHandler;
+	}
 	
 	public SchedulingApp() {
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
-	    currentUser = workerDAO.getWorkerbyId(workerId);		
+	    currentUser = workerDAO.getWorkerById(workerId);		
 	}
 	
 	public String getCurrentUser() {
@@ -32,6 +41,10 @@ public class SchedulingApp {
 	
 	public boolean isUserInDatabase(String workerId) {
 		return workerDAO.isUserInDatabase(workerId);
+	}
+	
+	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException {
+		activityAssigner.assignActivity(getWorkerById(workerId), activity);
 	}
 	
 	public double getWeeklyRegisteredHours() {
@@ -70,7 +83,22 @@ public class SchedulingApp {
 		currentUser.registerHours(hours, test_activity);
 	}
 
+	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
+		return workerDAO.getWorkerById(workerId);
+	}
+
+	public void requestAssistance(Activity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
+		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
+		
+	}
+	
+	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
+		return getWorkerById(workerId).getRequests();
+	}
+		
 	public void changeHoursOnActivity(double new_hours, Activity activity) throws Exception {
 		currentUser.changeHours(new_hours, activity);
+
 	}
 }
