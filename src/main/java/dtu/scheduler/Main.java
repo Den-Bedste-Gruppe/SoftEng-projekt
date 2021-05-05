@@ -1,17 +1,13 @@
 // Author: Kristian Sofus Knudsen
 
 package dtu.scheduler;
+import dtu.errors.WorkerDoesNotExistException;
 
 public class Main {
 
 	public static TerminalGUI gui = new TerminalGUI();
 	//Really ought to make a default constructor for this
-	public static SchedulingApp schedulingApp =
-	new SchedulingApp(
-		new WorkerDAO(new WorkerDatabase()),
-		new ActivityAssigner(),
-		new AssistRequestHandler()
-	);
+	public static SchedulingApp schedulingApp = new SchedulingApp();
 
 	public static void main(String args[]) throws Exception {
 		boolean programRunning = true;
