@@ -26,6 +26,11 @@ public class SchedulingApp {
 	    currentUser = workerDAO.getWorkerById(workerId);		
 	}
 	
+	public void createProjectActivity(String activtyName, String projectId) throws Exception {
+		Activity activity = new Activity(activtyName);
+		searchProject(projectId).addActivity(activity);
+	}
+	
 	public String getCurrentUserID() {
 		if(isUserLoggedIn()) {
 			return currentUser.getWorkerId();
