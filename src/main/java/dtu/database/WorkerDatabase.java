@@ -4,7 +4,7 @@ import dtu.scheduler.Worker;
 
 //Philip Hviid
 public class WorkerDatabase {
-	private Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV")};
+	private Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV"), new Worker("LMAA")};
 	
 	public Worker getWorkerAt(int index) {
 		return workers[index];
