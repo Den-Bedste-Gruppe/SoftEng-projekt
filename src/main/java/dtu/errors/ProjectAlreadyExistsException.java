@@ -1,4 +1,4 @@
-package dtu.scheduler;
+package dtu.errors;
 
 // Mads Harder
 public class ProjectAlreadyExistsException extends Exception {

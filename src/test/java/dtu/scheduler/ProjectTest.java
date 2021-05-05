@@ -2,6 +2,7 @@ package dtu.scheduler;
 
 import static org.junit.Assert.assertTrue;
 
+import dtu.errors.ProjectAlreadyExistsException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

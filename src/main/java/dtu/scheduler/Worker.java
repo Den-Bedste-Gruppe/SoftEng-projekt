@@ -3,6 +3,8 @@ package dtu.scheduler;
 import java.util.ArrayList;
 import java.util.List;
 
+import dtu.errors.TooManyActivitiesException;
+
 // By Mads Harder
 public class Worker {
 	private String workerId;
@@ -10,7 +12,7 @@ public class Worker {
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<AssistRequest> requests;
 	private List<Activity> activities;
-
+ 
 	public Worker(String workerId) {
 		// Input validation checking
 		if (workerId.length() == 0) throw new IllegalArgumentException("The ID must be at least one character");
@@ -32,25 +34,11 @@ public class Worker {
 		return week_hours;
 	}
 
-	public void updateWeeklyHoursSpent() {
-		double sum = 0;
-		for (TimeRegistration r : registrationList) {
-			sum += r.getHours();
-		}
-		week_hours = sum;
+	public void updateWeeklyHoursSpent(double i) {
+		week_hours += i;
 	}
 
-	public void registerHours(double hours, Activity activity) throws Exception {
-		// By Kristian Sofus Knudsen
-		if (hours <= 0 || hours > 24) {
-			throw new Exception("Invalid amount of hours");
-		}
-		//adds itself to the activity registration-list automatically in constructor
-		TimeRegistration new_registration = new TimeRegistration(hours, activity, workerId);
-		//manually add to worker registration-list
-		registrationList.add(new_registration);
-		updateWeeklyHoursSpent();
-	}
+
 
 	public void changeHours(double new_hours, Activity activity) throws Exception {
 		// By Kristian Sofus Knudsen
@@ -58,8 +46,9 @@ public class Worker {
 		if (new_hours <= 0 || new_hours > 24) {
 			throw new Exception("Invalid amount of hours");
 		}
+		double old_hours = registration.getHours();
 		registration.changeHours(new_hours);
-		updateWeeklyHoursSpent();
+		updateWeeklyHoursSpent(new_hours-old_hours);
 	}
 
 	public TimeRegistration getTimeRegistrationByActivity(Activity activity) throws Exception {
@@ -71,13 +60,23 @@ public class Worker {
 		}
 		throw new Exception("No registration found for given activity: " + activity.getName());
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return workerId;
+	}
 
 	public List<Activity> getActivities() {
 		return activities;
 	}
 	
-	public void addActivity(Activity activity) {
-		activities.add(activity);
+	public void addActivity(Activity activity) throws TooManyActivitiesException {
+		if (activities.size() < 20) {
+			activities.add(activity);
+		} else {
+			throw new TooManyActivitiesException("You already have 20 activities assigned");
+		}
 	}
 	
 	public void addRequest(AssistRequest request) {
@@ -86,5 +85,9 @@ public class Worker {
 	
 	public List<AssistRequest> getRequests() {
 		return requests;
+	}
+	
+	public void addTimeRegistration(TimeRegistration timeRegistration) {
+		registrationList.add(timeRegistration);
 	}
 }
