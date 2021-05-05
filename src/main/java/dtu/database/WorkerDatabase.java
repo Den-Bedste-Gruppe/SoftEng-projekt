@@ -1,4 +1,7 @@
-package dtu.scheduler;
+package dtu.database;
+
+import dtu.scheduler.Worker;
+
 //Philip Hviid
 public class WorkerDatabase {
 	private Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV")};

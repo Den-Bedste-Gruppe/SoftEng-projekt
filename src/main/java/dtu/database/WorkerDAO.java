@@ -1,4 +1,8 @@
-package dtu.scheduler;
+package dtu.database;
+
+import dtu.errors.WorkerDoesNotExistException;
+import dtu.scheduler.Worker;
+
 //Philip Hviid
 public class WorkerDAO {
 	WorkerDatabase workerDatabase;
