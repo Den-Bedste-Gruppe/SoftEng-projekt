@@ -15,11 +15,14 @@ public class SchedulingApp {
 	private List<Project> projectArray = new ArrayList<>();
 	private ActivityAssigner activityAssigner;
 	private AssistRequestHandler requestHandler;
+	private RegistrationHandler registrationHandler;
 
-	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner, AssistRequestHandler requestHandler) {
+	public SchedulingApp(WorkerDAO workerDAO, ActivityAssigner activityAssigner, 
+			AssistRequestHandler requestHandler, RegistrationHandler registrationHandler) {
 		this.workerDAO = workerDAO;
 		this.activityAssigner = activityAssigner;
 		this.requestHandler = requestHandler;
+		this.registrationHandler = registrationHandler;
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
@@ -84,7 +87,7 @@ public class SchedulingApp {
 	}
 
 	public void registerHours(double hours, Activity test_activity) throws Exception {
-		currentUser.registerHours(hours, test_activity);
+		registrationHandler.registerHours(hours, test_activity, currentUser);
 	}
 
 	public void assingProjectLeader(String projectID, Worker projectLeader) {
@@ -109,4 +112,5 @@ public class SchedulingApp {
 		currentUser.changeHours(new_hours, activity);
 
 	}
+	
 }
