@@ -2,6 +2,8 @@ package dtu.scheduler;
 
 import org.junit.internal.ExactComparisonCriteria;
 
+import dtu.errors.ProjectAlreadyExistsException;
+import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

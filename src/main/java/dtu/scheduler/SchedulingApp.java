@@ -1,6 +1,11 @@
 package dtu.scheduler;
 
 import java.util.List;
+
+import dtu.database.WorkerDAO;
+import dtu.errors.ProjectAlreadyExistsException;
+import dtu.errors.WorkerDoesNotExistException;
+
 import java.util.ArrayList;
 
 //Philip Hviid
