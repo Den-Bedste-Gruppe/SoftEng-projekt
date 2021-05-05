@@ -2,6 +2,7 @@ package dtu.scheduler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import dtu.errors.TooManyActivitiesException;
 
@@ -12,6 +13,7 @@ public class Worker {
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<AssistRequest> requests;
 	private List<Activity> activities;
+	private List<NonProjectActivity> nonProjectActivies;
  
 	public Worker(String workerId) {
 		// Input validation checking
@@ -24,6 +26,7 @@ public class Worker {
 		week_hours = 0;
 		this.activities = new ArrayList<>();
 		this.requests = new ArrayList<>();
+		this.nonProjectActivies = new ArrayList<>();
 	}
 	
 	public String getWorkerId() {
@@ -89,5 +92,14 @@ public class Worker {
 	
 	public void addTimeRegistration(TimeRegistration timeRegistration) {
 		registrationList.add(timeRegistration);
+	}
+
+	public void addNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		nonProjectActivies.add(nonProjectActivity);
+		
+	}
+
+	public Boolean hasNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		return(nonProjectActivies.contains(nonProjectActivity));
 	}
 }

@@ -1,6 +1,7 @@
 package dtu.scheduler;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import dtu.database.WorkerRepositoryInMemory;
 import dtu.database.ProjectRepository;
@@ -124,6 +125,16 @@ public class SchedulingApp {
 		
 	public void changeHoursOnActivity(double new_hours, Activity activity) throws Exception {
 		currentUser.changeHours(new_hours, activity);
+
+	}
+
+	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		currentUser.addNonProjectActivity(nonProjectActivity);
+		
+	}
+
+	public Boolean workerHasNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		return(currentUser.hasNonProjectActivity(nonProjectActivity));
 
 	}
 	

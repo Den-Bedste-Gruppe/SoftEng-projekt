@@ -18,6 +18,7 @@ public class ActivitySteps {
 	private ErrorMessageHolder msg;
 	private ActivityAssigner activityAssigner;
 	private Activity activity;
+	private NonProjectActivity nonProjectActivity;
 	private Project project;
 
 	
@@ -102,5 +103,20 @@ public class ActivitySteps {
 	@Then("The activity is not created by the worker")
 	public void theActivityIsNotCreatedByTheWorker() {
 	    assertFalse(project.getActivities().size()==2);
+	}
+	
+	@Given("that a nonproject activity exists")
+	public void thatANonprojectActivityExists() {
+	    nonProjectActivity = new NonProjectActivity();
+	}
+	
+	@When("the worker creates a nonproject activity")
+	public void theWorkerCreatesANonprojectActivity() {
+	    schedulingApp.createNonProjectActivity(nonProjectActivity);
+	}
+
+	@Then("the nonproject activity is added to the workers activities")
+	public void theNonprojectActivityIsAddedToTheWorkersActivities() {
+	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
 	}
 }
