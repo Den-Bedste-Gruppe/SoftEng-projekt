@@ -14,7 +14,7 @@ Scenario: Add worker to an activity
 	
 
 
-Scenario: Add a worker who has over 20 activities the given week
+Scenario: Add a worker who already has 20 activities the given week
 	Given that there is an activity
 	And the worker has 20 activities this week
 	When the user assigns themselves to the activity
