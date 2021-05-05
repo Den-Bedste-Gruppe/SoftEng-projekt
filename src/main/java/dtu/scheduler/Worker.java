@@ -3,6 +3,8 @@ package dtu.scheduler;
 import java.util.ArrayList;
 import java.util.List;
 
+import dtu.errors.TooManyActivitiesException;
+
 // By Mads Harder
 public class Worker {
 	private String workerId;
@@ -69,8 +71,12 @@ public class Worker {
 		return activities;
 	}
 	
-	public void addActivity(Activity activity) {
-		activities.add(activity);
+	public void addActivity(Activity activity) throws TooManyActivitiesException {
+		if (activities.size() < 20) {
+			activities.add(activity);
+		} else {
+			throw new TooManyActivitiesException("You already have 20 activities assigned");
+		}
 	}
 	
 	public void addRequest(AssistRequest request) {

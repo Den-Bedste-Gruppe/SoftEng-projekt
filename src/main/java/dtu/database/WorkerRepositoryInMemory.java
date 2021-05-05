@@ -6,7 +6,7 @@ import dtu.scheduler.Worker;
 //Philip Hviid
 public class WorkerRepositoryInMemory implements WorkerRepository {
 
-	private Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV")};
+	private Worker[] workers = {new Worker("QWER"), new Worker("ASDF"), new Worker("ZXCV"),  new Worker("LMAA")};
 	
 	public WorkerRepositoryInMemory() {
 	}

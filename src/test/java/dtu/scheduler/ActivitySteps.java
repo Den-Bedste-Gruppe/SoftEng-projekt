@@ -2,7 +2,7 @@ package dtu.scheduler;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import dtu.errors.TooManyActivitiesException;
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
@@ -28,7 +28,7 @@ public class ActivitySteps {
 	}
 	
 	@Given("the worker is on an activity")
-	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException {
+	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException, TooManyActivitiesException {
 		String currUser = schedulingApp.getCurrentUserID();
 		activity = new Activity();
 		schedulingApp.assignActivity(currUser, activity);

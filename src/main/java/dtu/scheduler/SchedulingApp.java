@@ -7,6 +7,7 @@ import dtu.database.ProjectRepository;
 import dtu.database.ProjectRepositoryInMemory;
 import dtu.database.WorkerRepository;
 import dtu.errors.ProjectAlreadyExistsException;
+import dtu.errors.TooManyActivitiesException;
 import dtu.errors.WorkerDoesNotExistException;
 
 import java.util.ArrayList;
@@ -64,8 +65,13 @@ public class SchedulingApp {
 		return workerRepository.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException {
-		activityAssigner.assignActivity(getWorkerById(workerId), activity);
+	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException, TooManyActivitiesException {
+		if (isUserInDatabase(workerId)) {
+			activityAssigner.assignActivity(getWorkerById(workerId), activity);
+		} else {
+			throw new WorkerDoesNotExistException("No user with exists with initials " + workerId);
+		}
+		
 	}
 	
 	public double getWeeklyRegisteredHours() {
