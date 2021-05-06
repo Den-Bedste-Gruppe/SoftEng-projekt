@@ -8,13 +8,29 @@ public class Project {
 	private String projectID;
 	private Worker projectLeader;
 	private List<Activity> activities = new ArrayList<>();
+
+	private int[] timeframe = new int[2]; //Start and end weeks
+
 	public Project(String ID) {
-		this.projectID = ID;
+		projectID = ID;
+		timeframe[0] = DateHelper.thisWeek();
+		timeframe[1] = DateHelper.thisWeek();
 	}
 
 	public Project(String ID, Worker projectLeader) {
-		this.projectID = ID;
+		projectID = ID;
 		this.projectLeader = projectLeader;
+		timeframe[0] = DateHelper.thisWeek();
+		timeframe[1] = DateHelper.thisWeek();
+	}
+
+	public int[] getTimeframe() {
+		return timeframe;
+	}
+
+	public void setTimeframe(int startWeek, int endWeek) {
+		timeframe[0] = startWeek;
+		timeframe[1] = endWeek;
 	}
 	
 	public String getProjectID() {

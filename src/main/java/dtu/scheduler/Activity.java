@@ -13,23 +13,32 @@ public class Activity {
 	private String name = "";
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 
-	private int[] weeks = new int[2];
+	private int[] timeframe = new int[2]; //Start and end weeks
 	
 	public Activity(String name) {
 		hoursSpent = 0;
 		this.name = name;
 
-		int thisWeek = DateHelper.thisWeek();
-
-		weeks[0] = thisWeek;
-		weeks[1] = thisWeek;
+		timeframe[0] = DateHelper.thisWeek();
+		timeframe[1] = DateHelper.thisWeek();
 	}
 
-	/*
-	public void registerHours(double hours) {
-		hoursSpent += hours;
+	public Activity(String name, int startWeek, int endWeek) {
+		hoursSpent = 0;
+		this.name = name;
+
+		timeframe[0] = startWeek;
+		timeframe[1] = endWeek;
 	}
-	*/
+
+	public int[] getTimeframe() {
+		return timeframe;
+	}
+
+	public void setTimeframe(int startWeek, int endWeek) {
+		timeframe[0] = startWeek;
+		timeframe[1] = endWeek;
+	}
 
 	public double getTotalHoursSpent() {
 		return hoursSpent;
