@@ -68,8 +68,8 @@ public class ActivitySteps {
 	}
 
 	@Given("Worker is the project leader of current project")
-	public void workerIsTheProjectLeaderOfCurrentProject() {
-	    schedulingApp.assingProjectLeader("P1",schedulingApp.getCurrentUser());
+	public void workerIsTheProjectLeaderOfCurrentProject() throws Exception {
+	    schedulingApp.assignProjectLeader("P1",schedulingApp.getCurrentUserID());
 	}
 
 	@When("Worker creates an activity")

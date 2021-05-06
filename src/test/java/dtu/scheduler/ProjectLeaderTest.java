@@ -24,9 +24,8 @@ public class ProjectLeaderTest {
 	}
 	
 	@When("a worker assigns the project {string} a project leader")
-	public void aWorkerAssignTheProjectAProjectLeader(String projectID) {
-		Worker projectLeader = schedulingApp.getCurrentUser();
-		schedulingApp.assingProjectLeader(projectID, projectLeader);
+	public void aWorkerAssignTheProjectAProjectLeader(String projectID) throws Exception {
+		schedulingApp.assignProjectLeader(projectID, schedulingApp.getCurrentUserID());
 	}
 
 	@Then("the project {string} has a project leader with id {string}")
