@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerRepository workerRepository;
-	// private ProjectRepository projectRepository = new ProjectRepositoryInMemory();
 	private ProjectRepository projectRepository = new ProjectRepositoryInMemory();
 	private ActivityAssigner activityAssigner;
 	private AssistRequestHandler requestHandler;
@@ -127,7 +126,8 @@ public class SchedulingApp {
 		currentUser.changeHours(new_hours, activity);
 
 	}
-
+	
+	//used by scheduleNonProjectActivity, not by client
 	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
 		currentUser.addNonProjectActivity(nonProjectActivity);
 		
@@ -138,7 +138,7 @@ public class SchedulingApp {
 
 	}
 
-
+	//used by scheduleNonProjectActivity, not by client
 	public void registerNonProject(NonProjectActivity nonProjectActivity) throws Exception {
 		registrationHandler.registerNonProjectActivity(nonProjectActivity, currentUser);
 		
@@ -146,6 +146,13 @@ public class SchedulingApp {
 
 	public List<NonProjectTimeRegistration> getNonProjectTimeRegistrations() {
 		return currentUser.getNonProjectTimeRegistrations();
+	}
+	
+	//This is used from clientside when scheduling nonprojectactivities
+	public void scheduleNonProjectActivity(NonProjectActivity nonProjectActivity) throws Exception {
+		createNonProjectActivity(nonProjectActivity);
+		registerNonProject(nonProjectActivity);
+		
 	}
 	
 }

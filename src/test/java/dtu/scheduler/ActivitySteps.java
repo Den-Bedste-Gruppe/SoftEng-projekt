@@ -154,6 +154,12 @@ public class ActivitySteps {
 	    assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations);
 	}
 	
+	@When("worker schedules nonproject activity")
+	public void workerSchedulesNonprojectActivity() throws Exception {
+		nonProjectActivity = new NonProjectActivity();
+	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
+	}
+	
 	
 
 }
