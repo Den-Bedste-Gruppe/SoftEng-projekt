@@ -75,12 +75,8 @@ public class Worker {
 		return activities;
 	}
 	
-	public void addActivity(Activity activity) throws TooManyActivitiesException {
-		if (activities.size() < 20) {
-			activities.add(activity);
-		} else {
-			throw new TooManyActivitiesException("You already have 20 activities assigned");
-		}
+	public void addActivity(Activity activity) {
+		activities.add(activity);
 	}
 	
 	public void addRequest(AssistRequest request) {
