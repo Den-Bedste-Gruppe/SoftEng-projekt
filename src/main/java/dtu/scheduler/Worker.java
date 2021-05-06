@@ -2,6 +2,7 @@ package dtu.scheduler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 import dtu.errors.TooManyActivitiesException;
 
@@ -10,8 +11,10 @@ public class Worker {
 	private String workerId;
 	private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
 	private List<TimeRegistration> registrationList = new ArrayList<>();
+	private List<NonProjectTimeRegistration> nonprojectregistrationList = new ArrayList<>();
 	private List<AssistRequest> requests;
 	private List<Activity> activities;
+	private List<NonProjectActivity> nonProjectActivies;
  
 	public Worker(String workerId) {
 		// Input validation checking
@@ -24,6 +27,7 @@ public class Worker {
 		week_hours = 0;
 		this.activities = new ArrayList<>();
 		this.requests = new ArrayList<>();
+		this.nonProjectActivies = new ArrayList<>();
 	}
 	
 	public String getWorkerId() {
@@ -71,12 +75,8 @@ public class Worker {
 		return activities;
 	}
 	
-	public void addActivity(Activity activity) throws TooManyActivitiesException {
-		if (activities.size() < 20) {
-			activities.add(activity);
-		} else {
-			throw new TooManyActivitiesException("You already have 20 activities assigned");
-		}
+	public void addActivity(Activity activity) {
+		activities.add(activity);
 	}
 	
 	public void addRequest(AssistRequest request) {
@@ -89,5 +89,22 @@ public class Worker {
 	
 	public void addTimeRegistration(TimeRegistration timeRegistration) {
 		registrationList.add(timeRegistration);
+	}
+
+	public void addNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		nonProjectActivies.add(nonProjectActivity);
+		
+	}
+
+	public boolean hasNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		return(nonProjectActivies.contains(nonProjectActivity));
+	}
+
+	public void addNonProjectTimeRegistration(NonProjectTimeRegistration new_registration) {
+		nonprojectregistrationList.add(new_registration);
+	}
+	
+	public List<NonProjectTimeRegistration> getNonProjectTimeRegistrations() {
+		return nonprojectregistrationList;
 	}
 }

@@ -45,11 +45,7 @@ public class AssignWorkerSteps {
 
 	@When("the user assigns themselves to the activity")
 	public void theUserAssignsThemselvesToTheActivity() throws WorkerDoesNotExistException {
-		try {
 			worker.addActivity(activity);
-		} catch (TooManyActivitiesException e) {
-			errMsg.setErrorMessage(e.getMessage());
-		}
 		
 	}
 
