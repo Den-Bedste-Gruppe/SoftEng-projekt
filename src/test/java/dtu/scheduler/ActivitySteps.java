@@ -139,19 +139,19 @@ public class ActivitySteps {
 	
 	@Then("the nonproject registration is added")
 	public void theNonprojectTimeregistrationIsAdded() {
-		assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations+1);
+		assertTrue(schedulingApp.getNonProjectRegistrations().size()==amounthOfNonProjectRegistrations+1);
 	}
 	
 	@Given("that the worker has {int} nonproject registrations")
 	public void thatTheWorkerHasNonprojectTimeRegistrations(Integer int1) {
-	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectTimeRegistrations().size();
+	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
 	    assertTrue(amounthOfNonProjectRegistrations==int1);
 	    
 	}
 
 	@Then("no nonproject registration is added")
 	public void noProjectIsAdded() {
-	    assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations);
+	    assertTrue(schedulingApp.getNonProjectRegistrations().size()==amounthOfNonProjectRegistrations);
 	}
 	
 	@When("worker schedules nonproject activity")
