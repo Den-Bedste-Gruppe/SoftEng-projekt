@@ -1,7 +1,7 @@
 package dtu.scheduler;
 
 import java.util.Date;
-
+//Philip Hviid
 public class NonProjectTimeRegistration {
 	private double hours;
 	private Date date;
