@@ -103,12 +103,13 @@ public class Main {
 			gui.println("");
 		}
 
+		String projectID;
 		int menuChoice = gui.numericalMenu(projectMenuOptions);
 		switch (menuChoice) {
 			case 1: //Create project
 				gui.clearScreen();
 				gui.println("Enter new project ID:");
-				String projectID = gui.inputString();
+				projectID = gui.inputString();
 
 				Project new_project;
 
@@ -125,7 +126,21 @@ public class Main {
 					gui.inputString();
 				}
 				break;
-			case 2:
+			case 2: //Assign new leader to project
+				gui.clearScreen();
+				gui.println("Enter project ID:");
+				projectID = gui.inputString();
+
+				gui.println("Enter worker ID:");
+				String workerID = gui.inputString();
+				if (schedulingApp.isUserInDatabase(workerID)) {
+					try {
+						schedulingApp.assingProjectLeader(projectID, workerID);
+					} catch (Exception e) {
+						gui.println(e.getMessage());
+						gui.inputString();
+					}
+				}
 				break;
 			case 3:
 				return; // Return to main menu
