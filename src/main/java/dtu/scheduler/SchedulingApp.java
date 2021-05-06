@@ -133,7 +133,7 @@ public class SchedulingApp {
 		
 	}
 
-	public Boolean workerHasNonProjectActivity(NonProjectActivity nonProjectActivity) {
+	public boolean workerHasNonProjectActivity(NonProjectActivity nonProjectActivity) {
 		return(currentUser.hasNonProjectActivity(nonProjectActivity));
 
 	}

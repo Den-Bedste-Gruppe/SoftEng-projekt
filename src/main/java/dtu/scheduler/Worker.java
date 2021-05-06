@@ -100,7 +100,7 @@ public class Worker {
 		
 	}
 
-	public Boolean hasNonProjectActivity(NonProjectActivity nonProjectActivity) {
+	public boolean hasNonProjectActivity(NonProjectActivity nonProjectActivity) {
 		return(nonProjectActivies.contains(nonProjectActivity));
 	}
 
