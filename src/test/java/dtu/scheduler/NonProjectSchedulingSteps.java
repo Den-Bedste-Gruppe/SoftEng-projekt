@@ -33,7 +33,7 @@ public class NonProjectSchedulingSteps {
 
 	@Then("the nonproject activity is added to the workers activities")
 	public void theNonprojectActivityIsAddedToTheWorkersActivities() {
-	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
+	    assertTrue(schedulingApp.getWorkersNonProjectActivities().size()==amounthOfNonProjectActivities+1);
 	}
 	
 	@Given("that worker is on a nonproject activity")
@@ -71,14 +71,14 @@ public class NonProjectSchedulingSteps {
 	
 	@When("worker schedules nonproject activity")
 	public void workerSchedulesNonprojectActivity() throws Exception {
-		nonProjectActivity = new NonProjectActivity("test");
-	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
+		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
+	    schedulingApp.scheduleNonProjectActivity("test");
 	}
 
 	@Given("worker has already has {int} {string} activity")
 	public void workerHasAlreadyHasActivity(Integer count, String type) {
 	    for(int i = 0; i<count ; i++) {
-	    	schedulingApp.scheduleNonProjectActivity(new NonProjectActivity(type));;
+	    	schedulingApp.scheduleNonProjectActivity(type);;
 	    }
 	}
 	
@@ -86,13 +86,29 @@ public class NonProjectSchedulingSteps {
 	public void workerSchedulesActivity(String string) {
 		amounthOfNonProjectActivities = schedulingApp.getWorkersNonProjectActivities().size();
 		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
-		nonProjectActivity = new NonProjectActivity(string);
-	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
+	    schedulingApp.scheduleNonProjectActivity(string);
 	}
 	
-	private void workerHasNonProjectActivities(int count, String type) {
-	    for(int i = 0; i<count ; i++) {
-	    	schedulingApp.scheduleNonProjectActivity(new NonProjectActivity(type));
-	    }
+	@Given("that the worker has {int} nonproject activities")
+	public void thatTheWorkerHasNonprojectActivities(Integer int1) {
+	    assertTrue(schedulingApp.getWorkersNonProjectActivities().size()==0);
 	}
+	
+	@When("worker schedules nonproject activity without name")
+	public void workerSchedulesNonprojectActivityWithoutName() {
+		amounthOfNonProjectActivities = schedulingApp.getWorkersNonProjectActivities().size();
+		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
+	    try {
+	    	//TODO remove all string.equals("") to check if string is empty, in case of esc chrs
+			schedulingApp.scheduleNonProjectActivity("");
+		} catch (Exception e) {
+			msg.setErrorMessage(e.getMessage());
+		}
+	}
+
+	@Then("no nonproject activity is added to the workers activities")
+	public void noNonprojectActivityIsAddedToTheWorkersActivities() {
+		assertTrue(schedulingApp.getWorkersNonProjectActivities().size()==amounthOfNonProjectActivities);
+	}
+	
 }

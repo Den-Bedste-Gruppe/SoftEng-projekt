@@ -150,23 +150,26 @@ public class SchedulingApp {
 	}
 	
 	//This is used from clientside when scheduling nonprojectactivities
-	public void scheduleNonProjectActivity(NonProjectActivity nonProjectActivity) {
-		createNonProjectActivity(nonProjectActivity);
-		registerNonProject(nonProjectActivity);
-		
+	public void scheduleNonProjectActivity(String name) {
+		if(name.isBlank()) {
+			throw new IllegalArgumentException("nonproject activity must have a have name");
+		}
+		NonProjectActivity npa = new NonProjectActivity(name);
+		createNonProjectActivity(npa);
+		registerNonProject(npa);
 	}
 	
 	//Following are just used fo simple interfacing with GUI
 	public void scheduleSickLeave() {
-		scheduleNonProjectActivity(new NonProjectActivity("Sick Leave"));
+		scheduleNonProjectActivity("Sick Leave");
 	}
 	
 	public void scheduleVacation() {
-		scheduleNonProjectActivity(new NonProjectActivity("Vacation"));
+		scheduleNonProjectActivity("Vacation");
 	}
 	
 	public void scheduleCourse() {
-		scheduleNonProjectActivity(new NonProjectActivity("Course"));
+		scheduleNonProjectActivity("Course");
 	}
 
 	public List<NonProjectActivity> getWorkersNonProjectActivities() {
