@@ -58,6 +58,7 @@ public class TerminalGUI {
 		// Feels like black magic, but it's pushing the ANSI escape codes for
 		// returning the cursor to the top-left, followed by clearing the screen. 
 		// More info: https://en.wikipedia.org/wiki/ANSI_escape_code
+		System.out.println("-- if you see this the terminal should have been cleared --");
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
