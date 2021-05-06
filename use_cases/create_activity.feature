@@ -2,8 +2,8 @@
 Feature: Create Activity
 	Description: The project leader creates an activity
 	Actors: Worker
-	
-Background: 
+
+Background:
 	Given that a worker is logged in
 
 Scenario: Worker creates activity
@@ -19,3 +19,10 @@ Scenario: Worker creates existing activity
 	When Worker creates the activity
 	Then The activity is not created by the worker
 	And the error message "Project with same name already exists in project" is given
+
+Scenario: Worker creates activity without name
+	Given A project exists
+	And Worker is the project leader of current project
+	When Worker creates an activity without name
+	Then The activity is not created by the worker
+	And the error message "activity cannot be created without name" is given

@@ -32,7 +32,7 @@ public class ActivitySteps {
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException, TooManyActivitiesException {
 		String currUser = schedulingApp.getCurrentUserID();
-		activity = new Activity();
+		activity = new Activity("Test");
 		schedulingApp.assignActivity(currUser, activity);
 	}
 
@@ -160,6 +160,14 @@ public class ActivitySteps {
 	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
 	}
 	
+	@When("Worker creates an activity without name")
+	public void workerCreatesAnActivityWithoutName() {
+	    try {
+			schedulingApp.createProjectActivity("", project.getProjectID());
+		} catch (Exception e) {
+			msg.setErrorMessage(e.getMessage());
+		}
+	}
 	
 
 }
