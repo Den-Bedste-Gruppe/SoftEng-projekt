@@ -8,9 +8,9 @@ import dtu.errors.WorkerDoesNotExistException;
 
 public class Main {
 
-	public static TerminalGUI gui = new TerminalGUI();
+	private static TerminalGUI gui = new TerminalGUI();
 	//Really ought to make a default constructor for this
-	public static SchedulingApp schedulingApp = new SchedulingApp();
+	private static SchedulingApp schedulingApp = new SchedulingApp();
 
 	public static void main(String args[]) throws Exception {
 		boolean programRunning = true;
@@ -28,7 +28,7 @@ public class Main {
 		}
 	}
 
-	public static void loginScene() throws WorkerDoesNotExistException {
+	private static void loginScene() throws WorkerDoesNotExistException {
 		gui.clearScreen();
 
 		gui.println("Enter user id:");
@@ -48,7 +48,7 @@ public class Main {
 	//Main menu scene
 	//Remember to update both the options *and* switch statement
 	//If we had more time we would do it in a less manual-labor way (separate class)
-	public static void mainMenuScene() {
+	private static void mainMenuScene() {
 		gui.clearScreen();
 
 		gui.println("Welcome " + schedulingApp.getCurrentUser());
@@ -78,21 +78,43 @@ public class Main {
 
 
 	
-	public static void personalSchedulingScene() {
+	private static void personalSchedulingScene() {
 		gui.clearScreen();
+		
+		String[] personalMenuOptions = {
+			"Register hours",
+			"Change registered hours",
+			"Return"
+		};
+
+		while (true) {
+			gui.clearScreen();
+
+			int menuChoice = gui.numericalMenu(personalMenuOptions);
+			switch (menuChoice) {
+
+				//Register hours
+				////////////////
+				case 1:
+					
+					break;
+				
+				//Change registered hours
+				/////////////////////////
+				case 2:
+
+					break;
+				case 3:
+					return; //Return to main menu
+			}
+		}
 	}
 
 
 
 
-	public static void projectManagementScene() {
-		gui.clearScreen();
+	private static void projectManagementScene() {
 		List<Project> projects = schedulingApp.getProjects();
-
-		gui.println("Active projects:");
-		for (Project p : projects) {
-			gui.println(p.getProjectID());
-		}
 
 		String[] projectMenuOptions = {
 			"Create project",
@@ -102,13 +124,8 @@ public class Main {
 
 		while (true) {
 		gui.clearScreen();
-		gui.println("Active projects:");
-		for (Project p : projects) {
-			gui.print(p.getProjectID());
-			if (p.getProjectLeader() != null) gui.print(" PL: " + p.getProjectLeader().getWorkerId());
-			gui.println("");
-		}
-		gui.println("");
+		
+		printProjects(projects);
 
 		String projectID;
 		int menuChoice = gui.numericalMenu(projectMenuOptions);
@@ -143,6 +160,7 @@ public class Main {
 			//////////////////////////////
 			case 2: 
 				gui.clearScreen();
+				printProjects(projects);
 				gui.println("Enter project ID:");
 				projectID = gui.inputString();
 				gui.println("Enter worker ID:");
@@ -162,4 +180,13 @@ public class Main {
 		}}
 	}
 
+	private static void printProjects(List<Project> projects) {
+		gui.println("Active projects:");
+		for (Project p : projects) {
+			gui.print(p.getProjectID());
+			if (p.getProjectLeader() != null) gui.print(" PL: " + p.getProjectLeader().getWorkerId());
+			gui.println("");
+		}
+		gui.println("");
+	}
 }
