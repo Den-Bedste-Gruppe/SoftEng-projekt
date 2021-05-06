@@ -84,6 +84,8 @@ public class Main {
 		String[] personalMenuOptions = {
 			"Register hours",
 			"Change registered hours",
+			//TODO find better name for nonproject 
+			"Register nonproject activity",
 			"Return"
 		};
 
@@ -105,9 +107,48 @@ public class Main {
 
 					break;
 				case 3:
+					//nonProjectSchedulingScene() when done
+					break;
+				case 4:
 					return; //Return to main menu
 			}
 		}
+	}
+	
+	//TODO finish after making tests to ensure nonproject activities cannot be created without name
+	private static void nonProjectSchedulingScene() {
+		gui.clearScreen();
+		
+		//it says Register in the client, because that is the wording used in the requirement specifications
+		//in our code it is actually scheduling of non project activities
+		String[] nonProjectMenuOptions = {
+				"Register sick leave",
+				"Register vacation",
+				//TODO find better name for nonproject 
+				"Register course ",
+				"Register other nonproject activity",
+				"Return"
+			};
+		
+		int menuChoice = gui.numericalMenu(nonProjectMenuOptions);
+		switch (menuChoice) {
+			case 1:
+				schedulingApp.scheduleSickLeave();
+				break;
+			case 2:
+				schedulingApp.scheduleVacation();
+				break;
+			case 3:
+				schedulingApp.scheduleCourse();
+				break;
+			case 4:
+				schedulingApp.scheduleNonProjectActivity(null);
+				
+				
+	
+		}
+		
+		
 	}
 
 
