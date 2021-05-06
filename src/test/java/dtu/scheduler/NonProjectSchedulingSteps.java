@@ -74,27 +74,25 @@ public class NonProjectSchedulingSteps {
 		nonProjectActivity = new NonProjectActivity("test");
 	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
 	}
+
+	@Given("worker has already has {int} {string} activity")
+	public void workerHasAlreadyHasActivity(Integer count, String type) {
+	    for(int i = 0; i<count ; i++) {
+	    	schedulingApp.scheduleNonProjectActivity(new NonProjectActivity(type));;
+	    }
+	}
 	
-	
-	@When("worker schedules Sick Leave activity")
-	public void workerSchedulesSickLeaveActivity() {
+	@When("worker schedules {string} activity")
+	public void workerSchedulesActivity(String string) {
 		amounthOfNonProjectActivities = schedulingApp.getWorkersNonProjectActivities().size();
 		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
-		nonProjectActivity = new NonProjectActivity("Sick Leave");
+		nonProjectActivity = new NonProjectActivity(string);
 	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
 	}
-
-	@Then("the Sick Leave activity is added to the workers activities")
-	public void theSickLeaveActivityIsAddedToTheWorkersActivities() {
-	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
-	    assertTrue(schedulingApp.getWorkersNonProjectActivities().size()==amounthOfNonProjectActivities+1);
-	}
-
-
-	@Given("worker has already has {int} Sick Lave activity")
-	public void workerHasAlreadyHasSickLaveActivity(Integer count) {
+	
+	private void workerHasNonProjectActivities(int count, String type) {
 	    for(int i = 0; i<count ; i++) {
-	    	schedulingApp.scheduleSickLeave();
+	    	schedulingApp.scheduleNonProjectActivity(new NonProjectActivity(type));
 	    }
 	}
 }

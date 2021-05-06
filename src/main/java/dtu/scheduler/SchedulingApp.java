@@ -156,7 +156,7 @@ public class SchedulingApp {
 		
 	}
 	
-	//TODO make tests run with given string to to check for specific activity names
+	//Following are just used fo simple interfacing with GUI
 	public void scheduleSickLeave() {
 		scheduleNonProjectActivity(new NonProjectActivity("Sick Leave"));
 	}

@@ -13,24 +13,24 @@ Scenario: Worker schedules nonproject activity
   And the nonproject registration is added
 
 Scenario: Worker registers Sick Leave activity
-	When worker schedules Sick Leave activity
-	Then the Sick Leave activity is added to the workers activities
+	When worker schedules "Sick Leave" activity
+  Then the nonproject activity is added to the workers activities
   And the nonproject registration is added
 
 Scenario: Worker registers multiple Sick Leave activities
-	Given worker has already has 5 Sick Lave activity
-	When worker schedules Sick Leave activity
-	Then the Sick Leave activity is added to the workers activities
+	Given worker has already has 5 "Sick Leave" activity
+	When worker schedules "Sick Leave" activity
+  Then the nonproject activity is added to the workers activities
   And the nonproject registration is added
 
-Scenario: Worker registers multiple Sick Leave activities
-	Given worker has already has 5 Sick Lave activity
-	When worker schedules Sick Leave activity
-	Then the Sick Leave activity is added to the workers activities
+Scenario: Worker registers multiple "Vacation" activities
+	Given worker has already has 5 "Vacation" activity
+	When worker schedules "Vacation" activity
+  Then the nonproject activity is added to the workers activities
   And the nonproject registration is added
 
-Scenario: Worker registers multiple Sick Leave activities
-	Given worker has already has 5 Sick Lave activity
-	When worker schedules Sick Leave activity
-	Then the Sick Leave activity is added to the workers activities
+Scenario: Worker registers multiple "Course" activities
+	Given worker has already has 5 "Course" activity
+	When worker schedules "Course" activity
+  Then the nonproject activity is added to the workers activities
   And the nonproject registration is added
