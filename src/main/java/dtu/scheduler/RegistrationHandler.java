@@ -12,4 +12,10 @@ public class RegistrationHandler {
 		worker.addTimeRegistration(new_registration);
 		worker.updateWeeklyHoursSpent(hours);
 	}
+
+	//Philip Hviid
+	public void registerNonProjectActivity(NonProjectActivity nonProjectActivity, Worker worker) throws Exception {
+		NonProjectTimeRegistration new_registration = new NonProjectTimeRegistration(nonProjectActivity, worker.getWorkerId());
+		worker.addNonProjectTimeRegistration(new_registration);
+	}
 }

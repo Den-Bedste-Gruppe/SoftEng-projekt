@@ -18,6 +18,8 @@ public class ActivitySteps {
 	private ErrorMessageHolder msg;
 	private ActivityAssigner activityAssigner;
 	private Activity activity;
+	private int amounthOfNonProjectRegistrations;
+	private NonProjectActivity nonProjectActivity;
 	private Project project;
 
 	
@@ -103,4 +105,53 @@ public class ActivitySteps {
 	public void theActivityIsNotCreatedByTheWorker() {
 	    assertFalse(project.getActivities().size()==2);
 	}
+	
+	@Given("that a nonproject activity exists")
+	public void thatANonprojectActivityExists() {
+	    nonProjectActivity = new NonProjectActivity();
+	}
+	
+	@When("the worker creates a nonproject activity")
+	public void theWorkerCreatesANonprojectActivity() {
+	    schedulingApp.createNonProjectActivity(nonProjectActivity);
+	}
+
+	@Then("the nonproject activity is added to the workers activities")
+	public void theNonprojectActivityIsAddedToTheWorkersActivities() {
+	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
+	}
+	
+	@Given("that worker is on a nonproject activity")
+	public void thatWorkerIsOnANonprojectActivity() {
+		nonProjectActivity = new NonProjectActivity();
+		schedulingApp.createNonProjectActivity(nonProjectActivity);
+	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
+	}
+
+	@When("the worker registers nonproject activity")
+	public void theWorkerRegistersHoursOnTheNonprojectActivity() {
+	    try {
+			schedulingApp.registerNonProject(nonProjectActivity);
+		} catch (Exception e) {
+			msg.setErrorMessage(e.getMessage());
+		}
+	}
+	
+	@Then("the nonproject timeregistration is added")
+	public void theNonprojectTimeregistrationIsAdded() {
+		assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations+1);
+	}
+	
+	@Given("that the worker has {int} nonproject time registrations")
+	public void thatTheWorkerHasNonprojectTimeRegistrations(Integer int1) {
+	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectTimeRegistrations().size();
+	    assertTrue(amounthOfNonProjectRegistrations==int1);
+	    
+	}
+
+	@Then("no project is added")
+	public void noProjectIsAdded() {
+	    assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations);
+	}
+
 }
