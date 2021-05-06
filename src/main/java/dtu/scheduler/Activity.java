@@ -12,10 +12,17 @@ public class Activity {
 	private double hoursSpent;
 	private String name = "";
 	private List<TimeRegistration> registrationList = new ArrayList<>();
+
+	private int[] weeks = new int[2];
 	
 	public Activity(String name) {
 		hoursSpent = 0;
 		this.name = name;
+
+		int thisWeek = DateHelper.thisWeek();
+
+		weeks[0] = thisWeek;
+		weeks[1] = thisWeek;
 	}
 
 	/*
