@@ -32,7 +32,7 @@ public class ActivitySteps {
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException, TooManyActivitiesException {
 		String currUser = schedulingApp.getCurrentUserID();
-		activity = new Activity();
+		activity = new Activity("Test");
 		schedulingApp.assignActivity(currUser, activity);
 	}
 
@@ -68,8 +68,8 @@ public class ActivitySteps {
 	}
 
 	@Given("Worker is the project leader of current project")
-	public void workerIsTheProjectLeaderOfCurrentProject() {
-	    schedulingApp.assingProjectLeader("P1",schedulingApp.getCurrentUser());
+	public void workerIsTheProjectLeaderOfCurrentProject() throws Exception {
+	    schedulingApp.assignProjectLeader("P1",schedulingApp.getCurrentUserID());
 	}
 
 	@When("Worker creates an activity")
@@ -137,21 +137,37 @@ public class ActivitySteps {
 		}
 	}
 	
-	@Then("the nonproject timeregistration is added")
+	@Then("the nonproject registration is added")
 	public void theNonprojectTimeregistrationIsAdded() {
 		assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations+1);
 	}
 	
-	@Given("that the worker has {int} nonproject time registrations")
+	@Given("that the worker has {int} nonproject registrations")
 	public void thatTheWorkerHasNonprojectTimeRegistrations(Integer int1) {
 	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectTimeRegistrations().size();
 	    assertTrue(amounthOfNonProjectRegistrations==int1);
 	    
 	}
 
-	@Then("no project is added")
+	@Then("no nonproject registration is added")
 	public void noProjectIsAdded() {
 	    assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations);
 	}
+	
+	@When("worker schedules nonproject activity")
+	public void workerSchedulesNonprojectActivity() throws Exception {
+		nonProjectActivity = new NonProjectActivity();
+	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
+	}
+	
+	@When("Worker creates an activity without name")
+	public void workerCreatesAnActivityWithoutName() {
+	    try {
+			schedulingApp.createProjectActivity("", project.getProjectID());
+		} catch (Exception e) {
+			msg.setErrorMessage(e.getMessage());
+		}
+	}
+	
 
 }
