@@ -119,4 +119,21 @@ public class ActivitySteps {
 	public void theNonprojectActivityIsAddedToTheWorkersActivities() {
 	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
 	}
+	
+	@Given("that worker is on a nonproject Activity")
+	public void thatWorkerIsOnANonprojectActivity() {
+		nonProjectActivity = new NonProjectActivity();
+		schedulingApp.createNonProjectActivity(nonProjectActivity);
+	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
+	}
+
+	@When("the worker registers {double} hours on the nonproject activity")
+	public void theWorkerRegistersHoursOnTheNonprojectActivity(double hours) {
+	    try {
+			schedulingApp.registeNonProjectrHours(hours, nonProjectActivity);
+		} catch (Exception e) {
+			msg.setErrorMessage(e.getMessage());
+		}
+	}
+
 }
