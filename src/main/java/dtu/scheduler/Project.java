@@ -49,7 +49,7 @@ public class Project {
 	public void addActivity(Activity activity) throws Exception {
 		if(activityWithNameExists(activity.getName())) {
 			throw new Exception("Project with same name already exists in project");
-		} else if(activity.getName().equals("")) {
+		} else if(activity.getName().isBlank()) {
 			throw new IllegalArgumentException("activity cannot be created without name");
 		}
 		activities.add(activity);

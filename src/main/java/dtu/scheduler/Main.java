@@ -107,7 +107,7 @@ public class Main {
 
 					break;
 				case 3:
-					//nonProjectSchedulingScene() when done
+					nonProjectSchedulingScene();
 					break;
 				case 4:
 					return; //Return to main menu
@@ -115,7 +115,7 @@ public class Main {
 		}
 	}
 	
-	//TODO finish after making tests to ensure nonproject activities cannot be created without name
+	//Philip Hviid
 	private static void nonProjectSchedulingScene() {
 		gui.clearScreen();
 		
@@ -130,25 +130,42 @@ public class Main {
 				"Return"
 			};
 		
-		int menuChoice = gui.numericalMenu(nonProjectMenuOptions);
-		switch (menuChoice) {
-			case 1:
-				schedulingApp.scheduleSickLeave();
-				break;
-			case 2:
-				schedulingApp.scheduleVacation();
-				break;
-			case 3:
-				schedulingApp.scheduleCourse();
-				break;
-			case 4:
-				schedulingApp.scheduleNonProjectActivity(null);
-				
-				
-	
+		while (true) {
+			gui.clearScreen();
+			int menuChoice = gui.numericalMenu(nonProjectMenuOptions);
+			switch (menuChoice) {
+				case 1:
+					//TODO they should all require 2 valid dates, for end and start date, when that is implemented
+					schedulingApp.scheduleSickLeave();
+					break;
+				case 2:
+					schedulingApp.scheduleVacation();
+					break;
+				case 3:
+					schedulingApp.scheduleCourse();
+					break;
+				case 4:
+					customNonProjectActivityScene();
+					break;
+				case 5:
+					return;
+			}
 		}
-		
-		
+	}
+	
+	//Philip Hviid
+	private static void customNonProjectActivityScene() {
+		gui.clearScreen();
+		while(true) {
+			System.out.println("Enter name/description of nonproject activity");
+			String name = gui.inputString();
+			try {
+				schedulingApp.scheduleNonProjectActivity(name);
+				break;
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + ", try again:");
+			}
+		}
 	}
 
 
