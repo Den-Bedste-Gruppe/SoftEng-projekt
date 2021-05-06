@@ -56,4 +56,17 @@ public class Project {
 	public List<Activity> getActivities() {
 		return activities;
 	}
+	
+	public int getNumOfProjectActivities() {
+		return activities.size();
+	}
+	
+	public double getProjectHours() {
+		double totalHours = 0;
+		for (Activity activity : activities) {
+			totalHours += activity.getTotalHoursSpent();
+		}
+		
+		return totalHours;
+	}
 }
