@@ -120,7 +120,7 @@ public class ActivitySteps {
 	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
 	}
 	
-	@Given("that worker is on a nonproject Activity")
+	@Given("that worker is on a nonproject activity")
 	public void thatWorkerIsOnANonprojectActivity() {
 		nonProjectActivity = new NonProjectActivity();
 		schedulingApp.createNonProjectActivity(nonProjectActivity);
