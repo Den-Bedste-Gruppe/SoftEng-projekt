@@ -137,21 +137,23 @@ public class ActivitySteps {
 		}
 	}
 	
-	@Then("the nonproject timeregistration is added")
+	@Then("the nonproject registration is added")
 	public void theNonprojectTimeregistrationIsAdded() {
 		assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations+1);
 	}
 	
-	@Given("that the worker has {int} nonproject time registrations")
+	@Given("that the worker has {int} nonproject registrations")
 	public void thatTheWorkerHasNonprojectTimeRegistrations(Integer int1) {
 	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectTimeRegistrations().size();
 	    assertTrue(amounthOfNonProjectRegistrations==int1);
 	    
 	}
 
-	@Then("no project is added")
+	@Then("no nonproject registration is added")
 	public void noProjectIsAdded() {
 	    assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations);
 	}
+	
+	
 
 }
