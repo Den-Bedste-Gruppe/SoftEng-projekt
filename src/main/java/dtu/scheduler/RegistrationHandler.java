@@ -14,7 +14,7 @@ public class RegistrationHandler {
 	}
 
 	//Philip Hviid
-	public void registerNonProjectHours(NonProjectActivity nonProjectActivity, Worker worker) throws Exception {
+	public void registerNonProjectActivity(NonProjectActivity nonProjectActivity, Worker worker) throws Exception {
 		NonProjectTimeRegistration new_registration = new NonProjectTimeRegistration(nonProjectActivity, worker.getWorkerId());
 		worker.addNonProjectTimeRegistration(new_registration);
 	}
