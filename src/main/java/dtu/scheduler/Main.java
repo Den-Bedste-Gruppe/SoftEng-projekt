@@ -76,9 +76,15 @@ public class Main {
 	}
 
 
+
+	
 	public static void personalSchedulingScene() {
 		gui.clearScreen();
 	}
+
+
+
+
 	public static void projectManagementScene() {
 		gui.clearScreen();
 		List<Project> projects = schedulingApp.getProjects();
@@ -102,11 +108,15 @@ public class Main {
 			if (p.getProjectLeader() != null) gui.print(" PL: " + p.getProjectLeader().getWorkerId());
 			gui.println("");
 		}
+		gui.println("");
 
 		String projectID;
 		int menuChoice = gui.numericalMenu(projectMenuOptions);
 		switch (menuChoice) {
-			case 1: //Create project
+
+			//Create project
+			////////////////
+			case 1:
 				gui.clearScreen();
 				gui.println("Enter new project ID:");
 				projectID = gui.inputString();
@@ -122,24 +132,29 @@ public class Main {
 				try {
 					schedulingApp.addProject(new_project);
 				} catch (ProjectAlreadyExistsException e) {
+					gui.clearScreen();
 					gui.println(e.getMessage());
+					gui.println("Press ENTER to return");
 					gui.inputString();
 				}
 				break;
-			case 2: //Assign new leader to project
+			
+			//Assign new leader to project
+			//////////////////////////////
+			case 2: 
 				gui.clearScreen();
 				gui.println("Enter project ID:");
 				projectID = gui.inputString();
-
 				gui.println("Enter worker ID:");
 				String workerID = gui.inputString();
-				if (schedulingApp.isUserInDatabase(workerID)) {
-					try {
-						schedulingApp.assingProjectLeader(projectID, workerID);
-					} catch (Exception e) {
-						gui.println(e.getMessage());
-						gui.inputString();
-					}
+
+				try {
+					schedulingApp.assignProjectLeader(projectID, workerID);
+				} catch (Exception e) {
+					gui.clearScreen();
+					gui.println(e.getMessage());
+					gui.println("Press ENTER to return");
+					gui.inputString();
 				}
 				break;
 			case 3:
