@@ -8,7 +8,9 @@ public class Project {
 	private String projectID;
 	private Worker projectLeader;
 	private List<Activity> activities = new ArrayList<>();
-
+	
+	// TODO "På oprettelsestidspunktet er information om aktiviteter og starttidspunkt ikke fuldstændige"
+	// Maybe timefram should be null
 	private int[] timeframe = new int[2]; //Start and end weeks
 
 	public Project(String ID) {
@@ -60,6 +62,15 @@ public class Project {
 			}
 		}
 		return false;
+	}
+	
+	public Activity searchActivity(String name) {
+		for(int i = 0; i < activities.size(); i++){
+			if (activities.get(i).getName().equals(name)) {
+				return activities.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public void addActivity(Activity activity) throws Exception {

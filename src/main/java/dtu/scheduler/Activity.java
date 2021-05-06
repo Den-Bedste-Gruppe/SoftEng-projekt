@@ -12,7 +12,6 @@ public class Activity {
 	private double hoursSpent;
 	private String name = "";
 	private List<TimeRegistration> registrationList = new ArrayList<>();
-
 	private int[] timeframe = new int[2]; //Start and end weeks
 	
 	public Activity(String name) {
@@ -35,7 +34,9 @@ public class Activity {
 		return timeframe;
 	}
 
-	public void setTimeframe(int startWeek, int endWeek) {
+	public void setTimeframe(int startWeek, int endWeek) throws Exception {
+		if(startWeek < 1 || startWeek > 52) throw new Exception("The given date is not eligible to set time frame");
+		if(endWeek < 1 || endWeek > 52) throw new Exception("The given date is not eligible to set time frame");
 		timeframe[0] = startWeek;
 		timeframe[1] = endWeek;
 	}
