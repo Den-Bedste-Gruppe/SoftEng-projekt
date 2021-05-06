@@ -57,12 +57,16 @@ public class Project {
 		return activities;
 	}
 	
-	public String getProjectHoursInfo() {
+	public int getNumOfProjectActivities() {
+		return activities.size();
+	}
+	
+	public double getProjectHours() {
 		double totalHours = 0;
 		for (Activity activity : activities) {
 			totalHours += activity.getTotalHoursSpent();
 		}
 		
-		return "Project \"" + projectID + "\" has " + totalHours + " hours spent over " + activities.size() + " activities.";
+		return totalHours;
 	}
 }

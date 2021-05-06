@@ -15,7 +15,8 @@ public class CheckHoursSteps {
 	private int projectID;
 	private Activity activity1;
 	private Activity activity2;
-	private String result;
+	private double totalProjectHours;
+	private int numOfActivities;
 	
 	public CheckHoursSteps(SchedulingApp schedulingApp) {
 		this.schedulingApp = schedulingApp;
@@ -48,13 +49,14 @@ public class CheckHoursSteps {
 
 	@When("the user checks the project overview for project with ID {int}")
 	public void theUserChecksTheProjectOverviewForProjectWithID(Integer int1) {
-	    result = project.getProjectHoursInfo();
+	    totalProjectHours = project.getProjectHours();
+	    numOfActivities = project.getNumOfProjectActivities();
 	}
 
 	@Then("the user is informed that total project time spent is {double} hours over {int} projects")
 	public void theUserIsInformedThatTotalProjectTimeSpentIsHoursOverProjects(double totalHours, Integer int1) {
-		String expected = "Project \"" + projectID + "\" has " + totalHours + " hours spent over " + int1 + " activities.";
-		assertEquals(result, expected);
+		assertTrue(totalHours == totalProjectHours);
+		assertTrue(int1 == numOfActivities);
 	}
 
 	
