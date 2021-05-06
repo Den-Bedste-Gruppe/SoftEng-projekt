@@ -11,3 +11,14 @@ Scenario: Worker schedules nonproject activity
   When worker schedules nonproject activity
   Then the nonproject activity is added to the workers activities
   And the nonproject registration is added
+
+Scenario: Worker registers Sick Leave activity
+	When worker schedules Sick Leave activity
+	Then the Sick Leave activity is added to the workers activities
+  And the nonproject registration is added
+
+Scenario: Worker registers multiple Sick Leave activities
+	Given worker has already has 5 Sick Lave activity
+	When worker schedules Sick Leave activity
+	Then the Sick Leave activity is added to the workers activities
+  And the nonproject registration is added

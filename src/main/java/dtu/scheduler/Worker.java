@@ -107,4 +107,8 @@ public class Worker {
 	public List<NonProjectRegistration> getNonProjectRegistrations() {
 		return nonprojectregistrationList;
 	}
+
+	public List<NonProjectActivity> getNonProjectActivies() {
+		return nonProjectActivies;
+	}
 }
