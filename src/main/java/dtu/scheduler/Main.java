@@ -3,6 +3,7 @@
 package dtu.scheduler;
 import java.util.List;
 
+import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
 
 public class Main {
@@ -59,8 +60,8 @@ public class Main {
 		};
 		
 		while (true) {
+		gui.clearScreen();
 		int menuChoice = gui.numericalMenu(mainMenuOptions);
-
 		switch (menuChoice) {
 			case 1:
 				personalSchedulingScene();
@@ -80,16 +81,55 @@ public class Main {
 	}
 	public static void projectManagementScene() {
 		gui.clearScreen();
+		List<Project> projects = schedulingApp.getProjects();
 
 		gui.println("Active projects:");
-
-		List<Project> projects = schedulingApp.getProjects();
 		for (Project p : projects) {
 			gui.println(p.getProjectID());
 		}
 
-		gui.println("ENTER to exit");
-		gui.inputString();
+		String[] projectMenuOptions = {
+			"Create project",
+			"Assign new leader to project",
+			"Return"
+		};
+
+		while (true) {
+		gui.clearScreen();
+		gui.println("Active projects:");
+		for (Project p : projects) {
+			gui.print(p.getProjectID());
+			if (p.getProjectLeader() != null) gui.print(" PL: " + p.getProjectLeader().getWorkerId());
+			gui.println("");
+		}
+
+		int menuChoice = gui.numericalMenu(projectMenuOptions);
+		switch (menuChoice) {
+			case 1: //Create project
+				gui.clearScreen();
+				gui.println("Enter new project ID:");
+				String projectID = gui.inputString();
+
+				Project new_project;
+
+				gui.println("Assign yourself as project leader? Y/N");
+				if (gui.inputChar() == 'y') {
+					new_project = new Project(projectID, schedulingApp.getCurrentUser());
+				} else {
+					new_project = new Project(projectID);
+				}
+				try {
+					schedulingApp.addProject(new_project);
+				} catch (ProjectAlreadyExistsException e) {
+					gui.println(e.getMessage());
+					gui.inputString();
+				}
+				break;
+			case 2:
+				break;
+			case 3:
+				return; // Return to main menu
+		}}
 	}
 
 }

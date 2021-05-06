@@ -23,11 +23,19 @@ public class TerminalGUI {
 
 	public String inputString() {
 		print(inputMarker);
-		return input.next();
+		input = new Scanner(System.in);
+		return input.nextLine();
+	}
+	public char inputChar() {
+		print(inputMarker);
+		input = new Scanner(System.in);
+		String res = input.next();
+		return res.toLowerCase().charAt(0);
 	}
 
 	public int inputInt() {
 		print(inputMarker);
+		input = new Scanner(System.in);
 		return input.nextInt();
 	}
 
