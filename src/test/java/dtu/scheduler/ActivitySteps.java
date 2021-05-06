@@ -106,60 +106,6 @@ public class ActivitySteps {
 	    assertFalse(project.getActivities().size()==2);
 	}
 	
-	@Given("that a nonproject activity exists")
-	public void thatANonprojectActivityExists() {
-	    nonProjectActivity = new NonProjectActivity();
-	}
-	
-	@When("the worker creates a nonproject activity")
-	public void theWorkerCreatesANonprojectActivity() {
-	    schedulingApp.createNonProjectActivity(nonProjectActivity);
-	}
-
-	@Then("the nonproject activity is added to the workers activities")
-	public void theNonprojectActivityIsAddedToTheWorkersActivities() {
-	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
-	}
-	
-	@Given("that worker is on a nonproject activity")
-	public void thatWorkerIsOnANonprojectActivity() {
-		nonProjectActivity = new NonProjectActivity();
-		schedulingApp.createNonProjectActivity(nonProjectActivity);
-	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
-	}
-
-	@When("the worker registers nonproject activity")
-	public void theWorkerRegistersHoursOnTheNonprojectActivity() {
-	    try {
-			schedulingApp.registerNonProject(nonProjectActivity);
-		} catch (Exception e) {
-			msg.setErrorMessage(e.getMessage());
-		}
-	}
-	
-	@Then("the nonproject registration is added")
-	public void theNonprojectTimeregistrationIsAdded() {
-		assertTrue(schedulingApp.getNonProjectRegistrations().size()==amounthOfNonProjectRegistrations+1);
-	}
-	
-	@Given("that the worker has {int} nonproject registrations")
-	public void thatTheWorkerHasNonprojectTimeRegistrations(Integer int1) {
-	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
-	    assertTrue(amounthOfNonProjectRegistrations==int1);
-	    
-	}
-
-	@Then("no nonproject registration is added")
-	public void noProjectIsAdded() {
-	    assertTrue(schedulingApp.getNonProjectRegistrations().size()==amounthOfNonProjectRegistrations);
-	}
-	
-	@When("worker schedules nonproject activity")
-	public void workerSchedulesNonprojectActivity() throws Exception {
-		nonProjectActivity = new NonProjectActivity();
-	    schedulingApp.scheduleNonProjectActivity(nonProjectActivity);
-	}
-	
 	@When("Worker creates an activity without name")
 	public void workerCreatesAnActivityWithoutName() {
 	    try {
@@ -169,5 +115,7 @@ public class ActivitySteps {
 		}
 	}
 	
+
+
 
 }

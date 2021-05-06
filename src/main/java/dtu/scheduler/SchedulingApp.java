@@ -131,7 +131,7 @@ public class SchedulingApp {
 	}
 
 	//used by scheduleNonProjectActivity, not by client
-	public void registerNonProject(NonProjectActivity nonProjectActivity) throws Exception {
+	public void registerNonProject(NonProjectActivity nonProjectActivity) {
 		registrationHandler.registerNonProjectActivity(nonProjectActivity, currentUser);
 		
 	}
@@ -141,10 +141,27 @@ public class SchedulingApp {
 	}
 	
 	//This is used from clientside when scheduling nonprojectactivities
-	public void scheduleNonProjectActivity(NonProjectActivity nonProjectActivity) throws Exception {
+	public void scheduleNonProjectActivity(NonProjectActivity nonProjectActivity) {
 		createNonProjectActivity(nonProjectActivity);
 		registerNonProject(nonProjectActivity);
 		
+	}
+	
+	//Following are just used fo simple interfacing with GUI
+	public void scheduleSickLeave() {
+		scheduleNonProjectActivity(new NonProjectActivity("Sick Leave"));
+	}
+	
+	public void scheduleVacation() {
+		scheduleNonProjectActivity(new NonProjectActivity("Vacation"));
+	}
+	
+	public void scheduleCourse() {
+		scheduleNonProjectActivity(new NonProjectActivity("Course"));
+	}
+
+	public List<NonProjectActivity> getWorkersNonProjectActivities() {
+		return currentUser.getNonProjectActivies();
 	}
 	
 }

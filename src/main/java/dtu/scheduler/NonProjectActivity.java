@@ -1,5 +1,8 @@
 package dtu.scheduler;
 //Philip Hviid
 public class NonProjectActivity {
-	//TODO needs timeframe
+	private String name;
+	public NonProjectActivity(String name) {
+		this.name = name;
+	}
 }
