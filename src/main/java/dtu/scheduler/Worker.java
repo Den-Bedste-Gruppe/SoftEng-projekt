@@ -107,4 +107,8 @@ public class Worker {
 	public void addNonProjectTimeRegistration(NonProjectTimeRegistration new_registration) {
 		nonprojectregistrationList.add(new_registration);
 	}
+	
+	public List<NonProjectTimeRegistration> getNonProjectTimeRegistrations() {
+		return nonprojectregistrationList;
+	}
 }

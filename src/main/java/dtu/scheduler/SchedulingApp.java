@@ -143,5 +143,9 @@ public class SchedulingApp {
 		registrationHandler.registerNonProjectHours(hours, nonProjectActivity, currentUser);
 		
 	}
+
+	public List<NonProjectTimeRegistration> getNonProjectTimeRegistrations() {
+		return currentUser.getNonProjectTimeRegistrations();
+	}
 	
 }

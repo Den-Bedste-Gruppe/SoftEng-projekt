@@ -18,6 +18,7 @@ public class ActivitySteps {
 	private ErrorMessageHolder msg;
 	private ActivityAssigner activityAssigner;
 	private Activity activity;
+	private int amounthOfNonProjectRegistrations;
 	private NonProjectActivity nonProjectActivity;
 	private Project project;
 
@@ -134,6 +135,23 @@ public class ActivitySteps {
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}
+	}
+	
+	@Then("the nonproject timeregistration is added")
+	public void theNonprojectTimeregistrationIsAdded() {
+		assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations+1);
+	}
+	
+	@Given("that the worker has {int} nonproject time registrations")
+	public void thatTheWorkerHasNonprojectTimeRegistrations(Integer int1) {
+	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectTimeRegistrations().size();
+	    assertTrue(amounthOfNonProjectRegistrations==int1);
+	    
+	}
+
+	@Then("no project is added")
+	public void noProjectIsAdded() {
+	    assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations);
 	}
 
 }
