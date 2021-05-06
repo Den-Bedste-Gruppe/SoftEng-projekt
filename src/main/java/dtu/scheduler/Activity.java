@@ -33,7 +33,7 @@ public class Activity {
 	public int[] getTimeframe() {
 		return timeframe;
 	}
-
+	//Emil Krarup
 	public void setTimeframe(int startWeek, int endWeek) throws Exception {
 		if(startWeek < 1 || startWeek > 52) throw new Exception("The given date is not eligible to set time frame");
 		if(endWeek < 1 || endWeek > 52) throw new Exception("The given date is not eligible to set time frame");

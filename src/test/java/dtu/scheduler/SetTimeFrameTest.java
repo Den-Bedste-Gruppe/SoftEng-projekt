@@ -1,3 +1,4 @@
+//Author Emil Krarup
 package dtu.scheduler;
 
 

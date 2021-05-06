@@ -64,6 +64,7 @@ public class Project {
 		return false;
 	}
 	
+	//Emil Krarup
 	public Activity searchActivity(String name) {
 		for(int i = 0; i < activities.size(); i++){
 			if (activities.get(i).getName().equals(name)) {
