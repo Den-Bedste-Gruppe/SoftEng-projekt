@@ -17,4 +17,4 @@ Scenario: Create a project with the same name as an existing project
 	Given that a worker is logged in
 	And there exists a project with name "P1"
 	When the worker creates a new project with name "P1"
-	Then the error message "Project already exist" is given
+	Then the error message "Project P1 already exists" is given

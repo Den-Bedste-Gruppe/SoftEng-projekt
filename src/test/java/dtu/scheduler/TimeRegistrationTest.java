@@ -28,7 +28,7 @@ public class TimeRegistrationTest {
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) throws Exception {
 		double diff = hours - schedulingApp.getWeeklyRegisteredHours();
-		Activity dummy_activity = new Activity();
+		Activity dummy_activity = new Activity("Test");
 		try {
 			schedulingApp.registerHours(diff, dummy_activity);
 		} catch (Exception e) {
@@ -45,7 +45,7 @@ public class TimeRegistrationTest {
 	@Given("that the activity has {double} hours spent")
 	public void thatTheActivityHasHoursSpent(double hours) {
 		double diff = hours - test_activity.getTotalHoursSpent();
-		TimeRegistration dummy_registration = new TimeRegistration(diff, test_activity, schedulingApp.getCurrentUser());
+		TimeRegistration dummy_registration = new TimeRegistration(diff, test_activity, schedulingApp.getCurrentUserID());
 		assertTrue(test_activity.getTotalHoursSpent() == hours);
 	}
 
