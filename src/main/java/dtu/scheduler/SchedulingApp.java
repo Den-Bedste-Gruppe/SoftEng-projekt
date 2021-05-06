@@ -145,8 +145,8 @@ public class SchedulingApp {
 		
 	}
 
-	public List<NonProjectTimeRegistration> getNonProjectTimeRegistrations() {
-		return currentUser.getNonProjectTimeRegistrations();
+	public List<NonProjectRegistration> getNonProjectRegistrations() {
+		return currentUser.getNonProjectRegistrations();
 	}
 	
 	//This is used from clientside when scheduling nonprojectactivities
