@@ -8,9 +8,8 @@ public class NonProjectTimeRegistration {
 	private NonProjectActivity parent_activity;
 	private String parent_worker_id;
 
-	public NonProjectTimeRegistration(double hours, NonProjectActivity parent_activity, String parent_worker_id) {
+	public NonProjectTimeRegistration(NonProjectActivity parent_activity, String parent_worker_id) {
 		this.parent_activity = parent_activity;
-		this.hours = hours;
 		this.parent_worker_id = parent_worker_id;
 	}
 

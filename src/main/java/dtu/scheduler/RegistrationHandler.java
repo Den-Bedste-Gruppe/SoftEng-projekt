@@ -14,11 +14,8 @@ public class RegistrationHandler {
 	}
 
 	//Philip Hviid
-	public void registerNonProjectHours(double hours, NonProjectActivity nonProjectActivity, Worker worker) throws Exception {
-		if (hours <= 0) {
-			throw new Exception("Invalid amount of hours");
-		}
-		NonProjectTimeRegistration new_registration = new NonProjectTimeRegistration(hours, nonProjectActivity, worker.getWorkerId());
+	public void registerNonProjectHours(NonProjectActivity nonProjectActivity, Worker worker) throws Exception {
+		NonProjectTimeRegistration new_registration = new NonProjectTimeRegistration(nonProjectActivity, worker.getWorkerId());
 		worker.addNonProjectTimeRegistration(new_registration);
 	}
 }

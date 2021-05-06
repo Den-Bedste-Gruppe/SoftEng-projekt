@@ -128,10 +128,10 @@ public class ActivitySteps {
 	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
 	}
 
-	@When("the worker registers {double} hours on the nonproject activity")
-	public void theWorkerRegistersHoursOnTheNonprojectActivity(double hours) {
+	@When("the worker registers nonproject activity")
+	public void theWorkerRegistersHoursOnTheNonprojectActivity() {
 	    try {
-			schedulingApp.registeNonProjectrHours(hours, nonProjectActivity);
+			schedulingApp.registerNonProject(nonProjectActivity);
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}

@@ -139,8 +139,8 @@ public class SchedulingApp {
 	}
 
 
-	public void registeNonProjectrHours(double hours, NonProjectActivity nonProjectActivity) throws Exception {
-		registrationHandler.registerNonProjectHours(hours, nonProjectActivity, currentUser);
+	public void registerNonProject(NonProjectActivity nonProjectActivity) throws Exception {
+		registrationHandler.registerNonProjectHours(nonProjectActivity, currentUser);
 		
 	}
 
