@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class TerminalGUI {
 
-	Scanner input;
-	final String inputMarker = ">> ";
+	private Scanner input;
+	private final String inputMarker = ">> ";
 
 
 	TerminalGUI() {

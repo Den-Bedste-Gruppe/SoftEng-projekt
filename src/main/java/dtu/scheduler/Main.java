@@ -1,6 +1,8 @@
 // Author: Kristian Sofus Knudsen
 
 package dtu.scheduler;
+import java.util.List;
+
 import dtu.errors.WorkerDoesNotExistException;
 
 public class Main {
@@ -25,33 +27,6 @@ public class Main {
 		}
 	}
 
-	public static void mainMenuScene() {
-		gui.clearScreen();
-
-		gui.println("Welcome " + schedulingApp.getCurrentUser());
-
-		String[] mainMenuOptions = { //Examples, more to be added. Remember to update the switch case below
-			"Register hours on activity",
-			"Change registered hours",
-			"Logout"
-		};
-		while (true) {
-		int menuChoice = gui.numericalMenu(mainMenuOptions);
-
-		switch (menuChoice) {
-			case 1:
-				gui.println("Not implemented");
-				break;
-			case 2:
-				gui.println("Not implemented");
-				break;
-			case 3:
-				schedulingApp.logOut();
-				return; // Return to main, initiates new login
-		}
-		}
-	}
-
 	public static void loginScene() throws WorkerDoesNotExistException {
 		gui.clearScreen();
 
@@ -67,4 +42,54 @@ public class Main {
 			gui.println("No user exists with given id, please try again:");
 		}}
 	}
+
+
+	//Main menu scene
+	//Remember to update both the options *and* switch statement
+	//If we had more time we would do it in a less manual-labor way (separate class)
+	public static void mainMenuScene() {
+		gui.clearScreen();
+
+		gui.println("Welcome " + schedulingApp.getCurrentUser());
+
+		String[] mainMenuOptions = { //Examples, more to be added. Remember to update the switch case below
+			"Personal scheduling",
+			"Project management",
+			"Logout"
+		};
+		
+		while (true) {
+		int menuChoice = gui.numericalMenu(mainMenuOptions);
+
+		switch (menuChoice) {
+			case 1:
+				personalSchedulingScene();
+				break;
+			case 2:
+				projectManagementScene();
+				break;
+			case 3:
+				schedulingApp.logOut();
+				return; // Return to main, initiates new login
+		}}
+	}
+
+
+	public static void personalSchedulingScene() {
+		gui.clearScreen();
+	}
+	public static void projectManagementScene() {
+		gui.clearScreen();
+
+		gui.println("Active projects:");
+
+		List<Project> projects = schedulingApp.getProjects();
+		for (Project p : projects) {
+			gui.println(p.getProjectID());
+		}
+
+		gui.println("ENTER to exit");
+		gui.inputString();
+	}
+
 }
