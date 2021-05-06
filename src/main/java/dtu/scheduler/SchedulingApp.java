@@ -1,18 +1,9 @@
 package dtu.scheduler;
 
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
-import dtu.database.WorkerRepositoryInMemory;
-import dtu.database.ProjectRepository;
-import dtu.database.ProjectRepositoryInMemory;
-import dtu.database.WorkerRepository;
-import dtu.errors.ProjectAlreadyExistsException;
-import dtu.errors.ProjectDoesNotExistException;
-import dtu.errors.TooManyActivitiesException;
-import dtu.errors.WorkerDoesNotExistException;
-
-import java.util.ArrayList;
+import dtu.database.*;
+import dtu.errors.*;
 
 //Philip Hviid
 public class SchedulingApp {
