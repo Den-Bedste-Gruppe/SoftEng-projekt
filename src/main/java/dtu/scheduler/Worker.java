@@ -11,7 +11,7 @@ public class Worker {
 	private String workerId;
 	private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
 	private List<TimeRegistration> registrationList = new ArrayList<>();
-	private List<NonProjectTimeRegistration> nonprojectregistrationList = new ArrayList<>();
+	private List<NonProjectRegistration> nonprojectregistrationList = new ArrayList<>();
 	private List<AssistRequest> requests;
 	private List<Activity> activities;
 	private List<NonProjectActivity> nonProjectActivies;
@@ -100,11 +100,15 @@ public class Worker {
 		return(nonProjectActivies.contains(nonProjectActivity));
 	}
 
-	public void addNonProjectTimeRegistration(NonProjectTimeRegistration new_registration) {
+	public void addNonProjectRegistration(NonProjectRegistration new_registration) {
 		nonprojectregistrationList.add(new_registration);
 	}
 	
-	public List<NonProjectTimeRegistration> getNonProjectTimeRegistrations() {
+	public List<NonProjectRegistration> getNonProjectRegistrations() {
 		return nonprojectregistrationList;
+	}
+
+	public List<NonProjectActivity> getNonProjectActivies() {
+		return nonProjectActivies;
 	}
 }

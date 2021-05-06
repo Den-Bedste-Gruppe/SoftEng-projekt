@@ -32,7 +32,7 @@ public class ActivitySteps {
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException, TooManyActivitiesException {
 		String currUser = schedulingApp.getCurrentUserID();
-		activity = new Activity();
+		activity = new Activity("Test");
 		schedulingApp.assignActivity(currUser, activity);
 	}
 
@@ -68,8 +68,8 @@ public class ActivitySteps {
 	}
 
 	@Given("Worker is the project leader of current project")
-	public void workerIsTheProjectLeaderOfCurrentProject() {
-	    schedulingApp.assingProjectLeader("P1",schedulingApp.getCurrentUser());
+	public void workerIsTheProjectLeaderOfCurrentProject() throws Exception {
+	    schedulingApp.assignProjectLeader("P1",schedulingApp.getCurrentUserID());
 	}
 
 	@When("Worker creates an activity")
@@ -106,52 +106,16 @@ public class ActivitySteps {
 	    assertFalse(project.getActivities().size()==2);
 	}
 	
-	@Given("that a nonproject activity exists")
-	public void thatANonprojectActivityExists() {
-	    nonProjectActivity = new NonProjectActivity();
-	}
-	
-	@When("the worker creates a nonproject activity")
-	public void theWorkerCreatesANonprojectActivity() {
-	    schedulingApp.createNonProjectActivity(nonProjectActivity);
-	}
-
-	@Then("the nonproject activity is added to the workers activities")
-	public void theNonprojectActivityIsAddedToTheWorkersActivities() {
-	    assertTrue(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
-	}
-	
-	@Given("that worker is on a nonproject activity")
-	public void thatWorkerIsOnANonprojectActivity() {
-		nonProjectActivity = new NonProjectActivity();
-		schedulingApp.createNonProjectActivity(nonProjectActivity);
-	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
-	}
-
-	@When("the worker registers nonproject activity")
-	public void theWorkerRegistersHoursOnTheNonprojectActivity() {
+	@When("Worker creates an activity without name")
+	public void workerCreatesAnActivityWithoutName() {
 	    try {
-			schedulingApp.registerNonProject(nonProjectActivity);
+			schedulingApp.createProjectActivity("", project.getProjectID());
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}
 	}
 	
-	@Then("the nonproject timeregistration is added")
-	public void theNonprojectTimeregistrationIsAdded() {
-		assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations+1);
-	}
-	
-	@Given("that the worker has {int} nonproject time registrations")
-	public void thatTheWorkerHasNonprojectTimeRegistrations(Integer int1) {
-	    amounthOfNonProjectRegistrations = schedulingApp.getNonProjectTimeRegistrations().size();
-	    assertTrue(amounthOfNonProjectRegistrations==int1);
-	    
-	}
 
-	@Then("no project is added")
-	public void noProjectIsAdded() {
-	    assertTrue(schedulingApp.getNonProjectTimeRegistrations().size()==amounthOfNonProjectRegistrations);
-	}
+
 
 }

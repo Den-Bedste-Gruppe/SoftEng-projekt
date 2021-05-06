@@ -13,8 +13,8 @@ Scenario: Worker creates nonproject activity
 
 Scenario: Worker registers nonproject activity
 	Given that worker is on a nonproject activity
-	And that the worker has 0 nonproject time registrations
+	And that the worker has 0 nonproject registrations
 	And that the worker has 0 hours spent that week
 	When the worker registers nonproject activity
 	Then the worker has a total of 0 hours spent that week
-	And the nonproject timeregistration is added
+	And the nonproject registration is added

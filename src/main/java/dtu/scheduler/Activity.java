@@ -13,9 +13,6 @@ public class Activity {
 	private String name = "";
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	
-	public Activity() {
-		hoursSpent = 0;
-	}
 	public Activity(String name) {
 		hoursSpent = 0;
 		this.name = name;
