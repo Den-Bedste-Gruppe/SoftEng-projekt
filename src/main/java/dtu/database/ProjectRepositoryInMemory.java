@@ -3,15 +3,19 @@ package dtu.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import dtu.errors.ProjectAlreadyExistsException;
 import dtu.scheduler.Project;
 
 public class ProjectRepositoryInMemory implements ProjectRepository {
 	List<Project> projects = new ArrayList<>();
 
 	@Override
-	public void add(Project project) {
-		projects.add(project);
-		
+	public void add(Project project) throws ProjectAlreadyExistsException {
+		if (search(project.getProjectID()) == null) {
+			projects.add(project);
+		} else {
+			throw new ProjectAlreadyExistsException("Project " + project.getProjectID() + " already exists");
+		}
 	}
 
 	@Override

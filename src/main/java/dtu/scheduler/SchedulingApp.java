@@ -8,6 +8,7 @@ import dtu.database.ProjectRepository;
 import dtu.database.ProjectRepositoryInMemory;
 import dtu.database.WorkerRepository;
 import dtu.errors.ProjectAlreadyExistsException;
+import dtu.errors.ProjectDoesNotExistException;
 import dtu.errors.TooManyActivitiesException;
 import dtu.errors.WorkerDoesNotExistException;
 
@@ -79,11 +80,6 @@ public class SchedulingApp {
 	}
 	
 	public void addProject(Project project) throws ProjectAlreadyExistsException {
-		// Test if project already exists
-		if (searchProject(project.getProjectID()) != null) {
-			throw new ProjectAlreadyExistsException("Project already exist");
-		}
-		
 		projectRepository.add(project);
 	}
 	
@@ -104,8 +100,13 @@ public class SchedulingApp {
 		registrationHandler.registerHours(hours, test_activity, currentUser);
 	}
 
-	public void assingProjectLeader(String projectID, Worker projectLeader) {
-		searchProject(projectID).assignLeader(projectLeader);
+	public void assignProjectLeader(String projectID, String leaderID) throws WorkerDoesNotExistException, ProjectDoesNotExistException {
+		Worker worker = workerRepository.getWorkerById(leaderID);
+		Project project = searchProject(projectID);
+		if (project == null) {
+			throw new ProjectDoesNotExistException("Project " + projectID + " does not exist");
+		}
+		project.assignLeader(worker);
 	}
   
 	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
