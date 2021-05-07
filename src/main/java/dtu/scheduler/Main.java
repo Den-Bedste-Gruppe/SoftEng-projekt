@@ -242,14 +242,14 @@ public class Main {
 				//Check project hours
 				////////////////
 			case 3:
-				
-				
+
+
 				//TODO THIS PROJECT IS FOR TESTING, REMEMBER TO DELETE
 				try {
 					schedulingApp.addProject(new Project("030901", schedulingApp.getCurrentUser()));
 					Activity activity = new Activity("Clean up Kanban Board");
 					schedulingApp.searchProject("030901").addActivity(activity);
-				    TimeRegistration registration = new TimeRegistration(13.5, activity, schedulingApp.getCurrentUserID());
+					TimeRegistration registration = new TimeRegistration(13.5, activity, schedulingApp.getCurrentUserID());
 				} catch (Exception e) {
 					gui.clearScreen();
 					gui.println(e.getMessage());
@@ -257,29 +257,30 @@ public class Main {
 					gui.inputString();
 				}		
 				
-					gui.clearScreen();	
-					printProjects(projects);
-					gui.println("Enter project ID:");
-					projectID = gui.inputString();
-					
-					currProject = new Project("INITIALISATION");
-					
-					try {
-						currProject = schedulingApp.searchProject(projectID);
-					} catch (NullPointerException e) {
-						gui.clearScreen();
-						gui.println("No project found with given ID");
-						gui.println("Press ENTER to return");
-						gui.inputString();
-					}			
+				gui.clearScreen();	
+				printProjects(projects);
+				currProject = new Project("INITIALISATION");
 				
+				gui.println("Enter project ID:");
+				projectID = gui.inputString();
+				
+				if(schedulingApp.searchProject(projectID) != null) {
+					currProject = schedulingApp.searchProject(projectID);
+				} else {
+					gui.clearScreen();
+					gui.println("No project found with given ID");
+					gui.println("Press ENTER to return");
+					gui.inputString();
+					break;
+				}	
+
 				double hours = currProject.getProjectHours();
 				int numOfActivities = currProject.getNumOfProjectActivities();
-				 
+
 				String projectHoursInfo = "The Project with ID \"" + currProject.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
-				
+
 				gui.println(projectHoursInfo);
-				
+
 				break;
 
 
