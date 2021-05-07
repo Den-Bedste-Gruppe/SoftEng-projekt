@@ -142,7 +142,7 @@ public class SchedulingApp {
 	
 	//This is used from clientside when scheduling nonprojectactivities
 	public void scheduleNonProjectActivity(String name) {
-		if(name.isBlank()) {
+		if(name.isEmpty()) {
 			throw new IllegalArgumentException("nonproject activity must have a have name");
 		}
 		NonProjectActivity npa = new NonProjectActivity(name);

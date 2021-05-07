@@ -77,7 +77,7 @@ public class Project {
 	public void addActivity(Activity activity) throws Exception {
 		if(activityWithNameExists(activity.getName())) {
 			throw new Exception("Project with same name already exists in project");
-		} else if(activity.getName().isBlank()) {
+		} else if(activity.getName().isEmpty()) {
 			throw new IllegalArgumentException("activity cannot be created without name");
 		}
 		activities.add(activity);
