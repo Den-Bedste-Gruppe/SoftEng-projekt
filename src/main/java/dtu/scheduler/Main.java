@@ -318,15 +318,41 @@ public class Main {
 			return;
 		}
 
-		while (true) {
+		String[] activityOptions = {
+			"Add activity",
+			"Return"
+		};
+		boolean managingActivities = true;
+		while (managingActivities) {
 			gui.clearScreen();
 
+			//TODO: Burde nok tjekke om man er project leader først, men siden at schedulingApp ikke tjekker skal GUI heller ikke
 			gui.println("Project: " + project.getName());
+			for (Activity a : project.getActivities()) {
+				gui.println("\t" + a.getName());
+			}
+			gui.println("");
 			
-			String[] activityOptions = {
-				"Add activity",
-				"Return"
-			};
+			int choice = gui.numericalMenu(activityOptions);
+			switch (choice) {
+				//Add activity
+				//////////////
+				case 1:
+					gui.clearScreen();
+					gui.println("Enter activity name:");
+					String activityName = gui.inputString();
+					try {
+						schedulingApp.createProjectActivity(activityName, projectID);
+					} catch (Exception e) {
+						gui.printErrorAndContinue(e);
+					}
+					break;
+			
+				case 2:
+					managingActivities = false;
+					break;
+			}
+
 		}
 
 	}
@@ -336,7 +362,7 @@ public class Main {
 	private static void printProjects(List<Project> projects) {
 		gui.println("Active projects:");
 		for (Project p : projects) {
-			gui.print(p.getProjectID());
+			gui.print(p.getProjectID() + ": \"" + p.getName() + "\"");
 			if (p.getProjectLeader() != null) gui.print(" PL: " + p.getProjectLeader().getWorkerId());
 			gui.println("");
 		}
