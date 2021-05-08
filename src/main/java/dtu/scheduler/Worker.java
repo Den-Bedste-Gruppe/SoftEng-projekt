@@ -70,7 +70,12 @@ public class Worker {
 		return activities;
 	}
 	
-	public void addActivity(ProjectActivity activity) {
+	public void addActivity(ProjectActivity activity) throws Exception {
+		for (Activity a : activities) {
+			if (a.equals(activity)) {
+				throw new Exception("Activity already assigned");
+			}
+		}
 		activities.add(activity);
 	}
 	

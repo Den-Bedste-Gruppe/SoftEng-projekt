@@ -117,7 +117,7 @@ public class Main {
 		
 		gui.clearScreen();
 		gui.println("Choose one of your assigned activities:");
-		int choice = gui.numericalMenu(assignedActivitiesNames(activities));
+		int choice = gui.numericalMenu(activitiesNames(activities)) - 1;
 		ProjectActivity activity;
 		try {
 			activity = activities.get(choice);
@@ -345,6 +345,8 @@ public class Main {
 
 		String[] activityOptions = {
 			"Add activity",
+			"Assign worker to activity",
+			"View activity details",
 			"Return"
 		};
 		boolean managingActivities = true;
@@ -353,10 +355,15 @@ public class Main {
 
 			//TODO: Burde nok tjekke om man er project leader først, men siden at schedulingApp ikke tjekker skal GUI heller ikke
 			gui.println("Project: " + project.getName());
+			gui.println("Activities:");
 			for (Activity a : project.getActivities()) {
 				gui.println("\t" + a.getName());
 			}
 			gui.println("");
+
+			//Declaring some reused variable names
+			int activityChoice;
+			ProjectActivity activity;
 			
 			int choice = gui.numericalMenu(activityOptions);
 			switch (choice) {
@@ -372,8 +379,49 @@ public class Main {
 						gui.printErrorAndContinue(e);
 					}
 					break;
-			
+				
+				//Assign worker to activity
+				///////////////////////////
 				case 2:
+					gui.clearScreen();
+					gui.println("Choose an activity:");
+					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					activity = project.getActivities().get(activityChoice);
+
+					gui.clearScreen();
+					gui.println("Enter worker ID:");
+					String workerID = gui.inputString();
+
+					try {
+						schedulingApp.assignActivity(workerID, activity);	
+					} catch (Exception e) {
+						gui.printErrorAndContinue(e);
+					}
+					break;
+					
+				case 3:
+					gui.clearScreen();
+					gui.println("Choose an activity:");
+					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					activity = project.getActivities().get(activityChoice);
+					List<Worker> assignedWorkers = activity.getAssignedWorkers();
+					
+					gui.clearScreen();
+					gui.println(activity.getName());
+					gui.println("Total hours registered: " + activity.getTotalHoursSpent()); //If we ever get around to budgeted time, do "5.5/30.0" for example
+					gui.println("Assigned workers:");
+					for (Worker w : assignedWorkers) {
+						try {
+							gui.println(w.getWorkerId() + "\t Hours: " + w.getTimeRegistrationByActivity(activity).getHours());
+						} catch (Exception e) {
+							gui.println(w.getWorkerId() + "\t Hours: No hours registered");
+						}
+					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
+					break;
+
+				case 4:
 					managingActivities = false;
 					break;
 			}
@@ -394,7 +442,7 @@ public class Main {
 		gui.println("");
 	}
 
-	private static String[] assignedActivitiesNames(List<ProjectActivity> activities) {
+	private static String[] activitiesNames(List<ProjectActivity> activities) {
 		String[] names = new String[activities.size()];
 		for (int i=0; i < activities.size(); i++) {
 			names[i] = activities.get(i).getName();
