@@ -40,7 +40,7 @@ public class SetTimeFrameTest {
 	public void the_project_leader_sets_a_time_frame_with_start_week_and_end_week_for_an_activity(Integer startWeek, Integer endWeek) throws Exception {
 	    Project curentProject = schedulingApp.searchProject(projectName);
 	    Activity curentActivity = curentProject.searchActivity(activityName);
-	    curentActivity.setTimeframe(startWeek, endWeek);
+	    curentActivity.setTimeFrame(startWeek, endWeek);
 	}
 
 	@Then("The activity is given a time frame with start week {int} and end week {int}")
@@ -56,7 +56,7 @@ public class SetTimeFrameTest {
 		Project curentProject = schedulingApp.searchProject(projectName);
 		Activity curentActivity = curentProject.searchActivity(activityName);
 		try {
-			curentActivity.setTimeframe(-2, 55);
+			curentActivity.setTimeFrame(-2, 55);
 		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage()); 
 		}

@@ -8,37 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Activity {
-
+	//doubles default to 0, no need to set it
 	private double hoursSpent;
-	private String name = "";
+	private String name;
 	private List<TimeRegistration> registrationList = new ArrayList<>();
-	private int[] timeframe = new int[2]; //Start and end weeks
+	private TimeFrame timeFrame = new TimeFrame(); //Start and end weeks
 	
 	public Activity(String name) {
-		hoursSpent = 0;
 		this.name = name;
 
-		timeframe[0] = DateHelper.thisWeek();
-		timeframe[1] = DateHelper.thisWeek();
 	}
 
 	public Activity(String name, int startWeek, int endWeek) {
-		hoursSpent = 0;
 		this.name = name;
-
-		timeframe[0] = startWeek;
-		timeframe[1] = endWeek;
+		
+	}
+	
+	public void setTimeFrame(int startWeek, int endWeek) throws Exception {
+		timeFrame.setTimeframe(startWeek, endWeek);
 	}
 
 	public int[] getTimeframe() {
-		return timeframe;
-	}
-	//Emil Krarup
-	public void setTimeframe(int startWeek, int endWeek) throws Exception {
-		if(startWeek < 1 || startWeek > 52) throw new Exception("The given date is not eligible to set time frame");
-		if(endWeek < 1 || endWeek > 52) throw new Exception("The given date is not eligible to set time frame");
-		timeframe[0] = startWeek;
-		timeframe[1] = endWeek;
+		return timeFrame.getTimeFrame();
 	}
 
 	public double getTotalHoursSpent() {
