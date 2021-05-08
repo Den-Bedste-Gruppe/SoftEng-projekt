@@ -90,6 +90,35 @@ public class SchedulingApp {
 	public void registerHours(double hours, ProjectActivity test_activity) throws Exception {
 		registrationHandler.registerHours(hours, test_activity, currentUser);
 	}
+	
+	//This is used from clientside when scheduling nonprojectactivities
+	public void scheduleNonProjectActivity(String name, int startWeek, int endWeek) throws Exception {
+		if(name.isEmpty()) {
+			throw new IllegalArgumentException("nonproject activity must have a have name");
+		}
+		NonProjectActivity npa = new NonProjectActivity(name,startWeek,endWeek);
+		createNonProjectActivity(npa);
+		registerNonProject(npa);
+	}
+	
+	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
+		currentUser.changeHours(new_hours, activity);
+
+	}
+	
+
+	//used by scheduleNonProjectActivity, not by client
+	public void registerNonProject(NonProjectActivity nonProjectActivity) {
+		registrationHandler.registerNonProjectActivity(nonProjectActivity, currentUser);
+		
+	}
+	
+	//used by scheduleNonProjectActivity, not by client
+	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		currentUser.addNonProjectActivity(nonProjectActivity);
+		
+	}
+	
 
 	public void assignProjectLeader(String projectID, String leaderID) throws WorkerDoesNotExistException, ProjectDoesNotExistException {
 		Worker worker = workerRepository.getWorkerById(leaderID);
@@ -113,43 +142,16 @@ public class SchedulingApp {
 	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
 		return getWorkerById(workerId).getRequests();
 	}
-		
-	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
-		currentUser.changeHours(new_hours, activity);
-
-	}
-	
-	//used by scheduleNonProjectActivity, not by client
-	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
-		currentUser.addNonProjectActivity(nonProjectActivity);
-		
-	}
 
 	public boolean workerHasNonProjectActivity(NonProjectActivity nonProjectActivity) {
 		return(currentUser.hasNonProjectActivity(nonProjectActivity));
 
 	}
 
-	//used by scheduleNonProjectActivity, not by client
-	public void registerNonProject(NonProjectActivity nonProjectActivity) {
-		registrationHandler.registerNonProjectActivity(nonProjectActivity, currentUser);
-		
-	}
 
 	public List<NonProjectRegistration> getNonProjectRegistrations() {
 		return currentUser.getNonProjectRegistrations();
 	}
-	
-	//This is used from clientside when scheduling nonprojectactivities
-	public void scheduleNonProjectActivity(String name, int startWeek, int endWeek) throws Exception {
-		if(name.isEmpty()) {
-			throw new IllegalArgumentException("nonproject activity must have a have name");
-		}
-		NonProjectActivity npa = new NonProjectActivity(name,startWeek,endWeek);
-		createNonProjectActivity(npa);
-		registerNonProject(npa);
-	}
-
 
 	public List<NonProjectActivity> getWorkersNonProjectActivities() {
 		return currentUser.getNonProjectActivies();
