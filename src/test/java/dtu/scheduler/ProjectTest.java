@@ -48,7 +48,7 @@ public class ProjectTest {
 
 	@Then("there is a project with the name {string}")
 	public void there_is_a_project_with_the_name(String name) throws Exception {
-		if (schedulingApp.searchProject(name) == null) {
+		if (schedulingApp.searchProjectByName(name) == null) {
 			throw new Exception("Error! project \"" + name + "\" does not exists");
 		};
 	}

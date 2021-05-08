@@ -26,8 +26,8 @@ public class SchedulingApp {
 	}
 	
 	
-	public void createProjectActivity(String activtyName, String projectId) throws Exception {
-		ProjectActivity activity = new ProjectActivity(activtyName);
+	public void createProjectActivity(String activityName, String projectId) throws Exception {
+		ProjectActivity activity = new ProjectActivity(activityName);
 		searchProject(projectId).addActivity(activity);
 	}
 	
@@ -76,6 +76,15 @@ public class SchedulingApp {
 	
 	public Project searchProject(String ID) {
 		return projectRepository.search(ID);
+	}
+
+	public Object searchProjectByName(String name) {
+		return projectRepository.searchByName(name);
+	}
+
+	public String findIDByName(String projectName) {
+		Project p = projectRepository.searchByName(projectName);
+		return p.getProjectID();
 	}
 	
 	public  List<Project> getProjects() {
@@ -158,5 +167,7 @@ public class SchedulingApp {
 	public List<ProjectActivity> getWorkersActivities() {
 		return currentUser.getActivities();
 	}
+
+	
 	
 }

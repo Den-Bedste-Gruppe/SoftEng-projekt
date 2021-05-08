@@ -11,10 +11,10 @@ public class ProjectRepositoryInMemory implements ProjectRepository {
 
 	@Override
 	public void add(Project project) throws ProjectAlreadyExistsException {
-		if (search(project.getProjectID()) == null) {
+		if (searchByName(project.getName()) == null) {
 			projects.add(project);
 		} else {
-			throw new ProjectAlreadyExistsException("Project " + project.getProjectID() + " already exists");
+			throw new ProjectAlreadyExistsException("Project " + project.getName() + " already exists");
 		}
 	}
 
@@ -28,6 +28,16 @@ public class ProjectRepositoryInMemory implements ProjectRepository {
 		for (int i = 0; i < projects.size(); i++) {
 			Project p = projects.get(i);
 			if (p.getProjectID().equals(ID)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public Project searchByName(String projectName) {
+		for (int i = 0; i < projects.size(); i++) {
+			Project p = projects.get(i);
+			if (p.getName().equals(projectName)) {
 				return p;
 			}
 		}

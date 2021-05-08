@@ -277,16 +277,16 @@ public class Main {
 
 	private static void createProjectScene() {
 		gui.clearScreen();
-		gui.println("Enter new project ID:");
-		String projectID = gui.inputString();
+		gui.println("Enter new project name:");
+		String projectName = gui.inputString();
 
 		Project new_project;
 
 		gui.println("Assign yourself as project leader? Y/N");
 		if (gui.inputChar() == 'y') {
-			new_project = new Project(projectID, schedulingApp.getCurrentUser());
+			new_project = new Project(projectName, schedulingApp.getCurrentUser());
 		} else {
-			new_project = new Project(projectID);
+			new_project = new Project(projectName);
 		}
 		try {
 			schedulingApp.addProject(new_project);
