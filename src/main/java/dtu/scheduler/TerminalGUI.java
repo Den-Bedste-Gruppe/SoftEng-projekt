@@ -32,11 +32,15 @@ public class TerminalGUI {
 		String res = input.next();
 		return res.toLowerCase().charAt(0);
 	}
-
 	public int inputInt() {
 		print(inputMarker);
 		input = new Scanner(System.in);
 		return input.nextInt();
+	}
+	public double inputDouble() {
+		print(inputMarker);
+		input = new Scanner(System.in);
+		return input.nextDouble();
 	}
 
 	//Displays menu, takes integer answer
