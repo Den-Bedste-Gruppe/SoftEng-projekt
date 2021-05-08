@@ -57,7 +57,7 @@ public class SchedulingApp {
 		return workerRepository.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException, TooManyActivitiesException {
+	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException {
 		if (isUserInDatabase(workerId)) {
 			activityAssigner.assignActivity(getWorkerById(workerId), activity);
 		} else {

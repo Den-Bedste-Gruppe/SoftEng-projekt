@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import dtu.errors.ProjectAlreadyExistsException;
-import dtu.errors.TooManyActivitiesException;
 import dtu.errors.WorkerDoesNotExistException;
 
 public class Main {

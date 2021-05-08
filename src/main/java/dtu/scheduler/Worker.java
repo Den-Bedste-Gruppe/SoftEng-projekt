@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import dtu.errors.TooManyActivitiesException;
 
 // By Mads Harder
 public class Worker {

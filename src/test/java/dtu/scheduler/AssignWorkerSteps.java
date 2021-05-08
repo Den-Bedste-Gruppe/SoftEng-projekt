@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
 
-import dtu.errors.TooManyActivitiesException;
 import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -57,7 +56,7 @@ public class AssignWorkerSteps {
 	
 	
 	@Given("the worker has {int} activities this week")
-	public void theWorkerHasActivitiesThisWeek(Integer int1) throws TooManyActivitiesException {
+	public void theWorkerHasActivitiesThisWeek(Integer int1) {
 	    for (int i = 0; i < int1; i++) {
 			worker.addActivity(new Activity("Mock Activity " + (i + 1)));
 		}
@@ -76,7 +75,7 @@ public class AssignWorkerSteps {
 	
 	
 	@When("the user assigns a user with ID {string} to the activity")
-	public void theUserAssignsAUserWithIDToTheActivity(String string) throws TooManyActivitiesException {
+	public void theUserAssignsAUserWithIDToTheActivity(String string) {
 		fakeID = string;
 	    try {
 			schedulingApp.assignActivity(fakeID, activity);
