@@ -2,7 +2,6 @@
 
 package dtu.scheduler;
 import java.util.List;
-import java.util.Objects;
 
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
@@ -10,7 +9,6 @@ import dtu.errors.WorkerDoesNotExistException;
 public class Main {
 
 	private static TerminalGUI gui = new TerminalGUI();
-	//Really ought to make a default constructor for this
 	private static SchedulingApp schedulingApp = new SchedulingApp();
 
 	public static void main(String args[]) throws Exception {
@@ -95,14 +93,10 @@ public class Main {
 			int menuChoice = gui.numericalMenu(personalMenuOptions);
 			switch (menuChoice) {
 
-			//Register hours
-			////////////////
 			case 1:
-
+				registerHoursScene();
 				break;
 
-				//Change registered hours
-				/////////////////////////
 			case 2:
 
 				break;
@@ -112,6 +106,23 @@ public class Main {
 			case 4:
 				return; //Return to main menu
 			}
+		}
+	}
+
+	private static void registerHoursScene() {
+		List<ProjectActivity> activities = schedulingApp.getWorkersActivities();
+		
+		gui.clearScreen();
+		gui.println("Choose one of your assigned activities:");
+		int choice = gui.numericalMenu(assignedActivitiesNames(activities));
+		ProjectActivity activity;
+		try {
+			activity = activities.get(choice);
+			gui.println("Enter number of hours (0-24):");
+			double hours = gui.inputDouble();
+			schedulingApp.registerHours(hours, activity);
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
 		}
 	}
 
@@ -162,7 +173,7 @@ public class Main {
 			System.out.println("Enter startweek:");
 			int startWeek = gui.inputInt();
 			System.out.println("Enter endweek");
-			int endWeek = gui.inputInt();	
+			int endWeek = gui.inputInt();
 			try {
 				schedulingApp.scheduleNonProjectActivity(name,startWeek, endWeek);
 				break;
@@ -189,120 +200,122 @@ public class Main {
 
 	private static void projectManagementScene() {
 		List<Project> projects = schedulingApp.getProjects();
-
 		String[] projectMenuOptions = {
 				"Create project",
 				"Assign new leader to project",
+				"Manage project activities",
 				"Check registered hours of a project",
 				"Return"
 		};
 
 		while (true) {
 			gui.clearScreen();
-
 			printProjects(projects);
 
-			String projectID;
-			Project currProject;
 			int menuChoice = gui.numericalMenu(projectMenuOptions);
 			switch (menuChoice) {
 
-			//Create project
-			////////////////
 			case 1:
-				gui.clearScreen();
-				gui.println("Enter new project ID:");
-				projectID = gui.inputString();
-
-				Project new_project;
-
-				gui.println("Assign yourself as project leader? Y/N");
-				if (gui.inputChar() == 'y') {
-					new_project = new Project(projectID, schedulingApp.getCurrentUser());
-				} else {
-					new_project = new Project(projectID);
-				}
-				try {
-					schedulingApp.addProject(new_project);
-				} catch (ProjectAlreadyExistsException e) {
-					gui.clearScreen();
-					gui.println(e.getMessage());
-					gui.println("Press ENTER to return");
-					gui.inputString();
-				}
+				createProjectScene();
 				break;
 
-				//Assign new leader to project
-				//////////////////////////////
 			case 2: 
-				gui.clearScreen();
-				printProjects(projects);
-				gui.println("Enter project ID:");
-				projectID = gui.inputString();
-				gui.println("Enter worker ID:");
-				String workerID = gui.inputString();
-
-				try {
-					schedulingApp.assignProjectLeader(projectID, workerID);
-				} catch (Exception e) {
-					gui.clearScreen();
-					gui.println(e.getMessage());
-					gui.println("Press ENTER to return");
-					gui.inputString();
-				}
+				assignLeaderScene();
 				break;
 
-
-				//Check project hours
-				////////////////
 			case 3:
-
-
-				//TODO THIS PROJECT IS FOR TESTING, REMEMBER TO DELETE
-				try {
-					schedulingApp.addProject(new Project("030901", schedulingApp.getCurrentUser()));
-					ProjectActivity activity = new ProjectActivity("Clean up Kanban Board");
-					schedulingApp.searchProject("030901").addActivity(activity);
-					TimeRegistration registration = new TimeRegistration(13.5, activity, schedulingApp.getCurrentUserID());
-				} catch (Exception e) {
-					gui.clearScreen();
-					gui.println(e.getMessage());
-					gui.println("Press ENTER to return");
-					gui.inputString();
-				}		
-				
-				gui.clearScreen();	
-				printProjects(projects);
-				currProject = new Project("INITIALISATION");
-				
-				gui.println("Enter project ID:");
-				projectID = gui.inputString();
-				
-				if(schedulingApp.searchProject(projectID) != null) {
-					currProject = schedulingApp.searchProject(projectID);
-				} else {
-					gui.clearScreen();
-					gui.println("No project found with given ID");
-					gui.println("Press ENTER to return");
-					gui.inputString();
-					break;
-				}	
-
-				double hours = currProject.getProjectHours();
-				int numOfActivities = currProject.getNumOfProjectActivities();
-
-				String projectHoursInfo = "The Project with ID \"" + currProject.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
-
-				gui.println(projectHoursInfo);
-
+				activityManagementScene();
 				break;
-
-
 
 			case 4:
+				checkRegisteredHoursScene();
+				break;
+
+			case 5:
 				return; // Return to main menu
 			}}
 	}
+
+
+
+	private static void checkRegisteredHoursScene() {
+		//Philip Hviid
+
+		//TODO THIS PROJECT IS FOR TESTING, REMEMBER TO DELETE
+		try {
+			schedulingApp.addProject(new Project("030901", schedulingApp.getCurrentUser()));
+			ProjectActivity activity = new ProjectActivity("Clean up Kanban Board");
+			schedulingApp.searchProject("030901").addActivity(activity);
+			TimeRegistration registration = new TimeRegistration(13.5, activity, schedulingApp.getCurrentUserID());
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
+		}		
+		
+		gui.clearScreen();	
+		printProjects(schedulingApp.getProjects());
+		Project currProject = new Project("INITIALISATION");
+		
+		gui.println("Enter project ID:");
+		String projectID = gui.inputString();
+		
+		if(schedulingApp.searchProject(projectID) != null) {
+			currProject = schedulingApp.searchProject(projectID);
+		} else {
+			gui.printErrorAndContinue("No project found with given ID");
+			return;
+		}	
+
+		double hours = currProject.getProjectHours();
+		int numOfActivities = currProject.getNumOfProjectActivities();
+
+		String projectHoursInfo = "The Project with ID \"" + currProject.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
+
+		gui.println(projectHoursInfo);
+	}
+
+	private static void createProjectScene() {
+		gui.clearScreen();
+		gui.println("Enter new project ID:");
+		String projectID = gui.inputString();
+
+		Project new_project;
+
+		gui.println("Assign yourself as project leader? Y/N");
+		if (gui.inputChar() == 'y') {
+			new_project = new Project(projectID, schedulingApp.getCurrentUser());
+		} else {
+			new_project = new Project(projectID);
+		}
+		try {
+			schedulingApp.addProject(new_project);
+		} catch (ProjectAlreadyExistsException e) {
+			gui.printErrorAndContinue(e);
+		}
+	}
+
+	private static void assignLeaderScene() {
+		gui.clearScreen();
+		printProjects(schedulingApp.getProjects());
+		gui.println("Enter project ID:");
+		String projectID = gui.inputString();
+		gui.println("Enter worker ID:");
+		String workerID = gui.inputString();
+
+		try {
+			schedulingApp.assignProjectLeader(projectID, workerID);
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
+		}
+	}
+
+	private static void activityManagementScene() {
+
+
+
+		return;
+	}
+
+
 
 	private static void printProjects(List<Project> projects) {
 		gui.println("Active projects:");
@@ -312,5 +325,13 @@ public class Main {
 			gui.println("");
 		}
 		gui.println("");
+	}
+
+	private static String[] assignedActivitiesNames(List<ProjectActivity> activities) {
+		String[] names = new String[activities.size()];
+		for (int i=0; i < activities.size(); i++) {
+			names[i] = activities.get(i).getName();
+		}
+		return names;
 	}
 }

@@ -154,5 +154,9 @@ public class SchedulingApp {
 	public List<NonProjectActivity> getWorkersNonProjectActivities() {
 		return currentUser.getNonProjectActivies();
 	}
+
+	public List<ProjectActivity> getWorkersActivities() {
+		return currentUser.getActivities();
+	}
 	
 }

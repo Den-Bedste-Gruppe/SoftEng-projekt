@@ -32,11 +32,15 @@ public class TerminalGUI {
 		String res = input.next();
 		return res.toLowerCase().charAt(0);
 	}
-
 	public int inputInt() {
 		print(inputMarker);
 		input = new Scanner(System.in);
 		return input.nextInt();
+	}
+	public double inputDouble() {
+		print(inputMarker);
+		input = new Scanner(System.in);
+		return input.nextDouble();
 	}
 
 	//Displays menu, takes integer answer
@@ -52,6 +56,19 @@ public class TerminalGUI {
 			answer = inputInt();
 		}
 		return answer;
+	}
+
+	public void printErrorAndContinue(String error) {
+		clearScreen();
+		println(error);
+		println("Press ENTER to return");
+		inputString();
+	}
+	public void printErrorAndContinue(Exception error) {
+		clearScreen();
+		println(error.getMessage());
+		println("Press ENTER to return");
+		inputString();
 	}
 
 	public void clearScreen() {
