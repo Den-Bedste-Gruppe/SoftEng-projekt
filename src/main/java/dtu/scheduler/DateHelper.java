@@ -14,4 +14,8 @@ public class DateHelper {
 	public static LocalDate today() {
 		return LocalDate.now();
 	}
+	
+	public boolean isItWednessDay() {
+		return (LocalDate.now().getDayOfWeek().toString().equals("Wednessday"));
+	}
 }

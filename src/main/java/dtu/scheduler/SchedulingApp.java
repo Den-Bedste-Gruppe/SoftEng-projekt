@@ -5,7 +5,7 @@ import java.util.List;
 import dtu.database.*;
 import dtu.errors.*;
 
-//Philip Hviid
+//Everyone
 public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerRepository workerRepository;

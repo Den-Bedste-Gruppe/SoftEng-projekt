@@ -5,6 +5,8 @@ package dtu.scheduler;
 import java.time.LocalDate;
 
 public class TimeRegistration extends ActivityRegistration {
+	//Code smell, should be defined as Activity field in super class, but gave problems with change hours
+	//will try to figure out later -- philip
 	private ProjectActivity parentActivity;
 	private double hours;
 	private LocalDate date;
@@ -16,12 +18,6 @@ public class TimeRegistration extends ActivityRegistration {
 		this.hours = hours;
 		parentActivity.addRegistration(this);
 	}
-
-	/*
-	public TimeRegistration(double hours, Activity parent_activity, Date date) {
-
-	}
-	*/
 
 	public double getHours() {
 		return hours;

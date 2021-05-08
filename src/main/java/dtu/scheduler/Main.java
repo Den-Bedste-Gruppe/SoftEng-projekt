@@ -135,7 +135,6 @@ public class Main {
 			int menuChoice = gui.numericalMenu(nonProjectMenuOptions);
 			switch (menuChoice) {
 			case 1:
-				//TODO they should all require 2 valid dates, for end and start date, when that is implemented
 				name="Sick Leave";
 				break;
 			case 2:
@@ -156,6 +155,7 @@ public class Main {
 		}
 	}
 	
+	//Philip Hviid
 	private static void inputTimeFrameScene(String name) {
 		while(true) {
 			gui.clearScreen();
@@ -185,8 +185,6 @@ public class Main {
 
 		}
 	}
-
-
 
 
 	private static void projectManagementScene() {
