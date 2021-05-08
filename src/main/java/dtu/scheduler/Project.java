@@ -41,11 +41,11 @@ public class Project {
 		timeFrame.setTimeFrame(currentYear, currentWeek, currentYear, currentWeek);
 	}
 
-	public TimeFrame getTimeframe() {
+	public TimeFrame getTimeFrame() {
 		return timeFrame;
 	}
 
-	public void setTimeframe(int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+	public void setTimeFrame(int startYear, int startWeek, int endYear, int endWeek) throws Exception {
 		timeFrame.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	

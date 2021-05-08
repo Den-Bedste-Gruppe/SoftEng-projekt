@@ -40,6 +40,22 @@ public class TimeFrame {
 	public void setEndWeek(int endWeek) {
 		this.endWeek = endWeek;
 	}
+
+	public int getStartYear() {
+		return startYear;
+	}
+
+	public int getStartWeek() {
+		return startWeek;
+	}
+
+	public int getEndYear() {
+		return endYear;
+	}
+
+	public int getEndWeek() {
+		return endWeek;
+	}
 	
 
 }
