@@ -14,8 +14,8 @@ public class ProjectActivity extends Activity {
 	
 	
 	
-	public ProjectActivity(String name, int startWeek, int endWeek) throws Exception {
-		super(name, startWeek, endWeek);
+	public ProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		super(name, startYear, startWeek, endYear, endWeek);
 	}
 	
 

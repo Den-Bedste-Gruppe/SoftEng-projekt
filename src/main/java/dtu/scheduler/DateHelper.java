@@ -2,7 +2,9 @@ package dtu.scheduler;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 public class DateHelper {
 	
@@ -22,5 +24,24 @@ public class DateHelper {
 	
 	public static boolean isItWednessDay() {
 		return (LocalDate.now().getDayOfWeek().equals(DayOfWeek.WEDNESDAY));
+	}
+	
+	// Mads Harder
+	public static int getWeeksInYear(int year) {
+		// I hate time, timezone and dates...
+		// Hours spent on this = 2.5
+
+		// Germany is the close enough to denmark
+		Locale userLocale = Locale.GERMANY;
+	    WeekFields weekNumbering = WeekFields.of(userLocale);
+
+	    LocalDate date = LocalDate.of(year, Month.DECEMBER, 31);
+	    int numberOfWeeksInYear = date.get(weekNumbering.weekOfWeekBasedYear());
+	    
+	    if (numberOfWeeksInYear == 53) {
+	    	return 53;
+	    } else {
+	    	return 52;
+	    }
 	}
 }

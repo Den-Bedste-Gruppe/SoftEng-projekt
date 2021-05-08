@@ -2,10 +2,8 @@ package dtu.scheduler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
-
-// By Mads Harder
+// Mads Harder
 public class Worker {
 	private String workerId;
 	private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
@@ -20,9 +18,7 @@ public class Worker {
 		if (workerId.length() == 0) throw new IllegalArgumentException("The ID must be at least one character");
 		if (workerId.length() > 4) throw new IllegalArgumentException("The ID can max be 4 characters");
 		
-		workerId = workerId.toUpperCase();
-
-		this.workerId = workerId;
+		this.workerId = workerId.toUpperCase();
 		week_hours = 0;
 		this.activities = new ArrayList<>();
 		this.requests = new ArrayList<>();

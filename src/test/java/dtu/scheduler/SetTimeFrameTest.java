@@ -38,24 +38,29 @@ public class SetTimeFrameTest {
 		schedulingApp.createProjectActivity(activityName, test_project.getProjectID());
 	}
 
-	@When("The project leader sets a time frame with start week {int} and end week {int} for an activity")
-	public void the_project_leader_sets_a_time_frame_with_start_week_and_end_week_for_an_activity(Integer startWeek, Integer endWeek) throws Exception {
+	@When("The project leader sets a time with current year, start week {int} and end week {int} for an activity")
+	public void theProjectLeaderSetsATimeWithCurrentYearStartWeekAndEndWeekForAnActivity(Integer startWeek, Integer endWeek) throws Exception {
+	    int currentYear = 2021;
 	    ProjectActivity curentActivity = test_project.searchActivity(activityName);
-	    curentActivity.setTimeFrame(startWeek, endWeek);
+	    curentActivity.setTimeFrame(currentYear, startWeek, currentYear, endWeek);
 	}
 
-	@Then("The activity is given a time frame with start week {int} and end week {int}")
-	public void the_activity_is_given_a_time_frame_with_start_week_and_end_week(Integer startWeek, Integer endWeek) {
+	@Then("The activity is given a time frame with current year, start week {int} and end week {int}")
+	public void theActivityIsGivenATimeFrameWithCurrentYearStartWeekAndEndWeek(Integer startWeek, Integer endWeek) {
+	    int currentYear = 2021;
 	    ProjectActivity curentActivity = test_project.searchActivity(activityName);
 		int[] timeframe = curentActivity.getTimeframe();
-		assertTrue(timeframe[0] == startWeek && timeframe[1] == endWeek);
+		assertTrue(timeframe[0] == currentYear);
+		assertTrue(timeframe[1] == startWeek);
+		assertTrue(timeframe[2] == currentYear);
+		assertTrue(timeframe[3] == endWeek);
 	}
 	
 	@When("The project leader sets an illegible time frame")
 	public void the_project_leader_sets_an_illegible_time_frame() {
 		ProjectActivity curentActivity = test_project.searchActivity(activityName);
 		try {
-			curentActivity.setTimeFrame(-2, 55);
+			curentActivity.setTimeFrame(2021, -2, 2021, 55);
 		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage()); 
 		}

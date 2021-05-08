@@ -8,8 +8,9 @@ Background:
 
 Scenario: The project leader sets a time frame for a project activity
 	Given There is a project activity
-	When The project leader sets a time frame with start week 1 and end week 5 for an activity
-	Then The activity is given a time frame with start week 1 and end week 5
+	
+	When The project leader sets a time with current year, start week 1 and end week 5 for an activity
+	Then The activity is given a time frame with current year, start week 1 and end week 5
 
 Scenario: The project leader sets an illegible date as time frame for a project activity
 	Given There is a project activity

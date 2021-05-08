@@ -1,5 +1,6 @@
 package dtu.scheduler;
-//Philip Hviid
+
+// Philip Hviid
 public abstract class Activity {
 	private TimeFrame timeFrame;
 	private String name;
@@ -13,17 +14,17 @@ public abstract class Activity {
 	}
 	
 	//protected as they can only be called from its child classes anyway
-	protected Activity(String name, int startWeek, int endWeek) throws Exception {
+	protected Activity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
 		this.name = name;
 		if(name.isEmpty()) {
 			throw new IllegalArgumentException("activity cannot be created without name");
 		}
 		timeFrame = new TimeFrame();
-		setTimeFrame(startWeek, endWeek);
+		setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	
-	public void setTimeFrame(int startWeek, int endWeek) throws Exception {
-		timeFrame.setTimeFrame(startWeek, endWeek);
+	public void setTimeFrame(int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		timeFrame.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	public int[] getTimeframe() {
 		return timeFrame.getTimeFrame();

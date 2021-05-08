@@ -6,7 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-//Philip HViid
+// Philip HViid
 public class NonProjectSchedulingSteps {
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder msg;
@@ -21,7 +21,7 @@ public class NonProjectSchedulingSteps {
 
 	@Given("that a nonproject activity exists")
 	public void thatANonprojectActivityExists() throws Exception {
-	    nonProjectActivity = new NonProjectActivity("Test", 1,2);
+	    nonProjectActivity = new NonProjectActivity("Test", 2021, 1, 2021, 2);
 	}
 	
 	@When("the worker creates a nonproject activity")
@@ -36,7 +36,7 @@ public class NonProjectSchedulingSteps {
 	
 	@Given("that worker is on a nonproject activity")
 	public void thatWorkerIsOnANonprojectActivity() throws Exception {
-		nonProjectActivity = new NonProjectActivity("Test", 1, 1);
+		nonProjectActivity = new NonProjectActivity("Test", 2021, 1, 2021, 1);
 		schedulingApp.createNonProjectActivity(nonProjectActivity);
 	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
 	}
@@ -70,13 +70,13 @@ public class NonProjectSchedulingSteps {
 	@When("worker schedules nonproject activity")
 	public void workerSchedulesNonprojectActivity() throws Exception {
 		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
-	    schedulingApp.scheduleNonProjectActivity("test",1,1);
+	    schedulingApp.scheduleNonProjectActivity("test", 2021, 1, 2021, 1);
 	}
 
 	@Given("worker already has {int} {string} activities")
 	public void workerHasAlreadyHasActivity(Integer count, String type) throws Exception {
-	    for(int i = 0; i<count ; i++) {
-	    	schedulingApp.scheduleNonProjectActivity(type,1,1);;
+	    for(int i = 0; i < count; i++) {
+	    	schedulingApp.scheduleNonProjectActivity(type, 2021, 1, 2021, 1);;
 	    }
 	}
 	
@@ -85,7 +85,7 @@ public class NonProjectSchedulingSteps {
 		amounthOfNonProjectActivities = schedulingApp.getWorkersNonProjectActivities().size();
 		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
 		try {
-		    schedulingApp.scheduleNonProjectActivity(string,1,1);
+		    schedulingApp.scheduleNonProjectActivity(string, 2021, 1, 2021, 1);
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}
@@ -102,7 +102,7 @@ public class NonProjectSchedulingSteps {
 		amounthOfNonProjectActivities = schedulingApp.getWorkersNonProjectActivities().size();
 		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
 	    try {
-			schedulingApp.scheduleNonProjectActivity("",1,1);
+			schedulingApp.scheduleNonProjectActivity("", 2021, 1, 2021, 1);
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}

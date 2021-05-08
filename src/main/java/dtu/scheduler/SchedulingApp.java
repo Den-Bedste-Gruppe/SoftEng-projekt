@@ -100,8 +100,8 @@ public class SchedulingApp {
 	}
 	
 	//This is used from clientside when scheduling nonprojectactivities, as they will always be both created and registered
-	public void scheduleNonProjectActivity(String name, int startWeek, int endWeek) throws Exception {
-		NonProjectActivity npa = new NonProjectActivity(name, startWeek, endWeek);
+	public void scheduleNonProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		NonProjectActivity npa = new NonProjectActivity(name, startYear, startWeek, endYear, endWeek);
 		createNonProjectActivity(npa);
 		registerNonProjectActivity(npa);
 	}

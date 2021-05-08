@@ -21,6 +21,8 @@ public class WorkerRepositoryInMemory implements WorkerRepository {
 	
 	@Override
 	public Worker getWorkerById(String id) throws WorkerDoesNotExistException {
+		// TODO FIX this shit
+		// Should just use getWorkerById2 dont check before hand
 		if(isUserInDatabase(id)) {
 			return getWorkerById2(id);
 		} else {

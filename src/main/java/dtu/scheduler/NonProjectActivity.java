@@ -1,12 +1,9 @@
 package dtu.scheduler;
-//Philip Hviid
+
+// Philip Hviid
 public class NonProjectActivity extends Activity {
-	public NonProjectActivity(String name, int startWeek, int endWeek) throws Exception {
-		super(name, startWeek, endWeek);
+	public NonProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		super(name, startYear, startWeek, endYear, endWeek);
 		
 	}
-
-
-
-
 }

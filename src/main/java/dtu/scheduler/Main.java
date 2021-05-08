@@ -173,12 +173,16 @@ public class Main {
 	private static void inputTimeFrameScene(String name) {
 		while(true) {
 			gui.clearScreen();
-			System.out.println("Enter startweek:");
+			System.out.println("Enter start year:");
+			int startYear = gui.inputInt();
+			System.out.println("Enter start week:");
 			int startWeek = gui.inputInt();
-			System.out.println("Enter endweek");
+			System.out.println("Enter end year");
+			int endYear = gui.inputInt();
+			System.out.println("Enter end week");
 			int endWeek = gui.inputInt();
 			try {
-				schedulingApp.scheduleNonProjectActivity(name,startWeek, endWeek);
+				schedulingApp.scheduleNonProjectActivity(name, startYear, startWeek, endYear, endWeek);
 				break;
 			} catch (Exception e) {
 				System.out.println(e.getMessage() + ", try again:");
