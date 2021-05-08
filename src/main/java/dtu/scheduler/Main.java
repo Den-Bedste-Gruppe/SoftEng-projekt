@@ -3,8 +3,6 @@
 package dtu.scheduler;
 import java.util.List;
 
-import javax.xml.validation.SchemaFactoryConfigurationError;
-
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
 
@@ -248,7 +246,15 @@ public class Main {
 
 		gui.clearScreen();	
 		printProjects(schedulingApp.getProjects());
-		Project currProject = new Project("INITIALISATION");
+		Project currProject;
+		
+		// TODO why is this new project created. It could just be assigned null
+		try {
+			currProject = new Project("INITIALISATION");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		gui.println("Enter project ID:");
 		String projectID = gui.inputString();
@@ -266,20 +272,35 @@ public class Main {
 		String projectHoursInfo = "The Project with ID \"" + currProject.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
 
 		gui.println(projectHoursInfo);
+		gui.pressEnterToReturn();
 	}
 
 	private static void createProjectScene() {
 		gui.clearScreen();
+		
+		
+		String projectName = "";
+		
+		// Makes sure that project name is at least 2 characters
+//		while (projectName.length() < 2) {
 		gui.println("Enter new project name:");
-		String projectName = gui.inputString();
+		projectName = gui.inputString();
+//			if (projectName.length() >= 2) break;
+//			gui.println("Project name must be at least 2 characters or more");
+//		}
 
-		Project new_project;
+		Project new_project = null;
 
 		gui.println("Assign yourself as project leader? Y/N");
-		if (gui.inputChar() == 'y') {
-			new_project = new Project(projectName, schedulingApp.getCurrentUser());
-		} else {
-			new_project = new Project(projectName);
+		try {
+			if (gui.inputChar() == 'y') {
+				new_project = new Project(projectName, schedulingApp.getCurrentUser());
+			} else {
+				new_project = new Project(projectName);
+			}
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
+			return;
 		}
 		try {
 			schedulingApp.addProject(new_project);

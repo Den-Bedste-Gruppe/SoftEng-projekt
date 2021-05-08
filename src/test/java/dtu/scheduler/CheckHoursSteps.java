@@ -24,7 +24,7 @@ public class CheckHoursSteps {
 	
 	
 	@Given("a project with ID {int}")
-	public void aProjectWithID(Integer int1) throws ProjectAlreadyExistsException {
+	public void aProjectWithID(Integer int1) throws Exception {
 		projectID = int1;
 		project = new Project(Integer.toString(projectID));
 	    schedulingApp.addProject(project);

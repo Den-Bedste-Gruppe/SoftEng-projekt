@@ -79,4 +79,10 @@ public class TerminalGUI {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
+	
+	// Mads Harder
+	public void pressEnterToReturn() {
+		System.out.println("Press enter to return");
+		inputString();
+	}
 }

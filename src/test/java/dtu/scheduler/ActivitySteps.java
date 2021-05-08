@@ -61,7 +61,7 @@ public class ActivitySteps {
 	}
 	
 	@Given("A project exists")
-	public void aProjectExists() throws ProjectAlreadyExistsException {
+	public void aProjectExists() throws Exception {
 		project = new Project("P1");
 		projectID = project.getProjectID();
 	    schedulingApp.addProject(project);

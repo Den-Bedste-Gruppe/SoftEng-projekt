@@ -19,7 +19,7 @@ public class SetTimeFrameTest {
 	private String projectName = "timeframeTest", activityName = "timeframeActivity";
 	Project test_project;
 
-	public SetTimeFrameTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
+	public SetTimeFrameTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) throws Exception {
 		this.schedulingApp = schedulingApp;
 		this.errorMessageHolder = errorMessageHolder;
 		test_project = new Project(projectName);
