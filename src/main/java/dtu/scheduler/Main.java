@@ -51,6 +51,9 @@ public class Main {
 		gui.clearScreen();
 
 		gui.println("Welcome " + schedulingApp.getCurrentUser());
+		if(DateHelper.isItWednessDay()) {
+			System.out.println("It is wednessday my dude");
+		}
 
 		String[] mainMenuOptions = { //Examples, more to be added. Remember to update the switch case below
 				"Personal scheduling",
