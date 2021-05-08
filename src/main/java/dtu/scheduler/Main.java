@@ -247,6 +247,8 @@ public class Main {
 		gui.clearScreen();	
 		printProjects(schedulingApp.getProjects());
 		Project currProject;
+		
+		// TODO why is this new project created. It could just be assigned null
 		try {
 			currProject = new Project("INITIALISATION");
 		} catch (Exception e) {
@@ -270,6 +272,7 @@ public class Main {
 		String projectHoursInfo = "The Project with ID \"" + currProject.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
 
 		gui.println(projectHoursInfo);
+		gui.pressEnterToReturn();
 	}
 
 	private static void createProjectScene() {
