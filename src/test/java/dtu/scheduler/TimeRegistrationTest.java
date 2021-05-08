@@ -17,7 +17,7 @@ import io.cucumber.java.en.When;
 public class TimeRegistrationTest {
 
 	private SchedulingApp schedulingApp;
-	private Activity test_activity;
+	private ProjectActivity test_activity;
 	private ErrorMessageHolder errorMessageHolder;
 
 	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
@@ -28,7 +28,7 @@ public class TimeRegistrationTest {
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) throws Exception {
 		double diff = hours - schedulingApp.getWeeklyRegisteredHours();
-		Activity dummy_activity = new Activity("Test");
+		ProjectActivity dummy_activity = new ProjectActivity("Test");
 		try {
 			schedulingApp.registerHours(diff, dummy_activity);
 		} catch (Exception e) {
@@ -39,7 +39,7 @@ public class TimeRegistrationTest {
 
 	@Given("that there is a project activity")
 	public void thatThereIsAProjectActivity() {
-		test_activity = new Activity("test activity");
+		test_activity = new ProjectActivity("test activity");
 	}
 
 	@Given("that the activity has {double} hours spent")

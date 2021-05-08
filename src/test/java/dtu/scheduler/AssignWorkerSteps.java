@@ -17,7 +17,7 @@ public class AssignWorkerSteps {
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder errMsg;
 	private ActivityAssigner activityAssigner;
-	private Activity activity;
+	private ProjectActivity activity;
 	private String activityName = "Test Activity";
 
 	
@@ -39,7 +39,7 @@ public class AssignWorkerSteps {
 	
 	@Given("that there is an activity")
 	public void thatThereIsAnActivity() {
-	    activity = new Activity(activityName);
+	    activity = new ProjectActivity(activityName);
 	}
 
 	@When("the user assigns themselves to the activity")
@@ -58,7 +58,7 @@ public class AssignWorkerSteps {
 	@Given("the worker has {int} activities this week")
 	public void theWorkerHasActivitiesThisWeek(Integer int1) {
 	    for (int i = 0; i < int1; i++) {
-			worker.addActivity(new Activity("Mock Activity " + (i + 1)));
+			worker.addActivity(new ProjectActivity("Mock Activity " + (i + 1)));
 		}
 	    
 //	    Debug:

@@ -246,7 +246,7 @@ public class Main {
 				//TODO THIS PROJECT IS FOR TESTING, REMEMBER TO DELETE
 				try {
 					schedulingApp.addProject(new Project("030901", schedulingApp.getCurrentUser()));
-					Activity activity = new Activity("Clean up Kanban Board");
+					ProjectActivity activity = new ProjectActivity("Clean up Kanban Board");
 					schedulingApp.searchProject("030901").addActivity(activity);
 					TimeRegistration registration = new TimeRegistration(13.5, activity, schedulingApp.getCurrentUserID());
 				} catch (Exception e) {

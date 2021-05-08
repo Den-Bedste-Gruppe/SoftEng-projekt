@@ -8,10 +8,10 @@ public class TimeRegistration {
 
 	private double hours;
 	private Date date;
-	private Activity parent_activity;
+	private ProjectActivity parent_activity;
 	private String parent_worker_id;
 
-	public TimeRegistration(double hours, Activity parent_activity, String parent_worker_id) {
+	public TimeRegistration(double hours, ProjectActivity parent_activity, String parent_worker_id) {
 		this.parent_activity = parent_activity;
 		this.hours = hours;
 		this.parent_worker_id = parent_worker_id;
@@ -31,7 +31,7 @@ public class TimeRegistration {
 		hours = new_hours;
 		parent_activity.updateTotalHoursSpent();
 	}
-	public Activity getActivity() {
+	public ProjectActivity getActivity() {
 		return parent_activity;
 	}
 }

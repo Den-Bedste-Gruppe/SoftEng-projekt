@@ -7,7 +7,7 @@ import java.util.List;
 public class Project {
 	private String projectID;
 	private Worker projectLeader;
-	private List<Activity> activities = new ArrayList<>();
+	private List<ProjectActivity> activities = new ArrayList<>();
 	
 	// TODO "På oprettelsestidspunktet er information om aktiviteter og starttidspunkt ikke fuldstændige"
 	// Maybe timefram should be null
@@ -54,7 +54,7 @@ public class Project {
 	}
 	
 	private boolean activityWithNameExists(String name) {
-		Activity activity;
+		ProjectActivity activity;
 		for(int i = activities.size(); i>0; i--){
 			activity = activities.get(i-1);
 			if(activity.getName().equals(name)) {
@@ -65,7 +65,7 @@ public class Project {
 	}
 	
 	//Emil Krarup
-	public Activity searchActivity(String name) {
+	public ProjectActivity searchActivity(String name) {
 		for(int i = 0; i < activities.size(); i++){
 			if (activities.get(i).getName().equals(name)) {
 				return activities.get(i);
@@ -74,7 +74,7 @@ public class Project {
 		return null;
 	}
 	
-	public void addActivity(Activity activity) throws Exception {
+	public void addActivity(ProjectActivity activity) throws Exception {
 		if(activityWithNameExists(activity.getName())) {
 			throw new Exception("Project with same name already exists in project");
 		} else if(activity.getName().isEmpty()) {
@@ -83,7 +83,7 @@ public class Project {
 		activities.add(activity);
 	}
 	
-	public List<Activity> getActivities() {
+	public List<ProjectActivity> getActivities() {
 		return activities;
 	}
 	
@@ -93,7 +93,7 @@ public class Project {
 	
 	public double getProjectHours() {
 		double totalHours = 0;
-		for (Activity activity : activities) {
+		for (ProjectActivity activity : activities) {
 			totalHours += activity.getTotalHoursSpent();
 		}
 		

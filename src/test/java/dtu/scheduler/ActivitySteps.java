@@ -16,7 +16,7 @@ public class ActivitySteps {
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder msg;
 	private ActivityAssigner activityAssigner;
-	private Activity activity;
+	private ProjectActivity activity;
 	private int amounthOfNonProjectRegistrations;
 	private NonProjectActivity nonProjectActivity;
 	private Project project;
@@ -31,7 +31,7 @@ public class ActivitySteps {
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException {
 		String currUser = schedulingApp.getCurrentUserID();
-		activity = new Activity("Test");
+		activity = new ProjectActivity("Test");
 		schedulingApp.assignActivity(currUser, activity);
 	}
 

@@ -1,7 +1,7 @@
 package dtu.scheduler;
 //Philip Hviid
 public class RegistrationHandler {
-	public void registerHours(double hours, Activity activity, Worker worker) throws Exception {
+	public void registerHours(double hours, ProjectActivity activity, Worker worker) throws Exception {
 		// By Kristian Sofus Knudsen
 		if (hours <= 0 || hours > 24) {
 			throw new Exception("Invalid amount of hours");

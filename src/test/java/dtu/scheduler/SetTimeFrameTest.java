@@ -39,14 +39,14 @@ public class SetTimeFrameTest {
 	@When("The project leader sets a time frame with start week {int} and end week {int} for an activity")
 	public void the_project_leader_sets_a_time_frame_with_start_week_and_end_week_for_an_activity(Integer startWeek, Integer endWeek) throws Exception {
 	    Project curentProject = schedulingApp.searchProject(projectName);
-	    Activity curentActivity = curentProject.searchActivity(activityName);
+	    ProjectActivity curentActivity = curentProject.searchActivity(activityName);
 	    curentActivity.setTimeFrame(startWeek, endWeek);
 	}
 
 	@Then("The activity is given a time frame with start week {int} and end week {int}")
 	public void the_activity_is_given_a_time_frame_with_start_week_and_end_week(Integer startWeek, Integer endWeek) {
 		Project curentProject = schedulingApp.searchProject(projectName);
-	    Activity curentActivity = curentProject.searchActivity(activityName);
+	    ProjectActivity curentActivity = curentProject.searchActivity(activityName);
 		int[] timeframe = curentActivity.getTimeframe();
 		assertTrue(timeframe[0] == startWeek && timeframe[1] == endWeek);
 	}
@@ -54,7 +54,7 @@ public class SetTimeFrameTest {
 	@When("The project leader sets an illegible time frame")
 	public void the_project_leader_sets_an_illegible_time_frame() {
 		Project curentProject = schedulingApp.searchProject(projectName);
-		Activity curentActivity = curentProject.searchActivity(activityName);
+		ProjectActivity curentActivity = curentProject.searchActivity(activityName);
 		try {
 			curentActivity.setTimeFrame(-2, 55);
 		} catch (Exception e) {

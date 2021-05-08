@@ -13,8 +13,8 @@ public class CheckHoursSteps {
 	private SchedulingApp schedulingApp;
 	private Project project;
 	private int projectID;
-	private Activity activity1;
-	private Activity activity2;
+	private ProjectActivity activity1;
+	private ProjectActivity activity2;
 	private double totalProjectHours;
 	private int numOfActivities;
 	
@@ -33,7 +33,7 @@ public class CheckHoursSteps {
 
 	@Given("there is a project activity with {double} hours spent")
 	public void thereIsAProjectActivityWithHoursSpent(double hours1) throws Exception {
-		activity1 = new Activity("Clean up Kanban Board");
+		activity1 = new ProjectActivity("Clean up Kanban Board");
 		double diff1 = hours1 - activity1.getTotalHoursSpent();
 	    project.addActivity(activity1);
 	    TimeRegistration registration1 = new TimeRegistration(diff1, activity1, "LMAA");
@@ -41,7 +41,7 @@ public class CheckHoursSteps {
 	
 	@Given("there is another project activity with {double} hours spent")
 	public void thereIsAnotherProjectActivityWithHoursSpent(double hours2) throws Exception {
-		activity2 = new Activity("Finish GUI");
+		activity2 = new ProjectActivity("Finish GUI");
 		double diff2 = hours2 - activity2.getTotalHoursSpent();
 		TimeRegistration registration2 = new TimeRegistration(diff2, activity2, "LMAA");
 	    project.addActivity(activity2);

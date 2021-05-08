@@ -27,7 +27,7 @@ public class SchedulingApp {
 	
 	
 	public void createProjectActivity(String activtyName, String projectId) throws Exception {
-		Activity activity = new Activity(activtyName);
+		ProjectActivity activity = new ProjectActivity(activtyName);
 		searchProject(projectId).addActivity(activity);
 	}
 	
@@ -57,7 +57,7 @@ public class SchedulingApp {
 		return workerRepository.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException {
+	public void assignActivity(String workerId, ProjectActivity activity) throws WorkerDoesNotExistException {
 		if (isUserInDatabase(workerId)) {
 			activityAssigner.assignActivity(getWorkerById(workerId), activity);
 		} else {
@@ -82,12 +82,12 @@ public class SchedulingApp {
 		return projectRepository.getProjects();
 	}
 
-	public double getHoursRegisteredOnActivity(Activity activity) throws Exception {
+	public double getHoursRegisteredOnActivity(ProjectActivity activity) throws Exception {
 		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
 		return registration.getHours();
 	}
 
-	public void registerHours(double hours, Activity test_activity) throws Exception {
+	public void registerHours(double hours, ProjectActivity test_activity) throws Exception {
 		registrationHandler.registerHours(hours, test_activity, currentUser);
 	}
 
@@ -104,7 +104,7 @@ public class SchedulingApp {
 		return workerRepository.getWorkerById(workerId);
 	}
 
-	public void requestAssistance(Activity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+	public void requestAssistance(ProjectActivity activity, String targetWorkerId) throws WorkerDoesNotExistException {
 		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
 		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
 		
@@ -114,7 +114,7 @@ public class SchedulingApp {
 		return getWorkerById(workerId).getRequests();
 	}
 		
-	public void changeHoursOnActivity(double new_hours, Activity activity) throws Exception {
+	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
 		currentUser.changeHours(new_hours, activity);
 
 	}

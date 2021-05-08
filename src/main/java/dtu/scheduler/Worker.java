@@ -12,7 +12,7 @@ public class Worker {
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<NonProjectRegistration> nonprojectregistrationList = new ArrayList<>();
 	private List<AssistRequest> requests;
-	private List<Activity> activities;
+	private List<ProjectActivity> activities;
 	private List<NonProjectActivity> nonProjectActivies;
  
 	public Worker(String workerId) {
@@ -43,7 +43,7 @@ public class Worker {
 
 
 
-	public void changeHours(double new_hours, Activity activity) throws Exception {
+	public void changeHours(double new_hours, ProjectActivity activity) throws Exception {
 		// By Kristian Sofus Knudsen
 		TimeRegistration registration = getTimeRegistrationByActivity(activity);
 		if (new_hours <= 0 || new_hours > 24) {
@@ -54,7 +54,7 @@ public class Worker {
 		updateWeeklyHoursSpent(new_hours-old_hours);
 	}
 
-	public TimeRegistration getTimeRegistrationByActivity(Activity activity) throws Exception {
+	public TimeRegistration getTimeRegistrationByActivity(ProjectActivity activity) throws Exception {
 		// By Kristian Sofus Knudsen
 		for (TimeRegistration r : registrationList) {
 			if (r.getActivity().equals(activity)) {
@@ -70,11 +70,11 @@ public class Worker {
 		return workerId;
 	}
 
-	public List<Activity> getActivities() {
+	public List<ProjectActivity> getActivities() {
 		return activities;
 	}
 	
-	public void addActivity(Activity activity) {
+	public void addActivity(ProjectActivity activity) {
 		activities.add(activity);
 	}
 	
