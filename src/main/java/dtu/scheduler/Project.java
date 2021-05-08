@@ -5,7 +5,9 @@ import java.util.List;
 
 // Mads Harder
 public class Project {
+
 	private String projectID;
+	private String name;
 	private Worker projectLeader;
 	private List<ProjectActivity> activities = new ArrayList<>();
 	
@@ -98,5 +100,12 @@ public class Project {
 		}
 		
 		return totalHours;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String new_name) {
+		name = new_name;
 	}
 }
