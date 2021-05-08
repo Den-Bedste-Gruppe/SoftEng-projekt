@@ -43,9 +43,8 @@ public class AssignWorkerSteps {
 	}
 
 	@When("the user assigns themselves to the activity")
-	public void theUserAssignsThemselvesToTheActivity() throws WorkerDoesNotExistException {
+	public void theUserAssignsThemselvesToTheActivity() throws Exception {
 			worker.addActivity(activity);
-		
 	}
 
 	@Then("the user is assigned to the activity")
@@ -56,7 +55,7 @@ public class AssignWorkerSteps {
 	
 	
 	@Given("the worker has {int} activities this week")
-	public void theWorkerHasActivitiesThisWeek(Integer int1) {
+	public void theWorkerHasActivitiesThisWeek(Integer int1) throws Exception {
 	    for (int i = 0; i < int1; i++) {
 			worker.addActivity(new ProjectActivity("Mock Activity " + (i + 1)));
 		}
@@ -75,7 +74,7 @@ public class AssignWorkerSteps {
 	
 	
 	@When("the user assigns a user with ID {string} to the activity")
-	public void theUserAssignsAUserWithIDToTheActivity(String string) {
+	public void theUserAssignsAUserWithIDToTheActivity(String string) throws Exception {
 		fakeID = string;
 	    try {
 			schedulingApp.assignActivity(fakeID, activity);

@@ -30,7 +30,7 @@ public class ActivitySteps {
 	}
 	
 	@Given("the worker is on an activity")
-	public void theWorkerIsOnAnActivity() throws WorkerDoesNotExistException {
+	public void theWorkerIsOnAnActivity() throws Exception {
 		String currUser = schedulingApp.getCurrentUserID();
 		activity = new ProjectActivity("Test");
 		schedulingApp.assignActivity(currUser, activity);

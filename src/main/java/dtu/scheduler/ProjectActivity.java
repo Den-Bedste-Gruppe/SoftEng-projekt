@@ -11,6 +11,7 @@ public class ProjectActivity extends Activity {
 	//doubles default to 0, no need to set it
 	private double hoursSpent;
 	private List<TimeRegistration> registrationList = new ArrayList<>();
+	private List<Worker> assignedWorkers = new ArrayList<>();
 	
 	
 	
@@ -40,6 +41,20 @@ public class ProjectActivity extends Activity {
 			sum += r.getHours();
 		}
 		hoursSpent = sum;
+	}
+
+
+	public void addWorker(Worker worker) throws Exception {
+		for (Worker w : assignedWorkers) {
+			if (w.getWorkerId() == worker.getWorkerId()) {
+				throw new Exception("Worker already assigned to activity");
+			}
+		}
+		assignedWorkers.add(worker);
+	}
+
+	public List<Worker> getAssignedWorkers() {
+		return assignedWorkers;
 	}
 	
 }

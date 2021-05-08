@@ -55,7 +55,7 @@ public class SchedulingApp {
 		return workerRepository.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String workerId, ProjectActivity activity) throws WorkerDoesNotExistException {
+	public void assignActivity(String workerId, ProjectActivity activity) throws Exception {
 		if (isUserInDatabase(workerId)) {
 			activityAssigner.assignActivity(getWorkerById(workerId), activity);
 		} else {
