@@ -43,9 +43,11 @@ public class TimeRegistrationTest {
 	}
 
 	@Given("that the activity has {double} hours spent")
-	public void thatTheActivityHasHoursSpent(double hours) {
-		double diff = hours - test_activity.getTotalHoursSpent();
-		TimeRegistration dummy_registration = new TimeRegistration(diff, test_activity, schedulingApp.getCurrentUserID());
+	public void thatTheActivityHasHoursSpent(double hours) throws Exception {
+		if(hours!=0) {
+			double diff = hours - test_activity.getTotalHoursSpent();
+			schedulingApp.registerHours(hours, test_activity);
+		}
 		assertTrue(test_activity.getTotalHoursSpent() == hours);
 	}
 

@@ -13,14 +13,16 @@ public class ProjectActivity extends Activity {
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	
 	
+	
 	public ProjectActivity(String name, int startWeek, int endWeek) throws Exception {
 		super(name, startWeek, endWeek);
 	}
 	
-	public ProjectActivity(String name) {
-		super();
-		setName(name);
+
+	public ProjectActivity(String activityName) {
+		super(activityName);
 	}
+
 
 	public double getTotalHoursSpent() {
 		return hoursSpent;

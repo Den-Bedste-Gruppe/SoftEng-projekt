@@ -17,7 +17,7 @@ Scenario: Worker schedules nonproject activity without name
 	When worker schedules nonproject activity without name
 	Then no nonproject activity is added to the workers activities
 	And no nonproject registration is added
-	And the error message "nonproject activity must have a have name" is given
+	And the error message "activity cannot be created without name" is given
 
 Scenario: Worker registers Sick Leave activity
 	When worker schedules "Sick Leave" activity
@@ -25,19 +25,19 @@ Scenario: Worker registers Sick Leave activity
   And the nonproject registration is added
 
 Scenario: Worker registers multiple Sick Leave activities
-	Given worker has already has 5 "Sick Leave" activity
+	Given worker already has 5 "Sick Leave" activities
 	When worker schedules "Sick Leave" activity
   Then the nonproject activity is added to the workers activities
   And the nonproject registration is added
 
 Scenario: Worker registers multiple Vacation activities
-	Given worker has already has 5 "Vacation" activity
+	Given worker already has 5 "Vacation" activities
 	When worker schedules "Vacation" activity
   Then the nonproject activity is added to the workers activities
   And the nonproject registration is added
 
 Scenario: Worker registers multiple Course activities
-	Given worker has already has 5 "Course" activity
+	Given worker already has 5 "Course" activities
 	When worker schedules "Course" activity
   Then the nonproject activity is added to the workers activities
   And the nonproject registration is added

@@ -44,7 +44,7 @@ public class NonProjectSchedulingSteps {
 	@When("the worker registers nonproject activity")
 	public void theWorkerRegistersHoursOnTheNonprojectActivity() {
 	    try {
-			schedulingApp.registerNonProject(nonProjectActivity);
+			schedulingApp.registerNonProjectActivity(nonProjectActivity);
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}
@@ -73,7 +73,7 @@ public class NonProjectSchedulingSteps {
 	    schedulingApp.scheduleNonProjectActivity("test",1,1);
 	}
 
-	@Given("worker has already has {int} {string} activity")
+	@Given("worker already has {int} {string} activities")
 	public void workerHasAlreadyHasActivity(Integer count, String type) throws Exception {
 	    for(int i = 0; i<count ; i++) {
 	    	schedulingApp.scheduleNonProjectActivity(type,1,1);;

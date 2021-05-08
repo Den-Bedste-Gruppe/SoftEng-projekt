@@ -1,12 +1,12 @@
 package dtu.scheduler;
 
-import java.util.Date;
+
 //Philip Hviid
 public class NonProjectRegistration extends ActivityRegistration {
 	private NonProjectActivity parentActivity;
 	
-	public NonProjectRegistration(NonProjectActivity parentActivity, String parentWorkerId) {
-		super(parentWorkerId);
+	public NonProjectRegistration(NonProjectActivity parentActivity, Worker parentWorker) {
+		super(parentWorker);
 		this.parentActivity = parentActivity;
 	}
 
@@ -15,12 +15,12 @@ public class NonProjectRegistration extends ActivityRegistration {
 	}
 	
 	public void register() {
-		//TODO redelegate registration functionality here
+		getParentWorker().addNonProjectRegistration(this);
 	}
 
-	@Override
 	Activity getParentActivity() {
 		return parentActivity;
 	}
+	
 	
 }

@@ -246,16 +246,6 @@ public class Main {
 	private static void checkRegisteredHoursScene() {
 		//Philip Hviid
 
-		//TODO THIS PROJECT IS FOR TESTING, REMEMBER TO DELETE
-		try {
-			schedulingApp.addProject(new Project("030901", schedulingApp.getCurrentUser()));
-			ProjectActivity activity = new ProjectActivity("Clean up Kanban Board");
-			schedulingApp.searchProject("030901").addActivity(activity);
-			TimeRegistration registration = new TimeRegistration(13.5, activity, schedulingApp.getCurrentUserID());
-		} catch (Exception e) {
-			gui.printErrorAndContinue(e);
-		}		
-		
 		gui.clearScreen();	
 		printProjects(schedulingApp.getProjects());
 		Project currProject = new Project("INITIALISATION");

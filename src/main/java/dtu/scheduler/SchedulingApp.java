@@ -12,13 +12,11 @@ public class SchedulingApp {
 	private ProjectRepository projectRepository = new ProjectRepositoryInMemory();
 	private ActivityAssigner activityAssigner;
 	private AssistRequestHandler requestHandler;
-	private RegistrationHandler registrationHandler;
 
 	public SchedulingApp() {
 		this.workerRepository = new WorkerRepositoryInMemory();
 		this.activityAssigner = new ActivityAssigner();
 		this.requestHandler = new AssistRequestHandler();
-		this.registrationHandler = new RegistrationHandler();
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
@@ -96,31 +94,29 @@ public class SchedulingApp {
 		return registration.getHours();
 	}
 
-	public void registerHours(double hours, ProjectActivity test_activity) throws Exception {
-		registrationHandler.registerHours(hours, test_activity, currentUser);
+	public void registerHours(double hours, ProjectActivity activity) throws Exception {
+		TimeRegistration newTimeRegistration = new TimeRegistration(hours, activity, currentUser);
+		newTimeRegistration.register();
 	}
 	
-	//This is used from clientside when scheduling nonprojectactivities
+	//This is used from clientside when scheduling nonprojectactivities, as they will always be both created and registered
 	public void scheduleNonProjectActivity(String name, int startWeek, int endWeek) throws Exception {
-		if(name.isEmpty()) {
-			throw new IllegalArgumentException("nonproject activity must have a have name");
-		}
-		NonProjectActivity npa = new NonProjectActivity(name,startWeek,endWeek);
+		NonProjectActivity npa = new NonProjectActivity(name, startWeek, endWeek);
 		createNonProjectActivity(npa);
-		registerNonProject(npa);
+		registerNonProjectActivity(npa);
 	}
 	
 	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
 		currentUser.changeHours(new_hours, activity);
 
 	}
-	
 
 	//used by scheduleNonProjectActivity, not by client
-	public void registerNonProject(NonProjectActivity nonProjectActivity) {
-		registrationHandler.registerNonProjectActivity(nonProjectActivity, currentUser);
-		
+	public void registerNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		NonProjectRegistration newNonProjectRegistration = new NonProjectRegistration(nonProjectActivity, currentUser);
+		newNonProjectRegistration.register();	
 	}
+	
 	
 	//used by scheduleNonProjectActivity, not by client
 	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
