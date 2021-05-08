@@ -15,34 +15,38 @@ public class Project {
 	
 	// TODO "På oprettelsestidspunktet er information om aktiviteter og starttidspunkt ikke fuldstændige"
 	// Maybe timefram should be null
-	private int[] timeframe = new int[2]; //Start and end weeks
+	//private int[] timeframe = new int[2]; //Start and end weeks
+	private TimeFrame timeFrame;
 
 	public Project(String name) throws Exception {
 		if (name.length() < 2) throw new Exception("Project name must be at least 2 characters");
 		this.name = name;
-		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);
+		int currentYear = DateHelper.thisYear();
+		int currentWeek = DateHelper.thisWeek();
+		projectID = String.format("%d%03d", currentYear, running_ID);
 		running_ID++;
-		timeframe[0] = DateHelper.thisWeek();
-		timeframe[1] = DateHelper.thisWeek();
+		timeFrame = new TimeFrame();
+		timeFrame.setTimeFrame(currentYear, currentWeek, currentYear, currentWeek);
 	}
 
 	public Project(String name, Worker projectLeader) throws Exception {
 		if (name.length() < 2) throw new Exception("Project name must be at least 2 characters");
 		this.name = name;
+		int currentYear = DateHelper.thisYear();
+		int currentWeek = DateHelper.thisWeek();
 		this.projectLeader = projectLeader;
 		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);
 		running_ID++;
-		timeframe[0] = DateHelper.thisWeek();
-		timeframe[1] = DateHelper.thisWeek();
+		timeFrame = new TimeFrame();
+		timeFrame.setTimeFrame(currentYear, currentWeek, currentYear, currentWeek);
 	}
 
-	public int[] getTimeframe() {
-		return timeframe;
+	public TimeFrame getTimeframe() {
+		return timeFrame;
 	}
 
-	public void setTimeframe(int startWeek, int endWeek) {
-		timeframe[0] = startWeek;
-		timeframe[1] = endWeek;
+	public void setTimeframe(int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		timeFrame.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	
 	public String getProjectID() {
