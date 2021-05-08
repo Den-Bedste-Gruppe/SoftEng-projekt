@@ -1,22 +1,27 @@
 package dtu.scheduler;
 
 public abstract class Activity {
-	private TimeFrame timeFrame = new TimeFrame();
+	private TimeFrame timeFrame;
 	private String name;
 	
+	protected Activity() {
+		timeFrame = new TimeFrame();
+	}
+	
+	//protected as they can only be called from its child classes anyway
+	protected Activity(String name, int startWeek, int endWeek) throws Exception {
+		this.name = name;
+		timeFrame = new TimeFrame();
+		setTimeFrame(startWeek, endWeek);
+	}
+	
+	protected Activity(String name) {
+		this.name = name;
+	}
+	
 	public void setTimeFrame(int startWeek, int endWeek) throws Exception {
-		timeFrame.setTimeframe(startWeek, endWeek);
+		timeFrame.setTimeFrame(startWeek, endWeek);
 	}
-	
-	public Activity(String name) {
-		this.name = name;
-	}
-
-	public Activity(String name, int startWeek, int endWeek) {
-		this.name = name;
-		
-	}
-	
 	public int[] getTimeframe() {
 		return timeFrame.getTimeFrame();
 	}

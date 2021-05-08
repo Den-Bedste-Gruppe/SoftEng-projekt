@@ -85,7 +85,6 @@ public class Main {
 		String[] personalMenuOptions = {
 				"Register hours",
 				"Change registered hours",
-				//TODO find better name for nonproject 
 				"Register nonproject activity",
 				"Return"
 		};
@@ -130,42 +129,60 @@ public class Main {
 				"Register other nonproject activity",
 				"Return"
 		};
-
 		while (true) {
 			gui.clearScreen();
+			String name = null;
 			int menuChoice = gui.numericalMenu(nonProjectMenuOptions);
 			switch (menuChoice) {
 			case 1:
 				//TODO they should all require 2 valid dates, for end and start date, when that is implemented
-				schedulingApp.scheduleSickLeave();
+				name="Sick Leave";
 				break;
 			case 2:
-				schedulingApp.scheduleVacation();
+				name="Vacation";
 				break;
 			case 3:
-				schedulingApp.scheduleCourse();
+				name="Course";
 				break;
 			case 4:
-				customNonProjectActivityScene();
+				name = customNonProjectActivityScene();
 				break;
 			case 5:
 				return;
+			}
+			if(name!=null) {
+				inputTimeFrameScene(name);
+			}
+		}
+	}
+	
+	private static void inputTimeFrameScene(String name) {
+		while(true) {
+			gui.clearScreen();
+			System.out.println("Enter startweek:");
+			int startWeek = gui.inputInt();
+			System.out.println("Enter endweek");
+			int endWeek = gui.inputInt();	
+			try {
+				schedulingApp.scheduleNonProjectActivity(name,startWeek, endWeek);
+				break;
+			} catch (Exception e) {
+				System.out.println(e.getMessage() + ", try again:");
 			}
 		}
 	}
 
 	//Philip Hviid
-	private static void customNonProjectActivityScene() {
+	private static String customNonProjectActivityScene() {
 		gui.clearScreen();
 		while(true) {
 			System.out.println("Enter name/description of nonproject activity");
 			String name = gui.inputString();
-			try {
-				schedulingApp.scheduleNonProjectActivity(name);
-				break;
-			} catch (Exception e) {
-				System.out.println(e.getMessage() + ", try again:");
+			if(!name.isBlank()) {
+				return name;
 			}
+
+
 		}
 	}
 
