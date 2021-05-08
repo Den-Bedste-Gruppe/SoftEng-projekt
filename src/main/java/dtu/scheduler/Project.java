@@ -17,7 +17,8 @@ public class Project {
 	// Maybe timefram should be null
 	private int[] timeframe = new int[2]; //Start and end weeks
 
-	public Project(String name) {
+	public Project(String name) throws Exception {
+		if (name.length() < 2) throw new Exception("Project name must be at least 2 characters");
 		this.name = name;
 		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);
 		running_ID++;
@@ -25,7 +26,8 @@ public class Project {
 		timeframe[1] = DateHelper.thisWeek();
 	}
 
-	public Project(String name, Worker projectLeader) {
+	public Project(String name, Worker projectLeader) throws Exception {
+		if (name.length() < 2) throw new Exception("Project name must be at least 2 characters");
 		this.name = name;
 		this.projectLeader = projectLeader;
 		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);

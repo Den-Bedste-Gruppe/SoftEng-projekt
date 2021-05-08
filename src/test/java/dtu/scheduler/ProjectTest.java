@@ -41,7 +41,7 @@ public class ProjectTest {
 		try {
 			Project project = new Project(name);
 			schedulingApp.addProject(project);
-		} catch (ProjectAlreadyExistsException e) {
+		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
 	}
