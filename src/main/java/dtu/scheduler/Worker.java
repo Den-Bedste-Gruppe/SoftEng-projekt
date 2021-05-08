@@ -57,7 +57,7 @@ public class Worker {
 	public TimeRegistration getTimeRegistrationByActivity(ProjectActivity activity) throws Exception {
 		// By Kristian Sofus Knudsen
 		for (TimeRegistration r : registrationList) {
-			if (r.getActivity().equals(activity)) {
+			if (r.getParentActivity().equals(activity)) {
 				return r;
 			}
 		}

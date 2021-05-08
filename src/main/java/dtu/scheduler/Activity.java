@@ -1,5 +1,5 @@
 package dtu.scheduler;
-
+//Philip Hviid
 public abstract class Activity {
 	private TimeFrame timeFrame;
 	private String name;

@@ -10,4 +10,8 @@ public class DateHelper {
 		LocalDate now = LocalDate.now();
 		return now.get(WeekFields.of(DayOfWeek.MONDAY, 7).weekOfYear());
 	}
+	
+	public static LocalDate today() {
+		return LocalDate.now();
+	}
 }

@@ -2,20 +2,19 @@
 
 package dtu.scheduler;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class TimeRegistration {
-
+public class TimeRegistration extends ActivityRegistration {
+	private ProjectActivity parentActivity;
 	private double hours;
-	private Date date;
-	private ProjectActivity parent_activity;
-	private String parent_worker_id;
-
-	public TimeRegistration(double hours, ProjectActivity parent_activity, String parent_worker_id) {
-		this.parent_activity = parent_activity;
+	private LocalDate date;
+	
+	public TimeRegistration(double hours, ProjectActivity parentActivity, String parentWorkerId) {
+		super(parentWorkerId);
+		this.parentActivity = parentActivity;
+		date = DateHelper.today();
 		this.hours = hours;
-		this.parent_worker_id = parent_worker_id;
-		parent_activity.addRegistration(this);
+		parentActivity.addRegistration(this);
 	}
 
 	/*
@@ -29,9 +28,16 @@ public class TimeRegistration {
 	}
 	public void changeHours(double new_hours) {
 		hours = new_hours;
-		parent_activity.updateTotalHoursSpent();
+		parentActivity.updateTotalHoursSpent();
 	}
-	public ProjectActivity getActivity() {
-		return parent_activity;
+	
+	public void register() {
+		//TODO redelegate registration functionality here
 	}
+
+	@Override
+	Activity getParentActivity() {
+		return parentActivity;
+	}
+
 }
