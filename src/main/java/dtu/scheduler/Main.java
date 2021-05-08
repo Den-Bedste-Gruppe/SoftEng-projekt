@@ -122,10 +122,7 @@ public class Main {
 			double hours = gui.inputDouble();
 			schedulingApp.registerHours(hours, activity);
 		} catch (Exception e) {
-			gui.clearScreen();
-			gui.println(e.getMessage());
-			gui.println("Press ENTER to return");
-			gui.inputString();
+			gui.printErrorAndContinue(e);
 		}
 	}
 
@@ -251,10 +248,7 @@ public class Main {
 			schedulingApp.searchProject("030901").addActivity(activity);
 			TimeRegistration registration = new TimeRegistration(13.5, activity, schedulingApp.getCurrentUserID());
 		} catch (Exception e) {
-			gui.clearScreen();
-			gui.println(e.getMessage());
-			gui.println("Press ENTER to return");
-			gui.inputString();
+			gui.printErrorAndContinue(e);
 		}		
 		
 		gui.clearScreen();	
@@ -267,10 +261,7 @@ public class Main {
 		if(schedulingApp.searchProject(projectID) != null) {
 			currProject = schedulingApp.searchProject(projectID);
 		} else {
-			gui.clearScreen();
-			gui.println("No project found with given ID");
-			gui.println("Press ENTER to return");
-			gui.inputString();
+			gui.printErrorAndContinue("No project found with given ID");
 			return;
 		}	
 
@@ -298,10 +289,7 @@ public class Main {
 		try {
 			schedulingApp.addProject(new_project);
 		} catch (ProjectAlreadyExistsException e) {
-			gui.clearScreen();
-			gui.println(e.getMessage());
-			gui.println("Press ENTER to return");
-			gui.inputString();
+			gui.printErrorAndContinue(e);
 		}
 	}
 
@@ -316,14 +304,14 @@ public class Main {
 		try {
 			schedulingApp.assignProjectLeader(projectID, workerID);
 		} catch (Exception e) {
-			gui.clearScreen();
-			gui.println(e.getMessage());
-			gui.println("Press ENTER to return");
-			gui.inputString();
+			gui.printErrorAndContinue(e);
 		}
 	}
 
 	private static void activityManagementScene() {
+
+
+
 		return;
 	}
 

@@ -58,6 +58,19 @@ public class TerminalGUI {
 		return answer;
 	}
 
+	public void printErrorAndContinue(String error) {
+		clearScreen();
+		println(error);
+		println("Press ENTER to return");
+		inputString();
+	}
+	public void printErrorAndContinue(Exception error) {
+		clearScreen();
+		println(error.getMessage());
+		println("Press ENTER to return");
+		inputString();
+	}
+
 	public void clearScreen() {
 		// Feels like black magic, but it's pushing the ANSI escape codes for
 		// returning the cursor to the top-left, followed by clearing the screen. 
