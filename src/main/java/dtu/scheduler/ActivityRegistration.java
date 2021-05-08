@@ -7,8 +7,8 @@ public abstract class ActivityRegistration {
 		this.parentWorkerId = parentWorkerId;
 	}
 	
-	
 	abstract void register();
+	
 	
 	abstract Activity getParentActivity();
 }

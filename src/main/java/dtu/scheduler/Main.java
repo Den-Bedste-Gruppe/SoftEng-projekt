@@ -53,6 +53,9 @@ public class Main {
 		gui.clearScreen();
 
 		gui.println("Welcome " + schedulingApp.getCurrentUser());
+		if(DateHelper.isItWednessDay()) {
+			System.out.println("It is wednessday my dude");
+		}
 
 		String[] mainMenuOptions = { //Examples, more to be added. Remember to update the switch case below
 				"Personal scheduling",
@@ -148,7 +151,6 @@ public class Main {
 			int menuChoice = gui.numericalMenu(nonProjectMenuOptions);
 			switch (menuChoice) {
 			case 1:
-				//TODO they should all require 2 valid dates, for end and start date, when that is implemented
 				name="Sick Leave";
 				break;
 			case 2:
@@ -199,6 +201,7 @@ public class Main {
 
 		}
 	}
+
 
 	private static void projectManagementScene() {
 		List<Project> projects = schedulingApp.getProjects();
