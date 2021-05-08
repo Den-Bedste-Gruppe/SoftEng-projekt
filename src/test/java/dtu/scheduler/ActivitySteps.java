@@ -20,6 +20,7 @@ public class ActivitySteps {
 	private int amounthOfNonProjectRegistrations;
 	private NonProjectActivity nonProjectActivity;
 	private Project project;
+	private String projectID;
 
 	
 	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg, ActivityAssigner activityAssigner) {
@@ -62,19 +63,20 @@ public class ActivitySteps {
 	@Given("A project exists")
 	public void aProjectExists() throws ProjectAlreadyExistsException {
 		project = new Project("P1");
+		projectID = project.getProjectID();
 	    schedulingApp.addProject(project);
 	    assertTrue(project.getActivities().size()==0);
 	}
 
 	@Given("Worker is the project leader of current project")
 	public void workerIsTheProjectLeaderOfCurrentProject() throws Exception {
-	    schedulingApp.assignProjectLeader("P1",schedulingApp.getCurrentUserID());
+	    schedulingApp.assignProjectLeader(projectID,schedulingApp.getCurrentUserID());
 	}
 
 	@When("Worker creates an activity")
 	public void workerCreatesAnActivity() {
 	    try {
-			schedulingApp.createProjectActivity("act1", "P1");
+			schedulingApp.createProjectActivity("act1", projectID);
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}
@@ -88,13 +90,13 @@ public class ActivitySteps {
 
 	@Given("Activity with same name already exists")
 	public void typeOfActivityAlreadyExist() throws Exception {
-		schedulingApp.createProjectActivity("act1", "P1");
+		schedulingApp.createProjectActivity("act1", projectID);
 	}
 
 	@When("Worker creates the activity")
 	public void workerCreatesTheActivity() {
 		try {
-			schedulingApp.createProjectActivity("act1", "P1");
+			schedulingApp.createProjectActivity("act1", projectID);
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}

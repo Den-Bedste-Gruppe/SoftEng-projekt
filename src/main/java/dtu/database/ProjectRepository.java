@@ -11,4 +11,6 @@ public interface ProjectRepository {
 	List<Project> getProjects();
 
 	Project search(String id);
+
+	Project searchByName(String projectName);
 }

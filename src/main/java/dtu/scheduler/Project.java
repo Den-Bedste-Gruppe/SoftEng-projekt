@@ -5,7 +5,11 @@ import java.util.List;
 
 // Mads Harder
 public class Project {
+
+	private static int running_ID = 1;
+
 	private String projectID;
+	private String name;
 	private Worker projectLeader;
 	private List<ProjectActivity> activities = new ArrayList<>();
 	
@@ -13,15 +17,19 @@ public class Project {
 	// Maybe timefram should be null
 	private int[] timeframe = new int[2]; //Start and end weeks
 
-	public Project(String ID) {
-		projectID = ID;
+	public Project(String name) {
+		this.name = name;
+		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);
+		running_ID++;
 		timeframe[0] = DateHelper.thisWeek();
 		timeframe[1] = DateHelper.thisWeek();
 	}
 
-	public Project(String ID, Worker projectLeader) {
-		projectID = ID;
+	public Project(String name, Worker projectLeader) {
+		this.name = name;
 		this.projectLeader = projectLeader;
+		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);
+		running_ID++;
 		timeframe[0] = DateHelper.thisWeek();
 		timeframe[1] = DateHelper.thisWeek();
 	}
@@ -98,5 +106,12 @@ public class Project {
 		}
 		
 		return totalHours;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String new_name) {
+		name = new_name;
 	}
 }

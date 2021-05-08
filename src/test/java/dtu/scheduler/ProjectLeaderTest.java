@@ -24,22 +24,24 @@ public class ProjectLeaderTest {
 	}
 	
 	@When("a worker assigns the project {string} a project leader")
-	public void aWorkerAssignTheProjectAProjectLeader(String projectID) throws Exception {
+	public void aWorkerAssignTheProjectAProjectLeader(String projectName) throws Exception {
+		String projectID = schedulingApp.findIDByName(projectName);
 		schedulingApp.assignProjectLeader(projectID, schedulingApp.getCurrentUserID());
 	}
 
 	@Then("the project {string} has a project leader with id {string}")
-	public void theProjectHasAProjectLeaderWithId(String projectID, String leaderID) throws Exception {
+	public void theProjectHasAProjectLeaderWithId(String projectName, String leaderID) throws Exception {
+		String projectID = schedulingApp.findIDByName(projectName);
 		if (!schedulingApp.searchProject(projectID).getProjectLeader().getWorkerId().equals(leaderID)) {
 			throw new Exception("Error! the project does now have a project leader");
 		}
 	}
 
 	@Given("the project {string} has a project leader")
-	public void theProjectHasAProjectLeader(String projectID) throws Exception {
+	public void theProjectHasAProjectLeader(String projectName) throws Exception {
+		String projectID = schedulingApp.findIDByName(projectName);
 		Worker worker = schedulingApp.getCurrentUser();
 		schedulingApp.searchProject(projectID).assignLeader(worker);
-		
 	}
 
 	@Given("there is a project with name {string}")
@@ -48,7 +50,8 @@ public class ProjectLeaderTest {
 	}
 
 	@When("a worker changes the project leader on project {string}")
-	public void aWorkerChangeTheProjectLeaderOnProject(String projectID) {
+	public void aWorkerChangeTheProjectLeaderOnProject(String projectName) {
+		String projectID = schedulingApp.findIDByName(projectName);
 		// TODO fix the new random user
 		Worker newWorker = new Worker("TEST");
 		schedulingApp.searchProject(projectID).assignLeader(newWorker);

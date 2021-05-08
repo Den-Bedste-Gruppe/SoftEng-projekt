@@ -3,6 +3,8 @@
 package dtu.scheduler;
 import java.util.List;
 
+import javax.xml.validation.SchemaFactoryConfigurationError;
+
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
 
@@ -266,7 +268,7 @@ public class Main {
 		} else {
 			gui.printErrorAndContinue("No project found with given ID");
 			return;
-		}	
+		}
 
 		double hours = currProject.getProjectHours();
 		int numOfActivities = currProject.getNumOfProjectActivities();
@@ -278,16 +280,16 @@ public class Main {
 
 	private static void createProjectScene() {
 		gui.clearScreen();
-		gui.println("Enter new project ID:");
-		String projectID = gui.inputString();
+		gui.println("Enter new project name:");
+		String projectName = gui.inputString();
 
 		Project new_project;
 
 		gui.println("Assign yourself as project leader? Y/N");
 		if (gui.inputChar() == 'y') {
-			new_project = new Project(projectID, schedulingApp.getCurrentUser());
+			new_project = new Project(projectName, schedulingApp.getCurrentUser());
 		} else {
-			new_project = new Project(projectID);
+			new_project = new Project(projectName);
 		}
 		try {
 			schedulingApp.addProject(new_project);
@@ -312,10 +314,31 @@ public class Main {
 	}
 
 	private static void activityManagementScene() {
+		gui.clearScreen();
+		if (schedulingApp.getProjects().size() == 0) {
+			gui.printErrorAndContinue("There exists no projects.");
+			return;
+		}
+		printProjects(schedulingApp.getProjects());
+		gui.println("Enter project ID:");
+		String projectID = gui.inputString();
+		Project project = schedulingApp.searchProject(projectID);
+		if (project == null) {
+			gui.printErrorAndContinue("Project with ID " + projectID + " does not exist.");
+			return;
+		}
 
+		while (true) {
+			gui.clearScreen();
 
+			gui.println("Project: " + project.getName());
+			
+			String[] activityOptions = {
+				"Add activity",
+				"Return"
+			};
+		}
 
-		return;
 	}
 
 
