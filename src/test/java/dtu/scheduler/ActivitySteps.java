@@ -31,7 +31,7 @@ public class ActivitySteps {
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws Exception {
 		String currUser = schedulingApp.getCurrentUserID();
-		activity = new ProjectActivity("Test");
+		activity = new ProjectActivity("Test", project);
 		schedulingApp.assignActivity(currUser, activity);
 	}
 
@@ -135,7 +135,7 @@ public class ActivitySteps {
 		projectID = project.getProjectID();
 	    schedulingApp.addProject(project);
 	    assertTrue(project.getActivities().size()==0);
-	    activity = new ProjectActivity("TestAct");
+	    activity = new ProjectActivity("TestAct", project);
 	    project.addActivity(activity);
 	    assertTrue(project.getActivities().size()==1);
 	}

@@ -26,7 +26,10 @@ public class SchedulingApp {
 	
 	
 	public void createProjectActivity(String activityName, String projectId) throws Exception {
-		ProjectActivity activity = new ProjectActivity(activityName);
+		Project parrentProject = searchProject(projectId);
+		if (parrentProject == null) throw new Exception("There is no project with id " + projectId);
+
+		ProjectActivity activity = new ProjectActivity(activityName, parrentProject);
 		searchProject(projectId).addActivity(activity);
 	}
 	

@@ -13,9 +13,11 @@ public class ProjectActivity extends Activity {
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<Worker> assignedWorkers = new ArrayList<>();
 	private int budgetedTime;
+	private Project parrentProject;
 	
-	public ProjectActivity(String name) throws Exception {
+	public ProjectActivity(String name, Project parrentProject) throws Exception {
 		super(name);
+		this.parrentProject = parrentProject;
 	}
 
 
