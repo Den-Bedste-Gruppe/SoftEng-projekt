@@ -33,14 +33,24 @@ public class TerminalGUI {
 		return res.toLowerCase().charAt(0);
 	}
 	public int inputInt() {
-		print(inputMarker);
 		input = new Scanner(System.in);
-		return input.nextInt();
+		while (true) {
+			print(inputMarker);
+			if (input.hasNextInt()) {
+				return input.nextInt();
+			}
+			input.next();
+		}
 	}
 	public double inputDouble() {
-		print(inputMarker);
 		input = new Scanner(System.in);
-		return input.nextDouble();
+		while (true) {
+			print(inputMarker);
+			if (input.hasNextDouble()) {
+				return input.nextDouble();
+			}
+			input.next();
+		}
 	}
 
 	//Displays menu, takes integer answer
