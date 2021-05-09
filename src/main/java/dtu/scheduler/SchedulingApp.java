@@ -196,6 +196,10 @@ public class SchedulingApp {
 	}
 	
 	public int [] getOverLaps(String workerId, ProjectActivity activity) throws WorkerDoesNotExistException{
+		if(activity.getTimeframe().isEmpty()) {
+			int[] answ = {0,0};
+			return answ;
+		}
 		return getWorkerById(workerId).activitiesInTimeFrame(activity.getTimeframe());
 	}
 

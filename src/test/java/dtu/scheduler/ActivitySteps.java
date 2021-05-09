@@ -166,8 +166,6 @@ public class ActivitySteps {
 
 	@Then("{int} projectactivity overlaps and {int} nonprojectactivity overlaps are returned")
 	public void projectactivityOverlapsAndNonprojectactivityOverlapsAreReturned(Integer projectOverlaps, Integer nonProjectOverlaps) {
-//		System.out.println(overlaps[0]);
-//		System.out.println(overlaps[1]);
 	    assertTrue(overlaps[0] == projectOverlaps && overlaps[1] == nonProjectOverlaps);
 	}
 	
@@ -177,7 +175,11 @@ public class ActivitySteps {
 	    assertTrue(1==schedulingApp.getWorkersNonProjectActivities(workerId).size());
 	}
 	
-	
+	@Given("there is an activity with no timeframe")
+	public void thereIsAnActivityWithNoTimeframe() throws Exception {
+	    activity = new ProjectActivity("testact", project);
+	    project.addActivity(activity);
+	}
 
 
 

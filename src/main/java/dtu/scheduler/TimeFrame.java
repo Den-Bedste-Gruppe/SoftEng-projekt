@@ -60,6 +60,9 @@ public class TimeFrame {
 	//WIP, could be made simpler, but not enough time
 	//Philip Hviid
 	public boolean hasOverlap(TimeFrame timeFrame) {
+		if(timeFrame.isEmpty()) {
+			return false;
+		}
 		int s1,s2, e1,e2;
 		//concatting years and weeks, to easier compare dates
 		s1 = Integer.valueOf(String.valueOf(startYear) + String.valueOf(startWeek));
@@ -71,6 +74,13 @@ public class TimeFrame {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	public boolean isEmpty() {
+		if(startWeek==0) {
+			return true;
+		}
 		return false;
 	}
 
