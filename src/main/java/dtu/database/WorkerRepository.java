@@ -8,5 +8,7 @@ public interface WorkerRepository {
 	boolean isUserInDatabase(String workerID);
 
 	Worker getWorkerById(String id) throws WorkerDoesNotExistException;
+	
+	Worker[] getAllWorkers();
 
 }
