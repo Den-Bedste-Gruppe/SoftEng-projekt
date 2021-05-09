@@ -9,12 +9,12 @@ Background:
 	And a project with ID 150905
 
 Scenario: Check total registered time for a project
-	Given there is a project activity with 10 hours spent
-	And there is another project activity with 15 hours spent
+	Given there is a project activity with the name "act1" with 20 hours timebudget and 10 hours spent
+	And there is another project activity with the name "act2" with 100 hours timebudget and 15 hours spent
 	When the user checks the project overview for project with ID 150905
-	Then the user is informed that total project time spent is 25 hours over 2 projects
+	Then the user activity with name "act1" has 10 hours spent out of 20, and activity with name "act2" has 15 hours spent out of 100
 
-#Scenario: Check what weeks a worker is 
+#Scenario: Check what weeks a worker is
 
 ## These became redundant after register_hours.feature
 #Scenario: Check registered hours on a project activity
