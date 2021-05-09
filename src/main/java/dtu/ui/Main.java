@@ -6,6 +6,7 @@ import java.util.List;
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
 import dtu.scheduler.Activity;
+import dtu.scheduler.AssistRequest;
 import dtu.scheduler.DateHelper;
 import dtu.scheduler.Project;
 import dtu.scheduler.ProjectActivity;
