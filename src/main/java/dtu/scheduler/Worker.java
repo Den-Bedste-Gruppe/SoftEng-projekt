@@ -118,7 +118,6 @@ public class Worker {
 	public int[] activitiesInTimeFrame(TimeFrame timeFrame) {
 		int projectActivityOverlaps = 0;
 		int nonProjectActivityOverlaps = 0;
-		int[] overlaps = {projectActivityOverlaps, nonProjectActivityOverlaps};
 		for(ProjectActivity activity : activities) {
 			if(timeFrame.hasOverlap(activity.getTimeframe())){
 				projectActivityOverlaps++;
@@ -129,6 +128,7 @@ public class Worker {
 				nonProjectActivityOverlaps++;
 			}
 		}
+		int[] overlaps = {projectActivityOverlaps, nonProjectActivityOverlaps};
 		return overlaps;
 	}
 	

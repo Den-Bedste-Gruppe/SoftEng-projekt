@@ -19,6 +19,7 @@ public class AssignWorkerSteps {
 	private ActivityAssigner activityAssigner;
 	private ProjectActivity activity;
 	private String activityName = "Test Activity";
+	private int activityCount = 0;
 
 	
 	public AssignWorkerSteps(SchedulingApp app, ErrorMessageHolder errMsg, ActivityAssigner activityAssigner) {
@@ -82,12 +83,12 @@ public class AssignWorkerSteps {
 			errMsg.setErrorMessage(e.getMessage());
 		} 
 	}
-
+	
 	@Then("the user is informed that no worker with the initials {string} exists")
-	public void theUserIsInformedThatNoWorkerWithTheInitialsExists(String string) {
-		assertTrue(errMsg.getErrorMessage().equals("No user with exists with initials " + fakeID));
-	}
-	
-	
+    public void theUserIsInformedThatNoWorkerWithTheInitialsExists(String string) {
+        assertTrue(errMsg.getErrorMessage().equals("No user with exists with initials " + fakeID));
+    }
+
+
 	
 }
