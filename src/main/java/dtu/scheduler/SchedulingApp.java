@@ -109,6 +109,7 @@ public class SchedulingApp {
 		newTimeRegistration.register();
 	}
 	
+	
 	//This is used from clientside when scheduling nonprojectactivities, as they will always be both created and registered
 	public void scheduleNonProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
 		NonProjectActivity npa = new NonProjectActivity(name, startYear, startWeek, endYear, endWeek);
@@ -191,6 +192,7 @@ public class SchedulingApp {
 		return getWorkerById(workerId).getActivities();
 	}
 	
+	//Philip
 	public int [] getOverLaps(String workerId, ProjectActivity activity) throws WorkerDoesNotExistException{
 		if(activity.getTimeframe().isEmpty()) {
 			int[] answ = {0,0};
@@ -198,14 +200,35 @@ public class SchedulingApp {
 		}
 		return getWorkerById(workerId).activitiesInTimeFrame(activity.getTimeframe());
 	}
-
+	
+	//Philip
 	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
 		if(!currentUser.equals(parentProject.getProjectLeader())) {
 			throw new Exception("only project leader can assign budgeted time");
 		}
 		activity.setBudgetedTime(int1);
 	}
+	
+	//TODO should really be refactored
+	//Philip Hviid
+	public String displayWorkerOverview(ProjectActivity activity) throws WorkerDoesNotExistException {
+		int[] overLaps;
+		String s = "";
+		String workerId;
+		Worker[] allWorkers = workerRepository.getAllWorkers();
+		for(Worker worker : allWorkers) {
+			workerId = worker.getWorkerId();
+			overLaps = getOverLaps(workerId, activity);
+			s+="Worker: " + workerId + " has " + overLaps[0] + "project activites and "
+			+ overLaps[1] + " nonprojectactivites overlapping with timeframe of current activity \n";
+		}
+		if(activity.getTimeframe().isEmpty()) {
+			s+="beware that current activity has no set timeframe";
+		}
+		return s;
+	}
 
+	//possibly refactor into AssistRequest along with code from requestHadler
 	public void acceptRequest(AssistRequest assistRequest) throws Exception {
 		assignActivity(getCurrentUserID(), assistRequest.getActivity());
 		assistRequest.toggleStatus();
