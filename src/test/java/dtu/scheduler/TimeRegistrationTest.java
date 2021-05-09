@@ -32,7 +32,7 @@ public class TimeRegistrationTest {
 	}
 
 	@Given("that there is a project activity")
-	public void thatThereIsAProjectActivity() {
+	public void thatThereIsAProjectActivity() throws Exception {
 		testActivity = new ProjectActivity("test activity");
 	}
 
