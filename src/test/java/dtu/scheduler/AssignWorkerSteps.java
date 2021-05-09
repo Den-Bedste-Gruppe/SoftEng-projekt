@@ -40,7 +40,7 @@ public class AssignWorkerSteps {
 	
 	@Given("that there is an activity")
 	public void thatThereIsAnActivity() throws Exception {
-	    activity = new ProjectActivity(activityName);
+	    activity = new ProjectActivity(activityName, null);
 	}
 
 	@When("the user assigns themselves to the activity")
@@ -55,18 +55,18 @@ public class AssignWorkerSteps {
 	
 	
 	
-	@Given("the worker has {int} activities this week")
-	public void theWorkerHasActivitiesThisWeek(Integer int1) throws Exception {
-	    for (int i = 0; i < int1; i++) {
-			worker.addActivity(new ProjectActivity("Mock Activity " + (i + 1)));
-		}
+//	@Given("the worker has {int} activities this week")
+//	public void theWorkerHasActivitiesThisWeek(Integer int1) throws Exception {
+//	    for (int i = 0; i < int1; i++) {
+//			worker.addActivity(new ProjectActivity("Mock Activity " + (i + 1)));
+//		}
 	    
 //	    Debug:
 //	    for (Activity activity : worker.getActivities()) {
 //			System.out.println(activity.getName());
 //		}
-	    
-	}
+//	    
+//	}
 
 	@Then("the user is informed that they are busy")
 	public void theUserIsInformedThatTheyAreBusy() {

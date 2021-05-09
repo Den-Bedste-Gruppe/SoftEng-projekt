@@ -15,17 +15,20 @@ public class TimeRegistrationTest {
 	private SchedulingApp schedulingApp;
 	private ProjectActivity testActivity;
 	private ErrorMessageHolder errorMessageHolder;
+	private Project project;
 
-	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
+	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) throws Exception {
 		this.schedulingApp = schedulingApp;
 		this.errorMessageHolder = errorMessageHolder;
+		project = new Project("TEST");
+		schedulingApp.addProject(project);
 	}
 
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) throws Exception {
 		if (hours != 0) {
 			double diff = hours - schedulingApp.getWeeklyRegisteredHours();
-			ProjectActivity dummy_activity = new ProjectActivity("Test");
+			ProjectActivity dummy_activity = new ProjectActivity("Test", project);
 			schedulingApp.registerHours(diff, dummy_activity);
 		}
 		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
@@ -33,7 +36,7 @@ public class TimeRegistrationTest {
 
 	@Given("that there is a project activity")
 	public void thatThereIsAProjectActivity() throws Exception {
-		testActivity = new ProjectActivity("test activity");
+		testActivity = new ProjectActivity("test activity", project);
 	}
 
 	@Given("that the activity has {double} hours spent")

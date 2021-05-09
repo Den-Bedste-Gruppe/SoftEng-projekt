@@ -33,7 +33,7 @@ public class CheckHoursSteps {
 
 	@Given("there is a project activity with {double} hours spent")
 	public void thereIsAProjectActivityWithHoursSpent(double hours1) throws Exception {
-		activity1 = new ProjectActivity("Clean up Kanban Board");
+		activity1 = new ProjectActivity("Clean up Kanban Board", project);
 		double diff1 = hours1 - activity1.getTotalHoursSpent();
 	    project.addActivity(activity1);
 	    schedulingApp.registerHours(hours1, activity1);
@@ -41,7 +41,7 @@ public class CheckHoursSteps {
 	
 	@Given("there is another project activity with {double} hours spent")
 	public void thereIsAnotherProjectActivityWithHoursSpent(double hours2) throws Exception {
-		activity2 = new ProjectActivity("Finish GUI");
+		activity2 = new ProjectActivity("Finish GUI", project);
 		double diff2 = hours2 - activity2.getTotalHoursSpent();
 	    project.addActivity(activity2);
 	    schedulingApp.registerHours(hours2, activity2);
