@@ -10,6 +10,7 @@ public class ProjectActivity extends Activity {
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<Worker> assignedWorkers = new ArrayList<>();
 	private int budgetedTime;
+	private Project parentProject;
 	
 	public ProjectActivity(String name, Project parentProject) throws Exception {
 		super(name);
