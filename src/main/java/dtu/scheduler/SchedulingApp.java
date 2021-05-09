@@ -26,7 +26,10 @@ public class SchedulingApp {
 	
 	
 	public void createProjectActivity(String activityName, String projectId) throws Exception {
-		ProjectActivity activity = new ProjectActivity(activityName);
+		Project parrentProject = searchProject(projectId);
+		if (parrentProject == null) throw new Exception("There is no project with id " + projectId);
+
+		ProjectActivity activity = new ProjectActivity(activityName, parrentProject);
 		searchProject(projectId).addActivity(activity);
 	}
 	
@@ -109,8 +112,7 @@ public class SchedulingApp {
 	
 	//This is used from clientside when scheduling nonprojectactivities, as they will always be both created and registered
 	public void scheduleNonProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
-		NonProjectActivity npa = new NonProjectActivity(name);
-		npa.setTimeFrame(startYear, startWeek, endYear, endWeek);
+		NonProjectActivity npa = new NonProjectActivity(name, startYear, startWeek, endYear, endWeek);
 		createNonProjectActivity(npa, currentUser);
 		registerNonProjectActivity(npa, currentUser);
 	}
@@ -137,8 +139,7 @@ public class SchedulingApp {
 	
 	public void addNonProjectActivity(String workerId, Integer startYear,
 			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
-		NonProjectActivity npa = new NonProjectActivity("testname");
-		npa.setTimeFrame(startYear, startWeek, endYear, endWeek);
+		NonProjectActivity npa = new NonProjectActivity("testname", startYear, startWeek, endYear, endWeek);
 		getWorkerById(workerId).addNonProjectActivity(npa);
 	}
 
@@ -192,6 +193,10 @@ public class SchedulingApp {
 	}
 	
 	public int [] getOverLaps(String workerId, ProjectActivity activity) throws WorkerDoesNotExistException{
+		if(activity.getTimeframe().isEmpty()) {
+			int[] answ = {0,0};
+			return answ;
+		}
 		return getWorkerById(workerId).activitiesInTimeFrame(activity.getTimeframe());
 	}
 

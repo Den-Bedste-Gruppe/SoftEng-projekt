@@ -45,3 +45,10 @@ Scenario: User checks timeframe overlap of busy worker and activity
   And there is a projectactivity with start year 2021, start week 3, endyear 2021 and endweek 6
   When the user checks availibility of worker "ZXCV" for the projectactivity
   Then 2 projectactivity overlaps and 1 nonprojectactivity overlaps are returned
+
+Scenario: User checks timeframe overlap of activity with no Timeframe
+  Given Worker is the project leader of current project
+  And worker "ZXCV" is on projectactivity with start year 2021, start week 2, endyear 2021 and endweek 9
+  And there is an activity with no timeframe
+  When the user checks availibility of worker "ZXCV" for the projectactivity
+  Then 0 projectactivity overlaps and 0 nonprojectactivity overlaps are returned

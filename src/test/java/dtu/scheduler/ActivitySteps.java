@@ -33,7 +33,7 @@ public class ActivitySteps {
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws Exception {
 		String currUser = schedulingApp.getCurrentUserID();
-		activity = new ProjectActivity("Test");
+		activity = new ProjectActivity("Test", project);
 		schedulingApp.assignActivity(currUser, activity);
 	}
 
@@ -137,15 +137,14 @@ public class ActivitySteps {
 		projectID = project.getProjectID();
 	    schedulingApp.addProject(project);
 	    assertTrue(project.getActivities().size()==0);
-	    activity = new ProjectActivity("TestAct");
+	    activity = new ProjectActivity("TestAct", project);
 	    project.addActivity(activity);
 	    assertTrue(project.getActivities().size()==1);
 	}
 	
 	@Given("worker {string} is on projectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
-	public void workerIsOnProjectactivityWithStartYearStartWeekEndyearAndEndweek(String workerId, Integer startYear,
-			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
-		ProjectActivity tempActivity = new ProjectActivity("test" + activityCount);
+	public void workerIsOnProjectactivityWithStartYearStartWeekEndyearAndEndweek(String workerId, Integer startYear, Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
+		ProjectActivity tempActivity = new ProjectActivity("test" + activityCount, project);
 		tempActivity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	    project.addActivity(tempActivity);
 	    schedulingApp.assignActivity(workerId, tempActivity);
@@ -154,9 +153,8 @@ public class ActivitySteps {
 	}
 
 	@Given("there is a projectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
-	public void thereIsAProjectactivityWithStartYearStartWeekEndyearAndEndweek(Integer startYear,
-			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
-	    activity = new ProjectActivity("testact");
+	public void thereIsAProjectactivityWithStartYearStartWeekEndyearAndEndweek(Integer startYear, Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
+	    activity = new ProjectActivity("testact", project);
 	    activity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	    project.addActivity(activity);
 	}
@@ -168,19 +166,20 @@ public class ActivitySteps {
 
 	@Then("{int} projectactivity overlaps and {int} nonprojectactivity overlaps are returned")
 	public void projectactivityOverlapsAndNonprojectactivityOverlapsAreReturned(Integer projectOverlaps, Integer nonProjectOverlaps) {
-		System.out.println(overlaps[0]);
-		System.out.println(overlaps[1]);
 	    assertTrue(overlaps[0] == projectOverlaps && overlaps[1] == nonProjectOverlaps);
 	}
 	
 	@Given("worker {string} is on nonprojectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
-	public void workerIsOnNonprojectactivityWithStartYearStartWeekEndyearAndEndweek(String workerId, Integer startYear,
-			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
+	public void workerIsOnNonprojectactivityWithStartYearStartWeekEndyearAndEndweek(String workerId, Integer startYear, Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
 		schedulingApp.addNonProjectActivity(workerId, startYear, startWeek, endYear, endWeek);
 	    assertTrue(1==schedulingApp.getWorkersNonProjectActivities(workerId).size());
 	}
 	
-	
+	@Given("there is an activity with no timeframe")
+	public void thereIsAnActivityWithNoTimeframe() throws Exception {
+	    activity = new ProjectActivity("testact", project);
+	    project.addActivity(activity);
+	}
 
 
 

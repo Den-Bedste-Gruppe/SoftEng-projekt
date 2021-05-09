@@ -21,8 +21,7 @@ public class NonProjectSchedulingSteps {
 
 	@Given("that a nonproject activity exists")
 	public void thatANonprojectActivityExists() throws Exception {
-	    nonProjectActivity = new NonProjectActivity("Test");
-	    nonProjectActivity.setTimeFrame(2021, 1, 2021, 2);
+	    nonProjectActivity = new NonProjectActivity("Test", 2021, 1, 2021, 2);
 	}
 	
 	@When("the worker creates a nonproject activity")
@@ -37,8 +36,7 @@ public class NonProjectSchedulingSteps {
 	
 	@Given("that worker is on a nonproject activity")
 	public void thatWorkerIsOnANonprojectActivity() throws Exception {
-		nonProjectActivity = new NonProjectActivity("Test");
-		nonProjectActivity.setTimeFrame(2021, 1, 2021, 1);
+		nonProjectActivity = new NonProjectActivity("Test", 2021, 1, 2021, 1);
 		schedulingApp.createNonProjectActivity(nonProjectActivity, schedulingApp.getCurrentUser());
 	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
 	}
