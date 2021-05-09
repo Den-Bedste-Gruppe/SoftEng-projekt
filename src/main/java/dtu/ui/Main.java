@@ -448,9 +448,7 @@ public class Main {
 				//Assign worker to activity
 				///////////////////////////
 				case 2:
-					gui.clearScreen();
-					gui.println("Choose an activity:");
-					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					activityChoice = chooseActivity(project);
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -473,9 +471,7 @@ public class Main {
 				//Set activity timeframe
 				////////////////////////
 				case 3:
-					gui.clearScreen();
-					gui.println("Choose an activity:");
-					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					activityChoice = chooseActivity(project);
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -498,9 +494,7 @@ public class Main {
 				//View activity details
 				///////////////////////
 				case 4:
-					gui.clearScreen();
-					gui.println("Choose an activity:");
-					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					activityChoice = chooseActivity(project);
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -543,6 +537,12 @@ public class Main {
 	private static void budgetTimeScene() {
 		//TODO implement
 		return;
+	}
+	
+	private static int chooseActivity(Project project) {
+		gui.clearScreen();
+		gui.println("Choose an activity:");
+		return gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
 	}
 
 
