@@ -6,3 +6,4 @@ Feature: Create Activity
 
 Background:
 	Given that a worker is logged in
+	

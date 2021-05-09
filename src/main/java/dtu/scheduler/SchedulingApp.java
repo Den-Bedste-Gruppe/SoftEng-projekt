@@ -28,7 +28,6 @@ public class SchedulingApp {
 	public void createProjectActivity(String activityName, String projectId) throws Exception {
 		Project parrentProject = searchProject(projectId);
 		if (parrentProject == null) throw new Exception("There is no project with id " + projectId);
-
 		ProjectActivity activity = new ProjectActivity(activityName, parrentProject);
 		searchProject(projectId).addActivity(activity);
 	}
@@ -208,6 +207,11 @@ public class SchedulingApp {
 			throw new Exception("only project leader can assign budgeted time");
 		}
 		activity.setBudgetedTime(int1);
+	}
+
+	public void acceptRequest(AssistRequest assistRequest) throws Exception {
+		assignActivity(getCurrentUserID(), assistRequest.getActivity());
+		assistRequest.toggleStatus();
 	}
 	
 	
