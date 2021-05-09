@@ -15,6 +15,11 @@ Scenario: The project is given an illegible  time frame
 	# Mads Harder
 	When the project is given an illegible date as a time frame
 	Then The error message "The given date is not eligible to set time frame"
+	
+Scenario: The project is given a end date before the start date
+	# Mads Harder
+	When the project is given a end date before the start date
+	Then The error message "The end date before the start date"
 
 Scenario: The project leader sets a time frame for a project activity
 	Given There is a project activity
@@ -25,3 +30,9 @@ Scenario: The project leader sets an illegible date as time frame for a project 
 	Given There is a project activity
 	When The project leader sets an illegible time frame
 	Then The error message "The given date is not eligible to set time frame"
+
+Scenario: The project activity is given a end date before the start date
+	# Mads Harder
+	Given There is a project activity
+	When the project activity is given a end date before the start date
+	Then The error message "The end date before the start date"

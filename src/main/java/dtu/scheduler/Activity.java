@@ -19,11 +19,17 @@ public abstract class Activity {
 		if(name.isEmpty()) {
 			throw new IllegalArgumentException("activity cannot be created without name");
 		}
+		if (DateHelper.isEndDateBeforeStartDate(startYear, startWeek, endYear, endWeek) ) {
+			throw new Exception("The end date before the start date");
+		}
 		timeFrame = new TimeFrame();
 		setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	
 	public void setTimeFrame(int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		if (DateHelper.isEndDateBeforeStartDate(startYear, startWeek, endYear, endWeek) ) {
+			throw new Exception("The end date before the start date");
+		}
 		timeFrame.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	public int[] getTimeframe() {

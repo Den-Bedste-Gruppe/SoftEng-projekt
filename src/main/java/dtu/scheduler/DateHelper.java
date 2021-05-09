@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.WeekFields;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class DateHelper {
@@ -43,5 +44,35 @@ public class DateHelper {
 	    } else {
 	    	return 52;
 	    }
+	}
+
+	// Mads Harder
+	public static boolean isEndDateBeforeStartDate(int startYear, int startWeek, int endYear, int endWeek) {
+		// I hate time, timezone and dates...
+		// Hours spent on this = 1.5
+
+	    Calendar calendar;
+		long startUnixTime;
+		long endUnixTime;
+
+	    calendar = Calendar.getInstance();
+	    
+	    calendar.set(Calendar.YEAR, startYear);  
+	    calendar.set(Calendar.WEEK_OF_YEAR, startWeek);  
+	    startUnixTime = calendar.getTimeInMillis();
+	    
+	    calendar.set(Calendar.YEAR, endYear);  
+	    calendar.set(Calendar.WEEK_OF_YEAR, endWeek);  
+	    endUnixTime = calendar.getTimeInMillis();
+	    
+	    // TODO because of Unix time is start 1970 then
+	    // it only work if year >= 1970. This can be fixed
+	    // but we should not care about date before 1970
+	    if ((endUnixTime - startUnixTime) >= 0) {
+	    	return false;
+	    } else {
+	    	return true;
+	    }
+
 	}
 }
