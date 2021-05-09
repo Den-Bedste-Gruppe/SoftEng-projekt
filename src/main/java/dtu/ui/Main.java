@@ -371,6 +371,8 @@ public class Main {
 		} catch (ProjectAlreadyExistsException e) {
 			gui.printErrorAndContinue(e);
 		}
+		gui.println("\nPress ENTER to return");
+		gui.inputString();
 	}
 
 	private static void assignLeaderScene() {
@@ -386,6 +388,8 @@ public class Main {
 		} catch (Exception e) {
 			gui.printErrorAndContinue(e);
 		}
+		gui.println("\nPress ENTER to return");
+		gui.inputString();
 	}
 
 	private static void activityManagementScene() {
@@ -441,6 +445,8 @@ public class Main {
 					} catch (Exception e) {
 						gui.printErrorAndContinue(e);
 					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
 					break;
 				
 				//Assign worker to activity
@@ -464,6 +470,8 @@ public class Main {
 					} catch (Exception e) {
 						gui.printErrorAndContinue(e);
 					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
 					break;
 				
 				//Set activity timeframe
@@ -487,6 +495,8 @@ public class Main {
 					} catch (Exception e) {
 						gui.printErrorAndContinue(e);
 					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
 					break;
 				
 				//View activity details
@@ -520,9 +530,24 @@ public class Main {
 					gui.println("\nPress ENTER to return");
 					gui.inputString();
 					break;
+				
+				//Budget Time
 				case 5:
-					budgetTimeScene();
-					break;
+					activityChoice = chooseProjectActivity(project.getActivities());
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
+					activity = project.getActivities().get(activityChoice);
+					gui.clearScreen();
+					int newTimebudget = gui.inputInt();
+					try {
+						schedulingApp.setBudgetedTime(newTimebudget, activity, project);
+					} catch (Exception e) {
+						gui.printErrorAndContinue(e);
+					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
 				case 6:
 					managingActivities = false;
 					break;
@@ -530,11 +555,6 @@ public class Main {
 
 		}
 
-	}
-
-	private static void budgetTimeScene() {
-		//TODO implement
-		return;
 	}
 	
 	private static int chooseProjectActivity(List<ProjectActivity> activities) {
