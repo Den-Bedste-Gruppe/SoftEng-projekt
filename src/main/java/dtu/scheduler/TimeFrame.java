@@ -70,11 +70,11 @@ public class TimeFrame {
 		s2 = Integer.valueOf(String.valueOf(timeFrame.getStartYear()) + String.valueOf(timeFrame.getStartWeek()));
 		e2 = Integer.valueOf(String.valueOf(timeFrame.getEndYear()) + String.valueOf(timeFrame.getEndWeek()));
 		//checks if either one ends before the other starts
-		if(s1<e2 || s2>e1) {
-			return true;
+		if(s1>e2 || s2>e1) {
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 	
 	public boolean isEmpty() {
