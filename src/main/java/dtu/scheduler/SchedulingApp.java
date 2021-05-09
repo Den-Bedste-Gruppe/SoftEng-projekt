@@ -24,7 +24,6 @@ public class SchedulingApp {
 	    currentUser = workerRepository.getWorkerById(workerId);		
 	}
 	
-	
 	public void createProjectActivity(String activityName, String projectId) throws Exception {
 		Project parrentProject = searchProject(projectId);
 		if (parrentProject == null) throw new Exception("There is no project with id " + projectId);
@@ -117,7 +116,6 @@ public class SchedulingApp {
 		registerNonProjectActivity(npa, currentUser);
 	}
 	
-	
 	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
 		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
 		currentUser.changeHours(new_hours, registration);
@@ -129,7 +127,6 @@ public class SchedulingApp {
 		NonProjectRegistration newNonProjectRegistration = new NonProjectRegistration(nonProjectActivity, worker);
 		newNonProjectRegistration.register();	
 	}
-	
 	
 	//used by scheduleNonProjectActivity, not by client
 	public void createNonProjectActivity(NonProjectActivity nonProjectActivity, Worker worker) {
@@ -171,7 +168,6 @@ public class SchedulingApp {
 
 	}
 
-
 	public List<NonProjectRegistration> getNonProjectRegistrations() {
 		return currentUser.getNonProjectRegistrations();
 	}
@@ -208,7 +204,6 @@ public class SchedulingApp {
 		}
 		activity.setBudgetedTime(int1);
 	}
-	
 	//TODO should really be refactored
 	//Philip Hviid
 	public String displayWorkerOverview(ProjectActivity activity) {
@@ -234,6 +229,4 @@ public class SchedulingApp {
 		assignActivity(getCurrentUserID(), assistRequest.getActivity());
 		assistRequest.toggleStatus();
 	}
-	
-	
 }

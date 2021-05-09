@@ -5,6 +5,7 @@ package dtu.scheduler;
 import java.time.LocalDate;
 
 public class TimeRegistration extends ActivityRegistration {
+	// TODO
 	//Code smell, should be defined as Activity field in super class, but gave problems with change hours
 	//will try to figure out later -- philip
 	private ProjectActivity parentActivity;

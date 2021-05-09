@@ -12,7 +12,7 @@ public class CheckHoursSteps {
 	
 	private SchedulingApp schedulingApp;
 	private Project project;
-	private int projectID;
+	private String projectID;
 	private ProjectActivity activity1;
 	private ProjectActivity activity2;
 	private double totalProjectHours;
@@ -23,10 +23,11 @@ public class CheckHoursSteps {
 	}
 	
 	
-	@Given("a project with ID {int}")
-	public void aProjectWithID(Integer int1) throws Exception {
-		projectID = int1;
-		project = new Project(Integer.toString(projectID));
+	@Given("a project with ID {int} and project leader {string}")
+	public void aProjectWithIDAndProjectLeader(Integer int1, String workerId) throws Exception {
+		projectID = Integer.toString(int1);
+		Worker worker = schedulingApp.getWorkerById(workerId);
+		project = new Project(projectID, worker);
 	    schedulingApp.addProject(project);
 	}
 
@@ -59,5 +60,38 @@ public class CheckHoursSteps {
 		assertTrue(int1 == numOfActivities);
 	}
 
-	
+	// Mads Harder
+	@Given("there is a project activity with the name {string} with {int} hours timebudget and {int} hours spent")
+	public void thereIsAProjectActivityWithTheNameWithHoursTimebudgetAndHoursSpent(String activityName, Integer TimebudgetHours, Integer hours) throws Exception {
+		activity1 = new ProjectActivity(activityName, project);
+		project.addActivity(activity1);
+
+		schedulingApp.setBudgetedTime(TimebudgetHours, activity1, project);
+		schedulingApp.registerHours(hours, activity1);
+	}
+
+	// Mads Harder
+	@Given("there is another project activity with the name {string} with {int} hours timebudget and {int} hours spent")
+	public void thereIsAnotherProjectActivityWithTheNameWithHoursTimebudgetAndHoursSpent(String activityName, Integer TimebudgetHours, Integer hours) throws Exception {
+		activity2 = new ProjectActivity(activityName, project);
+		project.addActivity(activity2);
+
+		schedulingApp.setBudgetedTime(TimebudgetHours, activity2, project);
+		schedulingApp.registerHours(hours, activity2);
+	}
+
+	// Mads Harder
+	@Then("the user activity with name {string} has {int} hours spent out of {int}, and activity with name {string} has {int} hours spent out of {int}")
+	public void theUserActivityWithNameHasHoursSpentOutOfAndActivityWithNameHasHoursSpentOutOf(String act1, Integer hours1, Integer timebudgeHours1, String act2, Integer hours2, Integer timebudgeHours2) {
+		double hoursSpend1 = activity1.getTotalHoursSpent();
+		double hoursSpend2 = activity2.getTotalHoursSpent();
+		
+		double budgettimeSpend1 = activity1.getBudgetedTime();
+		double budgettimeSpend2 = activity2.getBudgetedTime();
+		
+		assertTrue(hoursSpend1 == hours1);
+		assertTrue(hoursSpend2 == hours2);
+		assertTrue(budgettimeSpend1 == timebudgeHours1);
+		assertTrue(budgettimeSpend2 == timebudgeHours2);
+	}
 }

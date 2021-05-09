@@ -6,7 +6,7 @@ Feature: Check hours
 Background:
 	Given there is a worker with ID "LMAA"
 	And that the worker with ID "LMAA" is logged in
-	And a project with ID 150905
+	And a project with ID 150905 and project leader "LMAA"
 
 Scenario: Check total registered time for a project
 	Given there is a project activity with the name "act1" with 20 hours timebudget and 10 hours spent
