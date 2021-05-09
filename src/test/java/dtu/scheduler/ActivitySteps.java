@@ -2,8 +2,6 @@ package dtu.scheduler;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import dtu.errors.ProjectAlreadyExistsException;
-import dtu.errors.ProjectDoesNotExistException;
 import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
