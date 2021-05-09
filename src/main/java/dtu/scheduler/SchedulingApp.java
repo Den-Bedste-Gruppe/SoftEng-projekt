@@ -198,10 +198,6 @@ public class SchedulingApp {
 		return getWorkerById(workerId).activitiesInTimeFrame(activity.getTimeframe());
 	}
 
-	public boolean hasOverlap(TimeFrame timeFrame1, TimeFrame timeFrame2) {
-		return timeFrame1.hasOverlap(timeFrame2);
-	}
-
 	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
 		if(!currentUser.equals(parentProject.getProjectLeader())) {
 			throw new Exception("only project leader can assign budgeted time");
