@@ -152,7 +152,7 @@ public class SchedulingApp {
 		project.assignLeader(worker);
 	}
   
-	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
+	public Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
 		return workerRepository.getWorkerById(workerId);
 	}
 
