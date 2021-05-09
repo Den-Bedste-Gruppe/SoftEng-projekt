@@ -133,6 +133,10 @@ public class Main {
 		gui.clearScreen();
 		gui.println("Choose one of your assigned activities:");
 		int choice = gui.numericalMenu(activitiesNames(activities)) - 1;
+		if (choice == -2) {
+			gui.printErrorAndContinue("No activities!");
+			break;
+		}
 		ProjectActivity activity;
 		try {
 			activity = activities.get(choice);
@@ -149,6 +153,10 @@ public class Main {
 		List<AssistRequest> requests = schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID());
 		gui.println("Choose requests to to be assigned to activity:");
 		int choice = gui.numericalMenu(displayRequests(requests)) - 1;
+		if (choice == -2) {
+			gui.printErrorAndContinue("No requests!");
+			break;
+		}
 		AssistRequest request;
 		try {
 			request = requests.get(choice);
@@ -176,6 +184,10 @@ public class Main {
 		gui.clearScreen();
 		gui.println("Choose one of your assigned activities:");
 		int choice = gui.numericalMenu(activitiesNames(activities)) - 1;
+		if (choice == -2) {
+			gui.printErrorAndContinue("No activities!");
+			return;
+		}
 		ProjectActivity activity;
 		try {
 			activity = activities.get(choice);
@@ -439,6 +451,10 @@ public class Main {
 					gui.clearScreen();
 					gui.println("Choose an activity:");
 					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
 					activity = project.getActivities().get(activityChoice);
 
 					gui.clearScreen();
@@ -460,6 +476,10 @@ public class Main {
 					gui.clearScreen();
 					gui.println("Choose an activity:");
 					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
 					activity = project.getActivities().get(activityChoice);
 
 					gui.clearScreen();
@@ -481,6 +501,10 @@ public class Main {
 					gui.clearScreen();
 					gui.println("Choose an activity:");
 					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
 					activity = project.getActivities().get(activityChoice);
 					List<Worker> assignedWorkers = activity.getAssignedWorkers();
 					
