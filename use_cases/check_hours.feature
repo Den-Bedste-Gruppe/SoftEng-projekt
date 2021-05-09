@@ -14,6 +14,7 @@ Scenario: Check total registered time for a project
 	When the user checks the project overview for project with ID 150905
 	Then the user is informed that total project time spent is 25 hours over 2 projects
 
+#Scenario: Check what weeks a worker is 
 
 ## These became redundant after register_hours.feature
 #Scenario: Check registered hours on a project activity
