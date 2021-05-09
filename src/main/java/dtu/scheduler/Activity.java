@@ -5,25 +5,13 @@ public abstract class Activity {
 	private TimeFrame timeFrame;
 	private String name;
 	
-	protected Activity(String name) {
-		timeFrame = new TimeFrame();
-		this.name = name;
-		if(name.isEmpty()) {
-			throw new IllegalArgumentException("activity cannot be created without name");
-		}
-	}
-	
 	//protected as they can only be called from its child classes anyway
-	protected Activity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
-		this.name = name;
+	protected Activity(String name) throws Exception {
 		if(name.isEmpty()) {
 			throw new IllegalArgumentException("activity cannot be created without name");
 		}
-		if (DateHelper.isEndDateBeforeStartDate(startYear, startWeek, endYear, endWeek) ) {
-			throw new Exception("The end date before the start date");
-		}
+		this.name = name;
 		timeFrame = new TimeFrame();
-		setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	
 	public void setTimeFrame(int startYear, int startWeek, int endYear, int endWeek) throws Exception {

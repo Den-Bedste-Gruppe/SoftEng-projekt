@@ -112,7 +112,8 @@ public class SchedulingApp {
 	
 	//This is used from clientside when scheduling nonprojectactivities, as they will always be both created and registered
 	public void scheduleNonProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
-		NonProjectActivity npa = new NonProjectActivity(name, startYear, startWeek, endYear, endWeek);
+		NonProjectActivity npa = new NonProjectActivity(name);
+		npa.setTimeFrame(startYear, startWeek, endYear, endWeek);
 		createNonProjectActivity(npa, currentUser);
 		registerNonProjectActivity(npa, currentUser);
 	}
@@ -139,7 +140,8 @@ public class SchedulingApp {
 	
 	public void addNonProjectActivity(String workerId, Integer startYear,
 			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
-		NonProjectActivity npa = new NonProjectActivity("testname", startYear, startWeek, endYear, endWeek);
+		NonProjectActivity npa = new NonProjectActivity("testname");
+		npa.setTimeFrame(startYear, startWeek, endYear, endWeek);
 		getWorkerById(workerId).addNonProjectActivity(npa);
 	}
 

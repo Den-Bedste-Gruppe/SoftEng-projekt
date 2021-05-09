@@ -39,7 +39,7 @@ public class AssignWorkerSteps {
 	}
 	
 	@Given("that there is an activity")
-	public void thatThereIsAnActivity() {
+	public void thatThereIsAnActivity() throws Exception {
 	    activity = new ProjectActivity(activityName);
 	}
 

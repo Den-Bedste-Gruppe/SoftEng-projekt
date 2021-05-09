@@ -2,8 +2,6 @@ package dtu.scheduler;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import dtu.errors.ProjectAlreadyExistsException;
-import dtu.errors.ProjectDoesNotExistException;
 import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -147,7 +145,8 @@ public class ActivitySteps {
 	@Given("worker {string} is on projectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
 	public void workerIsOnProjectactivityWithStartYearStartWeekEndyearAndEndweek(String workerId, Integer startYear,
 			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
-		ProjectActivity tempActivity = new ProjectActivity("test" + activityCount, startYear, startWeek, endYear, endWeek);
+		ProjectActivity tempActivity = new ProjectActivity("test" + activityCount);
+		tempActivity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	    project.addActivity(tempActivity);
 	    schedulingApp.assignActivity(workerId, tempActivity);
 	    activityCount++;
@@ -157,7 +156,8 @@ public class ActivitySteps {
 	@Given("there is a projectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
 	public void thereIsAProjectactivityWithStartYearStartWeekEndyearAndEndweek(Integer startYear,
 			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
-	    activity = new ProjectActivity("testact", startYear, startWeek, endYear, endWeek);
+	    activity = new ProjectActivity("testact");
+	    activity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	    project.addActivity(activity);
 	}
 
