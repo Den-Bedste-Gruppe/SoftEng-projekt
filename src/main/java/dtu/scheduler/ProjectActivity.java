@@ -1,6 +1,4 @@
 // Author: Kristian Sofus Knudsen
-//
-// Simple implementation to pass the tests in which it is involved
 
 package dtu.scheduler;
 
@@ -8,16 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectActivity extends Activity {
-	//doubles default to 0, no need to set it
 	private double hoursSpent;
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<Worker> assignedWorkers = new ArrayList<>();
 	private int budgetedTime;
-	private Project parrentProject;
+	private Project parentProject;
 	
-	public ProjectActivity(String name, Project parrentProject) throws Exception {
+	public ProjectActivity(String name, Project parentProject) throws Exception {
 		super(name);
-		this.parrentProject = parrentProject;
+		this.parentProject = parentProject;
 	}
 
 

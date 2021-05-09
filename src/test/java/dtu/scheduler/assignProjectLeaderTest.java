@@ -1,3 +1,5 @@
+//Author: Kristian Knudsen
+
 package dtu.scheduler;
 
 import static org.junit.Assert.assertTrue;

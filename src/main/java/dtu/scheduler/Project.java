@@ -13,9 +13,6 @@ public class Project {
 	private Worker projectLeader = null;
 	private List<ProjectActivity> activities = new ArrayList<>();
 	
-	// TODO "På oprettelsestidspunktet er information om aktiviteter og starttidspunkt ikke fuldstændige"
-	// Maybe timefram should be null
-	//private int[] timeframe = new int[2]; //Start and end weeks
 	private TimeFrame timeFrame;
 
 	public Project(String name) throws Exception {
@@ -35,8 +32,10 @@ public class Project {
 		int currentYear = DateHelper.thisYear();
 		int currentWeek = DateHelper.thisWeek();
 		this.projectLeader = projectLeader;
-		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);
+
+		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID); //Automatic ID
 		running_ID++;
+		
 		timeFrame = new TimeFrame();
 		timeFrame.setTimeFrame(currentYear, currentWeek, currentYear, currentWeek);
 	}
