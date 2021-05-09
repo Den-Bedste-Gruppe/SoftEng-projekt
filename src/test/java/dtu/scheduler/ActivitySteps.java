@@ -3,6 +3,7 @@ package dtu.scheduler;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import dtu.errors.ProjectAlreadyExistsException;
+import dtu.errors.ProjectDoesNotExistException;
 import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -115,6 +116,33 @@ public class ActivitySteps {
 			msg.setErrorMessage(e.getMessage());
 		}
 	}
+	
+	@When("the worker sets budgeted time of {int} hours")
+	public void theWorkerSetsBudgetedTimeOfHours(Integer hours) {
+		try {
+			schedulingApp.setBudgetedTime(hours, activity, project);
+		} catch(Exception s) {
+			msg.setErrorMessage(s.getMessage());
+		}
+	}
+
+	@Then("the activity has a budgeted time of {int} hours")
+	public void theActivityHasABudgetedTimeOfHours(Integer int1) {
+	    assertTrue(activity.getBudgetedTime()==int1);
+	}
+
+	@Given("There is a project with an activity")
+	public void thereIsAProjectWithAnActivity() throws Exception {
+		project = new Project("P1");
+		projectID = project.getProjectID();
+	    schedulingApp.addProject(project);
+	    assertTrue(project.getActivities().size()==0);
+	    activity = new ProjectActivity("TestAct");
+	    project.addActivity(activity);
+	    assertTrue(project.getActivities().size()==1);
+	}
+	
+	
 	
 
 

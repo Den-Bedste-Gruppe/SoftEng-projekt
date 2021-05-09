@@ -12,6 +12,7 @@ public class ProjectActivity extends Activity {
 	private double hoursSpent;
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<Worker> assignedWorkers = new ArrayList<>();
+	private int budgetedTime;
 	
 	
 	
@@ -55,6 +56,19 @@ public class ProjectActivity extends Activity {
 
 	public List<Worker> getAssignedWorkers() {
 		return assignedWorkers;
+	}
+
+
+	public void setBudgetedTime(int hours) {
+		if(hours<=0) {
+			throw new IllegalArgumentException("budgeted time must be positive integer");
+		}
+		this.budgetedTime = hours;
+		
+	}
+	
+	public int getBudgetedTime() {
+		return budgetedTime;
 	}
 	
 }

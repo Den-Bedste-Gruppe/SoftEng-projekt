@@ -59,7 +59,6 @@ public class SetTimeFrameTest {
 		try {
 			testProject.setTimeFrame(-2, -4, -2, -3);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
 	}

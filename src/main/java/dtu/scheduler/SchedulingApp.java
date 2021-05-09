@@ -166,6 +166,13 @@ public class SchedulingApp {
 		return currentUser.getActivities();
 	}
 
+	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
+		if(!currentUser.equals(parentProject.getProjectLeader())) {
+			throw new Exception("only project leader can assign budgeted time");
+		}
+		activity.setBudgetedTime(int1);
+	}
+
 	
 	
 }

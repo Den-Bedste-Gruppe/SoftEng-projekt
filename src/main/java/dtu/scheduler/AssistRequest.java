@@ -11,7 +11,6 @@ public class AssistRequest {
 		this.accepted = false;
 	}
 	
-	
 	public String getSenderId() {
 		return senderId;
 	}
