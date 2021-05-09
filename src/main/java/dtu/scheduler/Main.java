@@ -282,16 +282,8 @@ public class Main {
 	private static void createProjectScene() {
 		gui.clearScreen();
 		
-		
-		String projectName = "";
-		
-		// Makes sure that project name is at least 2 characters
-//		while (projectName.length() < 2) {
 		gui.println("Enter new project name:");
-		projectName = gui.inputString();
-//			if (projectName.length() >= 2) break;
-//			gui.println("Project name must be at least 2 characters or more");
-//		}
+		String projectName = gui.inputString();
 
 		Project new_project = null;
 
@@ -346,6 +338,7 @@ public class Main {
 		String[] activityOptions = {
 			"Add activity",
 			"Assign worker to activity",
+			"Set activity timeframe",
 			"View activity details",
 			"Return"
 		};
@@ -363,6 +356,7 @@ public class Main {
 
 			//Declaring some reused variable names
 			int activityChoice;
+			int[] timeframe = new int[4];
 			ProjectActivity activity;
 			
 			int choice = gui.numericalMenu(activityOptions);
@@ -389,6 +383,8 @@ public class Main {
 					activity = project.getActivities().get(activityChoice);
 
 					gui.clearScreen();
+					gui.println(schedulingApp.displayWorkerOverview(activity));
+
 					gui.println("Enter worker ID:");
 					String workerID = gui.inputString();
 
@@ -398,8 +394,31 @@ public class Main {
 						gui.printErrorAndContinue(e);
 					}
 					break;
-					
+				
+				//Set activity timeframe
+				////////////////////////
 				case 3:
+					gui.clearScreen();
+					gui.println("Choose an activity:");
+					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					activity = project.getActivities().get(activityChoice);
+
+					gui.clearScreen();
+					gui.println("Enter four numbers like so: 'start-year start-week end-year end-week'");
+					timeframe[0] = gui.inputInt();
+					timeframe[1] = gui.inputInt();
+					timeframe[2] = gui.inputInt();
+					timeframe[3] = gui.inputInt();
+					try {
+						activity.setTimeFrame(timeframe[0], timeframe[1], timeframe[2], timeframe[3]);
+					} catch (Exception e) {
+						gui.printErrorAndContinue(e);
+					}
+					break;
+				
+				//View activity details
+				///////////////////////
+				case 4:
 					gui.clearScreen();
 					gui.println("Choose an activity:");
 					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
@@ -408,6 +427,12 @@ public class Main {
 					
 					gui.clearScreen();
 					gui.println(activity.getName());
+					if (activity.getTimeframe().isEmpty()) {
+						gui.println("No timeframe set yet.");
+					} else {
+						timeframe = activity.getTimeframe().getTimeFrameAsList();
+						gui.println(String.format("Scheduled from %d week %d to %d week %d", timeframe[0], timeframe[1], timeframe[2], timeframe[3]));
+					}
 					gui.println("Total hours registered: " + activity.getTotalHoursSpent()); //If we ever get around to budgeted time, do "5.5/30.0" for example
 					gui.println("Assigned workers:");
 					for (Worker w : assignedWorkers) {
@@ -421,7 +446,7 @@ public class Main {
 					gui.inputString();
 					break;
 
-				case 4:
+				case 5:
 					managingActivities = false;
 					break;
 			}

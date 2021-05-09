@@ -193,12 +193,12 @@ public class SchedulingApp {
 	}
 	
 	//Philip
-	public int [] getOverLaps(String workerId, ProjectActivity activity) throws WorkerDoesNotExistException{
+	public int [] getOverLaps(Worker worker, ProjectActivity activity) {
 		if(activity.getTimeframe().isEmpty()) {
 			int[] answ = {0,0};
 			return answ;
 		}
-		return getWorkerById(workerId).activitiesInTimeFrame(activity.getTimeframe());
+		return worker.activitiesInTimeFrame(activity.getTimeframe());
 	}
 	
 	//Philip
@@ -211,20 +211,21 @@ public class SchedulingApp {
 	
 	//TODO should really be refactored
 	//Philip Hviid
-	public String displayWorkerOverview(ProjectActivity activity) throws WorkerDoesNotExistException {
+	public String displayWorkerOverview(ProjectActivity activity) {
 		int[] overLaps;
 		String s = "";
-		String workerId;
+
+		if(activity.getTimeframe().isEmpty()) {
+			s+="Current activity has no set timeframe!\n";
+		}
+
 		Worker[] allWorkers = workerRepository.getAllWorkers();
 		for(Worker worker : allWorkers) {
-			workerId = worker.getWorkerId();
-			overLaps = getOverLaps(workerId, activity);
-			s+="Worker: " + workerId + " has " + overLaps[0] + "project activites and "
-			+ overLaps[1] + " nonprojectactivites overlapping with timeframe of current activity \n";
+			overLaps = getOverLaps(worker, activity);
+			s+="Worker: " + worker.getWorkerId() + " has " + overLaps[0] + " project activites and "
+			+ overLaps[1] + " nonproject activites overlapping with timeframe of current activity.\n";
 		}
-		if(activity.getTimeframe().isEmpty()) {
-			s+="beware that current activity has no set timeframe";
-		}
+		
 		return s;
 	}
 

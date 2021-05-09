@@ -161,7 +161,8 @@ public class ActivitySteps {
 
 	@When("the user checks availibility of worker {string} for the projectactivity")
 	public void theUserChecksAvailibilityOfWorkerForTheProjectactivity(String workerId) throws WorkerDoesNotExistException {
-	    overlaps = schedulingApp.getOverLaps(workerId, activity);
+		Worker worker = schedulingApp.getWorkerById(workerId);
+	    overlaps = schedulingApp.getOverLaps(worker, activity);
 	}
 
 	@Then("{int} projectactivity overlaps and {int} nonprojectactivity overlaps are returned")
