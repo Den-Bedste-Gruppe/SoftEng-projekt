@@ -68,10 +68,10 @@ public class TimeFrame {
 		e2 = Integer.valueOf(String.valueOf(timeFrame.getEndYear()) + String.valueOf(timeFrame.getEndWeek()));
 		//checks if either one ends before the other starts
 		if(s1<e2 || s2>e1) {
-			return false;
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 
 }
