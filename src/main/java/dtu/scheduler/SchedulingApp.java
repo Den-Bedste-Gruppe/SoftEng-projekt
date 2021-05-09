@@ -114,7 +114,8 @@ public class SchedulingApp {
 	}
 	
 	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
-		currentUser.changeHours(new_hours, activity);
+		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
+		currentUser.changeHours(new_hours, registration);
 
 	}
 

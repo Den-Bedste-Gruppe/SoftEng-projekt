@@ -75,4 +75,8 @@ public class DateHelper {
 	    }
 
 	}
+
+	public static int getWeekFromDate(LocalDate date) {
+		return date.get(WeekFields.of(DayOfWeek.MONDAY, 7).weekOfYear());
+	}
 }
