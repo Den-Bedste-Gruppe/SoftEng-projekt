@@ -38,10 +38,7 @@ public class SchedulingApp {
 	}
 
 	public Worker getCurrentUser() {
-		if(isUserLoggedIn()) {
-			return currentUser;
-		}
-		return null;
+		return currentUser;
 	}	
 
 	public Boolean isUserLoggedIn() {
