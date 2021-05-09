@@ -17,12 +17,11 @@ public class WorkerRepositoryInMemory implements WorkerRepository {
 		
 	}
 	
-
-	
 	@Override
 	public Worker getWorkerById(String id) throws WorkerDoesNotExistException {
-		if(isUserInDatabase(id)) {
-			return getWorkerById2(id);
+		Worker worker = getWorkerById2(id);
+		if(worker != null) {
+			return worker;
 		} else {
 			throw new WorkerDoesNotExistException("Signature not in system");
 		}
@@ -40,6 +39,7 @@ public class WorkerRepositoryInMemory implements WorkerRepository {
 		return false;
 	}
 	
+	// TODO rename getWorkerById2
 	public Worker getWorkerById2(String id) {
 		for(Worker worker: workers) {
 			if(worker.getWorkerId().equals(id) ) {

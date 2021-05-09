@@ -32,11 +32,15 @@ public class TerminalGUI {
 		String res = input.next();
 		return res.toLowerCase().charAt(0);
 	}
-
 	public int inputInt() {
 		print(inputMarker);
 		input = new Scanner(System.in);
 		return input.nextInt();
+	}
+	public double inputDouble() {
+		print(inputMarker);
+		input = new Scanner(System.in);
+		return input.nextDouble();
 	}
 
 	//Displays menu, takes integer answer
@@ -54,6 +58,19 @@ public class TerminalGUI {
 		return answer;
 	}
 
+	public void printErrorAndContinue(String error) {
+		clearScreen();
+		println(error);
+		println("Press ENTER to return");
+		inputString();
+	}
+	public void printErrorAndContinue(Exception error) {
+		clearScreen();
+		println(error.getMessage());
+		println("Press ENTER to return");
+		inputString();
+	}
+
 	public void clearScreen() {
 		// Feels like black magic, but it's pushing the ANSI escape codes for
 		// returning the cursor to the top-left, followed by clearing the screen. 
@@ -61,5 +78,11 @@ public class TerminalGUI {
 		System.out.println("-- if you see this the terminal should have been cleared --");
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
+	}
+	
+	// Mads Harder
+	public void pressEnterToReturn() {
+		System.out.println("Press enter to return");
+		inputString();
 	}
 }

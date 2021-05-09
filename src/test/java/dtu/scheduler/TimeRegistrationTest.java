@@ -4,10 +4,6 @@
 
 package dtu.scheduler;
 
-
-
-
-
 import static org.junit.Assert.assertTrue;
 
 import io.cucumber.java.en.Given;
@@ -17,7 +13,7 @@ import io.cucumber.java.en.When;
 public class TimeRegistrationTest {
 
 	private SchedulingApp schedulingApp;
-	private Activity test_activity;
+	private ProjectActivity testActivity;
 	private ErrorMessageHolder errorMessageHolder;
 
 	public TimeRegistrationTest(SchedulingApp schedulingApp, ErrorMessageHolder errorMessageHolder) {
@@ -28,7 +24,7 @@ public class TimeRegistrationTest {
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) throws Exception {
 		double diff = hours - schedulingApp.getWeeklyRegisteredHours();
-		Activity dummy_activity = new Activity("Test");
+		ProjectActivity dummy_activity = new ProjectActivity("Test");
 		try {
 			schedulingApp.registerHours(diff, dummy_activity);
 		} catch (Exception e) {
@@ -39,26 +35,28 @@ public class TimeRegistrationTest {
 
 	@Given("that there is a project activity")
 	public void thatThereIsAProjectActivity() {
-		test_activity = new Activity("test activity");
+		testActivity = new ProjectActivity("test activity");
 	}
 
 	@Given("that the activity has {double} hours spent")
-	public void thatTheActivityHasHoursSpent(double hours) {
-		double diff = hours - test_activity.getTotalHoursSpent();
-		TimeRegistration dummy_registration = new TimeRegistration(diff, test_activity, schedulingApp.getCurrentUserID());
-		assertTrue(test_activity.getTotalHoursSpent() == hours);
+	public void thatTheActivityHasHoursSpent(double hours) throws Exception {
+		if(hours!=0) {
+			double diff = hours - testActivity.getTotalHoursSpent();
+			schedulingApp.registerHours(hours, testActivity);
+		}
+		assertTrue(testActivity.getTotalHoursSpent() == hours);
 	}
 
 	@Given("that the worker has {double} hours registered on the activity")
 	public void thatTheWorkerHasHoursRegisteredOnTheActivity(double hours) throws Exception {
-		schedulingApp.registerHours(hours, test_activity);
-		assertTrue(schedulingApp.getHoursRegisteredOnActivity(test_activity) == hours);
+		schedulingApp.registerHours(hours, testActivity);
+		assertTrue(schedulingApp.getHoursRegisteredOnActivity(testActivity) == hours);
 	}
 
 	@When("the worker registers {double} hours on the activity")
 	public void theWorkerRegistersHoursOnTheActivity(double hours) {
 		try {
-			schedulingApp.registerHours(hours, test_activity);
+			schedulingApp.registerHours(hours, testActivity);
 		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
@@ -67,7 +65,7 @@ public class TimeRegistrationTest {
 	@When("the worker changes the amount of hours registered on the activity to {double} hours")
 	public void theWorkerChangesTheAmountOfHoursRegisteredOnTheActivityToHours(double new_hours) throws Exception {
 		try {
-			schedulingApp.changeHoursOnActivity(new_hours, test_activity);
+			schedulingApp.changeHoursOnActivity(new_hours, testActivity);
 		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
@@ -75,7 +73,7 @@ public class TimeRegistrationTest {
 
 	@Then("the activity has a total of {double} hours spent")
 	public void theActivityHasATotalOfHoursSpent(double hours) {
-		assertTrue(test_activity.getTotalHoursSpent() == hours);
+		assertTrue(testActivity.getTotalHoursSpent() == hours);
 	}
 
 	@Then("the worker has a total of {double} hours spent that week")

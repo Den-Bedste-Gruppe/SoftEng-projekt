@@ -1,33 +1,41 @@
-// Author: Kristian Sofus Knudsen
-//
-// Simple implementation to pass the tests in which it is involved
-
 package dtu.scheduler;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Activity {
-
-	private double hoursSpent;
-	private String name = "";
-	private List<TimeRegistration> registrationList = new ArrayList<>();
+// Philip Hviid
+public abstract class Activity {
+	private TimeFrame timeFrame;
+	private String name;
 	
-	public Activity(String name) {
-		hoursSpent = 0;
+	protected Activity(String name) {
+		timeFrame = new TimeFrame();
 		this.name = name;
+		if(name.isEmpty()) {
+			throw new IllegalArgumentException("activity cannot be created without name");
+		}
 	}
-
-	/*
-	public void registerHours(double hours) {
-		hoursSpent += hours;
+	
+	//protected as they can only be called from its child classes anyway
+	protected Activity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		this.name = name;
+		if(name.isEmpty()) {
+			throw new IllegalArgumentException("activity cannot be created without name");
+		}
+		if (DateHelper.isEndDateBeforeStartDate(startYear, startWeek, endYear, endWeek) ) {
+			throw new Exception("The end date before the start date");
+		}
+		timeFrame = new TimeFrame();
+		setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
-	*/
-
-	public double getTotalHoursSpent() {
-		return hoursSpent;
+	
+	public void setTimeFrame(int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		if (DateHelper.isEndDateBeforeStartDate(startYear, startWeek, endYear, endWeek) ) {
+			throw new Exception("The end date before the start date");
+		}
+		timeFrame.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
-
+	public int[] getTimeframe() {
+		return timeFrame.getTimeFrame();
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -35,17 +43,4 @@ public class Activity {
 		name = new_name;
 	}
 
-	public void addRegistration(TimeRegistration new_registration) {
-		registrationList.add(new_registration);
-		hoursSpent += new_registration.getHours();
-	}
-
-	public void updateTotalHoursSpent() {
-		double sum = 0;
-		for (TimeRegistration r : registrationList) {
-			sum += r.getHours();
-		}
-		hoursSpent = sum;
-	}
-	
 }

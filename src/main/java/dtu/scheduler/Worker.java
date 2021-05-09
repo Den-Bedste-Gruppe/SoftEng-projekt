@@ -2,18 +2,15 @@ package dtu.scheduler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
-import dtu.errors.TooManyActivitiesException;
-
-// By Mads Harder
+// Mads Harder
 public class Worker {
 	private String workerId;
 	private double week_hours; //Should not be set by any other function than updateWeeklyHoursSpent
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<NonProjectRegistration> nonprojectregistrationList = new ArrayList<>();
 	private List<AssistRequest> requests;
-	private List<Activity> activities;
+	private List<ProjectActivity> activities;
 	private List<NonProjectActivity> nonProjectActivies;
  
 	public Worker(String workerId) {
@@ -21,9 +18,7 @@ public class Worker {
 		if (workerId.length() == 0) throw new IllegalArgumentException("The ID must be at least one character");
 		if (workerId.length() > 4) throw new IllegalArgumentException("The ID can max be 4 characters");
 		
-		workerId = workerId.toUpperCase();
-
-		this.workerId = workerId;
+		this.workerId = workerId.toUpperCase();
 		week_hours = 0;
 		this.activities = new ArrayList<>();
 		this.requests = new ArrayList<>();
@@ -44,7 +39,7 @@ public class Worker {
 
 
 
-	public void changeHours(double new_hours, Activity activity) throws Exception {
+	public void changeHours(double new_hours, ProjectActivity activity) throws Exception {
 		// By Kristian Sofus Knudsen
 		TimeRegistration registration = getTimeRegistrationByActivity(activity);
 		if (new_hours <= 0 || new_hours > 24) {
@@ -55,10 +50,10 @@ public class Worker {
 		updateWeeklyHoursSpent(new_hours-old_hours);
 	}
 
-	public TimeRegistration getTimeRegistrationByActivity(Activity activity) throws Exception {
+	public TimeRegistration getTimeRegistrationByActivity(ProjectActivity activity) throws Exception {
 		// By Kristian Sofus Knudsen
 		for (TimeRegistration r : registrationList) {
-			if (r.getActivity().equals(activity)) {
+			if (r.getParentActivity().equals(activity)) {
 				return r;
 			}
 		}
@@ -71,11 +66,16 @@ public class Worker {
 		return workerId;
 	}
 
-	public List<Activity> getActivities() {
+	public List<ProjectActivity> getActivities() {
 		return activities;
 	}
 	
-	public void addActivity(Activity activity) {
+	public void addActivity(ProjectActivity activity) throws Exception {
+		for (Activity a : activities) {
+			if (a.equals(activity)) {
+				throw new Exception("Activity already assigned");
+			}
+		}
 		activities.add(activity);
 	}
 	

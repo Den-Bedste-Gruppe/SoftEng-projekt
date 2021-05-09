@@ -5,20 +5,18 @@ import java.util.List;
 import dtu.database.*;
 import dtu.errors.*;
 
-//Philip Hviid
+//Everyone
 public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerRepository workerRepository;
 	private ProjectRepository projectRepository = new ProjectRepositoryInMemory();
 	private ActivityAssigner activityAssigner;
 	private AssistRequestHandler requestHandler;
-	private RegistrationHandler registrationHandler;
 
 	public SchedulingApp() {
 		this.workerRepository = new WorkerRepositoryInMemory();
 		this.activityAssigner = new ActivityAssigner();
 		this.requestHandler = new AssistRequestHandler();
-		this.registrationHandler = new RegistrationHandler();
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
@@ -26,8 +24,8 @@ public class SchedulingApp {
 	}
 	
 	
-	public void createProjectActivity(String activtyName, String projectId) throws Exception {
-		Activity activity = new Activity(activtyName);
+	public void createProjectActivity(String activityName, String projectId) throws Exception {
+		ProjectActivity activity = new ProjectActivity(activityName);
 		searchProject(projectId).addActivity(activity);
 	}
 	
@@ -57,7 +55,7 @@ public class SchedulingApp {
 		return workerRepository.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String workerId, Activity activity) throws WorkerDoesNotExistException, TooManyActivitiesException {
+	public void assignActivity(String workerId, ProjectActivity activity) throws Exception {
 		if (isUserInDatabase(workerId)) {
 			activityAssigner.assignActivity(getWorkerById(workerId), activity);
 		} else {
@@ -77,19 +75,55 @@ public class SchedulingApp {
 	public Project searchProject(String ID) {
 		return projectRepository.search(ID);
 	}
+
+	public Object searchProjectByName(String name) {
+		return projectRepository.searchByName(name);
+	}
+
+	public String findIDByName(String projectName) {
+		Project p = projectRepository.searchByName(projectName);
+		return p.getProjectID();
+	}
 	
 	public  List<Project> getProjects() {
 		return projectRepository.getProjects();
 	}
 
-	public double getHoursRegisteredOnActivity(Activity activity) throws Exception {
+	public double getHoursRegisteredOnActivity(ProjectActivity activity) throws Exception {
 		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
 		return registration.getHours();
 	}
 
-	public void registerHours(double hours, Activity test_activity) throws Exception {
-		registrationHandler.registerHours(hours, test_activity, currentUser);
+	public void registerHours(double hours, ProjectActivity activity) throws Exception {
+		TimeRegistration newTimeRegistration = new TimeRegistration(hours, activity, currentUser);
+		newTimeRegistration.register();
 	}
+	
+	//This is used from clientside when scheduling nonprojectactivities, as they will always be both created and registered
+	public void scheduleNonProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		NonProjectActivity npa = new NonProjectActivity(name, startYear, startWeek, endYear, endWeek);
+		createNonProjectActivity(npa);
+		registerNonProjectActivity(npa);
+	}
+	
+	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
+		currentUser.changeHours(new_hours, activity);
+
+	}
+
+	//used by scheduleNonProjectActivity, not by client
+	public void registerNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		NonProjectRegistration newNonProjectRegistration = new NonProjectRegistration(nonProjectActivity, currentUser);
+		newNonProjectRegistration.register();	
+	}
+	
+	
+	//used by scheduleNonProjectActivity, not by client
+	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
+		currentUser.addNonProjectActivity(nonProjectActivity);
+		
+	}
+	
 
 	public void assignProjectLeader(String projectID, String leaderID) throws WorkerDoesNotExistException, ProjectDoesNotExistException {
 		Worker worker = workerRepository.getWorkerById(leaderID);
@@ -104,7 +138,7 @@ public class SchedulingApp {
 		return workerRepository.getWorkerById(workerId);
 	}
 
-	public void requestAssistance(Activity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+	public void requestAssistance(ProjectActivity activity, String targetWorkerId) throws WorkerDoesNotExistException {
 		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
 		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
 		
@@ -113,58 +147,32 @@ public class SchedulingApp {
 	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
 		return getWorkerById(workerId).getRequests();
 	}
-		
-	public void changeHoursOnActivity(double new_hours, Activity activity) throws Exception {
-		currentUser.changeHours(new_hours, activity);
-
-	}
-	
-	//used by scheduleNonProjectActivity, not by client
-	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
-		currentUser.addNonProjectActivity(nonProjectActivity);
-		
-	}
 
 	public boolean workerHasNonProjectActivity(NonProjectActivity nonProjectActivity) {
 		return(currentUser.hasNonProjectActivity(nonProjectActivity));
 
 	}
 
-	//used by scheduleNonProjectActivity, not by client
-	public void registerNonProject(NonProjectActivity nonProjectActivity) {
-		registrationHandler.registerNonProjectActivity(nonProjectActivity, currentUser);
-		
-	}
 
 	public List<NonProjectRegistration> getNonProjectRegistrations() {
 		return currentUser.getNonProjectRegistrations();
-	}
-	
-	//This is used from clientside when scheduling nonprojectactivities
-	public void scheduleNonProjectActivity(String name) {
-		if(name.isBlank()) {
-			throw new IllegalArgumentException("nonproject activity must have a have name");
-		}
-		NonProjectActivity npa = new NonProjectActivity(name);
-		createNonProjectActivity(npa);
-		registerNonProject(npa);
-	}
-	
-	//Following are just used fo simple interfacing with GUI
-	public void scheduleSickLeave() {
-		scheduleNonProjectActivity("Sick Leave");
-	}
-	
-	public void scheduleVacation() {
-		scheduleNonProjectActivity("Vacation");
-	}
-	
-	public void scheduleCourse() {
-		scheduleNonProjectActivity("Course");
 	}
 
 	public List<NonProjectActivity> getWorkersNonProjectActivities() {
 		return currentUser.getNonProjectActivies();
 	}
+
+	public List<ProjectActivity> getWorkersActivities() {
+		return currentUser.getActivities();
+	}
+
+	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
+		if(!currentUser.equals(parentProject.getProjectLeader())) {
+			throw new Exception("only project leader can assign budgeted time");
+		}
+		activity.setBudgetedTime(int1);
+	}
+
+	
 	
 }
