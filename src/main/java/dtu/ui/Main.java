@@ -448,7 +448,7 @@ public class Main {
 				//Assign worker to activity
 				///////////////////////////
 				case 2:
-					activityChoice = chooseActivity(project);
+					activityChoice = chooseProjectActivity(project);
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -471,7 +471,7 @@ public class Main {
 				//Set activity timeframe
 				////////////////////////
 				case 3:
-					activityChoice = chooseActivity(project);
+					activityChoice = chooseProjectActivity(project);
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -494,7 +494,7 @@ public class Main {
 				//View activity details
 				///////////////////////
 				case 4:
-					activityChoice = chooseActivity(project);
+					activityChoice = chooseProjectActivity(project);
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -539,7 +539,7 @@ public class Main {
 		return;
 	}
 	
-	private static int chooseActivity(Project project) {
+	private static int chooseProjectActivity(Project project) {
 		gui.clearScreen();
 		gui.println("Choose an activity:");
 		return gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
