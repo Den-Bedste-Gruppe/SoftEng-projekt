@@ -15,12 +15,11 @@ public class ProjectActivity extends Activity {
 	private int budgetedTime;
 	
 	
-	
 	public ProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
 		super(name, startYear, startWeek, endYear, endWeek);
 	}
 	
-
+	
 	public ProjectActivity(String activityName) {
 		super(activityName);
 	}

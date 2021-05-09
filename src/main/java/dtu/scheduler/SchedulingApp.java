@@ -165,6 +165,11 @@ public class SchedulingApp {
 	public List<ProjectActivity> getWorkersActivities() {
 		return currentUser.getActivities();
 	}
+	
+
+	public boolean hasOverlap(TimeFrame timeFrame1, TimeFrame timeFrame2) {
+		return timeFrame1.hasOverlap(timeFrame2);
+	}
 
 	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
 		if(!currentUser.equals(parentProject.getProjectLeader())) {
@@ -172,7 +177,6 @@ public class SchedulingApp {
 		}
 		activity.setBudgetedTime(int1);
 	}
-
 	
 	
 }

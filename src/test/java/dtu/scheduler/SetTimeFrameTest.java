@@ -76,7 +76,7 @@ public class SetTimeFrameTest {
 	public void theActivityIsGivenATimeFrameWithCurrentYearStartWeekAndEndWeek(Integer startWeek, Integer endWeek) {
 	    int currentYear = 2021;
 	    ProjectActivity curentActivity = testProject.searchActivity(activityName);
-		int[] timeframe = curentActivity.getTimeframe();
+		int[] timeframe = curentActivity.getTimeframe().getTimeFrame();
 		assertTrue(timeframe[0] == currentYear);
 		assertTrue(timeframe[1] == startWeek);
 		assertTrue(timeframe[2] == currentYear);

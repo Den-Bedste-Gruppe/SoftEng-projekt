@@ -32,8 +32,8 @@ public abstract class Activity {
 		}
 		timeFrame.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
-	public int[] getTimeframe() {
-		return timeFrame.getTimeFrame();
+	public TimeFrame getTimeframe() {
+		return timeFrame;
 	}
 	
 	public String getName() {
