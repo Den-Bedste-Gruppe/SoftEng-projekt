@@ -112,4 +112,24 @@ public class Worker {
 	public List<NonProjectActivity> getNonProjectActivies() {
 		return nonProjectActivies;
 	}
+	
+	//Phili Hviid
+	//for finding how many activities a worker has 
+	public int[] activitiesInTimeFrame(TimeFrame timeFrame) {
+		int projectActivityOverlaps = 0;
+		int nonProjectActivityOverlaps = 0;
+		int[] overlaps = {projectActivityOverlaps, nonProjectActivityOverlaps};
+		for(ProjectActivity activity : activities) {
+			if(timeFrame.hasOverlap(activity.getTimeframe())){
+				projectActivityOverlaps++;
+			}
+		}
+		for(NonProjectActivity activity : nonProjectActivies) {
+			if(timeFrame.hasOverlap(activity.getTimeframe())){
+				nonProjectActivityOverlaps++;
+			}
+		}
+		return overlaps;
+	}
+	
 }

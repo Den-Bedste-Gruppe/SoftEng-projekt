@@ -68,7 +68,7 @@ public class SetTimeFrameTest {
 	public void theProjectLeaderSetsATimeWithCurrentYearStartWeekAndEndWeekForAnActivity(Integer startWeek, Integer endWeek) throws Exception {
 	    int currentYear = 2021;
 	    ProjectActivity curentActivity = testProject.searchActivity(activityName);
-	    schedulingApp.setAcivityTimeFrame(curentActivity, currentYear, startWeek, currentYear, endWeek);
+	    schedulingApp.setAcivityTimeFrame(testProject, curentActivity, currentYear, startWeek, currentYear, endWeek);
 	}
 
 	// Mads Harder
@@ -111,11 +111,11 @@ public class SetTimeFrameTest {
 	}
 
 	// Mads Harder 
-	@When("the worker tryes to set a start and end date on current activity")
-	public void theWorkerTryesToSetAStartAndEndDateOnCurrentActivity() {
-	    ProjectActivity curentActivity = testProject.searchActivity(activityName);
+	@When("the worker tries to set a start and end date on current activity")
+	public void theWorkerTriesToSetAStartAndEndDateOnCurrentActivity() {
+		ProjectActivity curentActivity = testProject.searchActivity(activityName);
 	    try {
-	    	schedulingApp.setAcivityTimeFrame(curentActivity, 2021, 1, 2021, 4);
+	    	schedulingApp.setAcivityTimeFrame(testProject, curentActivity, 2021, 1, 2021, 4);
 		} catch (Exception e) {
 	    	errorMessageHolder.setErrorMessage(e.getMessage());
 		}
@@ -125,7 +125,7 @@ public class SetTimeFrameTest {
 	public void the_project_leader_sets_an_illegible_time_frame() {
 		ProjectActivity curentActivity = testProject.searchActivity(activityName);
 		try {
-			schedulingApp.setAcivityTimeFrame(curentActivity, 2021, -2, 2021, 55);
+			schedulingApp.setAcivityTimeFrame(testProject, curentActivity, 2021, -2, 2021, 55);
 		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage()); 
 		}

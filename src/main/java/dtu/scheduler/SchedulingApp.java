@@ -4,6 +4,7 @@ import java.util.List;
 
 import dtu.database.*;
 import dtu.errors.*;
+import io.cucumber.java.en_old.Ac;
 
 //Everyone
 public class SchedulingApp {
@@ -63,12 +64,15 @@ public class SchedulingApp {
 		}
 	}
 	
-	public void setAcivityTimeFrame(Activity activity, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+	public void setAcivityTimeFrame(Project project, Activity activity, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		if (!currentUser.equals(project.getProjectLeader())) {
+			throw new Exception("The current worker is not a project leader and can't set time frame");
+		}
 		activity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	
 	public int[] getAcivityTimeFrame(Activity activity) throws Exception {
-		return activity.getTimeframe();
+		return activity.getTimeframe().getTimeFrameAsList();
 	}
 	
 	public double getWeeklyRegisteredHours() {
@@ -173,6 +177,11 @@ public class SchedulingApp {
 	public List<ProjectActivity> getWorkersActivities() {
 		return currentUser.getActivities();
 	}
+	
+
+	public boolean hasOverlap(TimeFrame timeFrame1, TimeFrame timeFrame2) {
+		return timeFrame1.hasOverlap(timeFrame2);
+	}
 
 	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
 		if(!currentUser.equals(parentProject.getProjectLeader())) {
@@ -180,7 +189,6 @@ public class SchedulingApp {
 		}
 		activity.setBudgetedTime(int1);
 	}
-
 	
 	
 }
