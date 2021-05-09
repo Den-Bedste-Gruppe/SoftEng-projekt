@@ -1,7 +1,6 @@
 package dtu.scheduler;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 // Mads Harder

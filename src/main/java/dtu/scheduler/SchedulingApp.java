@@ -4,7 +4,6 @@ import java.util.List;
 
 import dtu.database.*;
 import dtu.errors.*;
-import io.cucumber.java.en_old.Ac;
 
 //Everyone
 public class SchedulingApp {
