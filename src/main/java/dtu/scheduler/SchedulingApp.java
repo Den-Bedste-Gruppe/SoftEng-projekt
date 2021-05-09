@@ -68,7 +68,7 @@ public class SchedulingApp {
 	}
 	
 	public int[] getAcivityTimeFrame(Activity activity) throws Exception {
-		return activity.getTimeframe().getTimeFrame();
+		return activity.getTimeframe().getTimeFrameAsList();
 	}
 	
 	public double getWeeklyRegisteredHours() {

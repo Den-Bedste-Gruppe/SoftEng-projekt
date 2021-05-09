@@ -20,7 +20,7 @@ public class TimeFrame {
 		setEndWeek(endWeek);
 	}
 	
-	public int[] getTimeFrame() {
+	public int[] getTimeFrameAsList() {
 		int[] timeFrame = {startYear, startWeek, endYear, endWeek};
 		return timeFrame;
 	}
