@@ -50,6 +50,16 @@ public class SetTimeFrameTest {
 		assertTrue(timeFrame.getEndYear() == endYear);
 		assertTrue(timeFrame.getEndWeek() == endWeek);
 	}
+	
+	@When("the project is given an illegible date as a time frame")
+	public void theProjectIsGivenAnIllegibleDateAsATimeFrame() {
+		try {
+			testProject.setTimeFrame(-2, -4, -2, -3);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			errorMessageHolder.setErrorMessage(e.getMessage());
+		}
+	}
 
 	@When("The project leader sets a time with current year, start week {int} and end week {int} for an activity")
 	public void theProjectLeaderSetsATimeWithCurrentYearStartWeekAndEndWeekForAnActivity(Integer startWeek, Integer endWeek) throws Exception {
