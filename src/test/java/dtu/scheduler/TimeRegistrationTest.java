@@ -23,12 +23,10 @@ public class TimeRegistrationTest {
 
 	@Given("that the worker has {double} hours spent that week")
 	public void thatTheWorkerHasHoursSpentThatWeek(double hours) throws Exception {
-		double diff = hours - schedulingApp.getWeeklyRegisteredHours();
-		ProjectActivity dummy_activity = new ProjectActivity("Test");
-		try {
+		if (hours != 0) {
+			double diff = hours - schedulingApp.getWeeklyRegisteredHours();
+			ProjectActivity dummy_activity = new ProjectActivity("Test");
 			schedulingApp.registerHours(diff, dummy_activity);
-		} catch (Exception e) {
-			errorMessageHolder.setErrorMessage(e.getMessage());
 		}
 		assertTrue(schedulingApp.getWeeklyRegisteredHours() == hours);
 	}
