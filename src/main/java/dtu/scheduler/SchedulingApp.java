@@ -4,6 +4,7 @@ import java.util.List;
 
 import dtu.database.*;
 import dtu.errors.*;
+import io.cucumber.java.en_old.Ac;
 
 //Everyone
 public class SchedulingApp {
@@ -63,7 +64,10 @@ public class SchedulingApp {
 		}
 	}
 	
-	public void setAcivityTimeFrame(Activity activity, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+	public void setAcivityTimeFrame(Project project, Activity activity, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		if (!currentUser.equals(project.getProjectLeader())) {
+			throw new Exception("The current worker is not a project leader and can't set time frame");
+		}
 		activity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
 	
