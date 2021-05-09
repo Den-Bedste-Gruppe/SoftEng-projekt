@@ -45,6 +45,9 @@ public class TerminalGUI {
 
 	//Displays menu, takes integer answer
 	public int numericalMenu(String[] options) {
+		if (options.length == 0) {
+			return -1; //Return -1 to mark empty array
+		}
 		Integer i = 1;
 		for (String option : options) {
 			println(i.toString() + ": " + option);
