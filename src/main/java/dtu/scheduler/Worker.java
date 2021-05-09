@@ -113,7 +113,7 @@ public class Worker {
 	}
 	
 	//Phili Hviid
-	//for finding how many activities a worker has 
+	//for finding how many activities a worker has  in given period
 	public int[] activitiesInTimeFrame(TimeFrame timeFrame) {
 		int projectActivityOverlaps = 0;
 		int nonProjectActivityOverlaps = 0;

@@ -187,7 +187,8 @@ public class SchedulingApp {
 		return getWorkerById(workerId).getActivities();
 	}
 	
-	//Philip
+	//The following methods' logic should be delegated to other classes, but budget is a bitch (not the method)
+	//Philip Hviid
 	public int [] getOverLaps(Worker worker, ProjectActivity activity) {
 		if(activity.getTimeframe().isEmpty()) {
 			int[] answ = {0,0};
@@ -196,7 +197,7 @@ public class SchedulingApp {
 		return worker.activitiesInTimeFrame(activity.getTimeframe());
 	}
 	
-	//Philip
+	//Philip Hviid
 	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
 		if(!currentUser.equals(parentProject.getProjectLeader())) {
 			throw new Exception("only project leader can assign budgeted time");
