@@ -10,7 +10,7 @@ public class Project {
 
 	private String projectID;
 	private String name;
-	private Worker projectLeader;
+	private Worker projectLeader = null;
 	private List<ProjectActivity> activities = new ArrayList<>();
 	
 	// TODO "På oprettelsestidspunktet er information om aktiviteter og starttidspunkt ikke fuldstændige"

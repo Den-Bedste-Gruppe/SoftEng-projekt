@@ -61,7 +61,14 @@ public class SchedulingApp {
 		} else {
 			throw new WorkerDoesNotExistException("No user with exists with initials " + workerId);
 		}
-		
+	}
+	
+	public void setAcivityTimeFrame(Activity activity, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		activity.setTimeFrame(startYear, startWeek, endYear, endWeek);
+	}
+	
+	public int[] getAcivityTimeFrame(Activity activity) throws Exception {
+		return activity.getTimeframe();
 	}
 	
 	public double getWeeklyRegisteredHours() {

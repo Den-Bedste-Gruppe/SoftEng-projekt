@@ -32,6 +32,7 @@ public abstract class Activity {
 		}
 		timeFrame.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	}
+
 	public int[] getTimeframe() {
 		return timeFrame.getTimeFrame();
 	}
@@ -39,6 +40,7 @@ public abstract class Activity {
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String new_name) {
 		name = new_name;
 	}
