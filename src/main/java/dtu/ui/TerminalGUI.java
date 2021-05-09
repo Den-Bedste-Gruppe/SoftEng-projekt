@@ -1,6 +1,6 @@
 // Author: Kristian Sofus Knudsen
 
-package dtu.scheduler;
+package dtu.ui;
 
 import java.util.Scanner;
 
