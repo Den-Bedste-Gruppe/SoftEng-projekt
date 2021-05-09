@@ -173,6 +173,9 @@ public class SchedulingApp {
 		return currentUser.getActivities();
 	}
 	
+	public int [] getOverLaps(Worker worker, ProjectActivity activity){
+		return worker.activitiesInTimeFrame(activity.getTimeframe());
+	}
 
 	public boolean hasOverlap(TimeFrame timeFrame1, TimeFrame timeFrame2) {
 		return timeFrame1.hasOverlap(timeFrame2);
