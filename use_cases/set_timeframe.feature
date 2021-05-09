@@ -21,11 +21,11 @@ Scenario: The project is given a end date before the start date
 	When the project is given a end date before the start date
 	Then The error message "The end date before the start date"
 
-#Scenario: A worker who is not project leader tryes to set start and end date
-#	# Mads Harder
-#	Given the project leader is set to null on current activity
-#	When the worker tryes to set a start and end date on current activity
-#	Then The error message "The current worker is not a project leader and can't set time frame"
+Scenario: A worker who is not project leader tryes to set start and end date on activity
+	# Mads Harder
+	Given the project leader is set to null on current activity
+	When the worker tries to set a start and end date on current activity
+	Then The error message "The current worker is not a project leader and can't set time frame"
 
 Scenario: The project leader sets a time frame for a project activity
 	Given There is a project activity
