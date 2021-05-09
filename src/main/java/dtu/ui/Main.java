@@ -130,9 +130,7 @@ public class Main {
 	//Philip Hviid
 	private static void requestAssistanceScene() {
 		List<ProjectActivity> activities = schedulingApp.getCurrentUsersActivities();
-		gui.clearScreen();
-		gui.println("Choose one of your assigned activities:");
-		int choice = gui.numericalMenu(activitiesNames(activities)) - 1;
+		int choice = chooseProjectActivity(activities);
 		if (choice == -2) {
 			gui.printErrorAndContinue("No activities!");
 			return;
@@ -448,7 +446,7 @@ public class Main {
 				//Assign worker to activity
 				///////////////////////////
 				case 2:
-					activityChoice = chooseProjectActivity(project);
+					activityChoice = chooseProjectActivity(project.getActivities());
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -471,7 +469,7 @@ public class Main {
 				//Set activity timeframe
 				////////////////////////
 				case 3:
-					activityChoice = chooseProjectActivity(project);
+					activityChoice = chooseProjectActivity(project.getActivities());
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -494,7 +492,7 @@ public class Main {
 				//View activity details
 				///////////////////////
 				case 4:
-					activityChoice = chooseProjectActivity(project);
+					activityChoice = chooseProjectActivity(project.getActivities());
 					if (activityChoice == -2) {
 						gui.printErrorAndContinue("No activities!");
 						break;
@@ -539,10 +537,10 @@ public class Main {
 		return;
 	}
 	
-	private static int chooseProjectActivity(Project project) {
+	private static int chooseProjectActivity(List<ProjectActivity> activities) {
 		gui.clearScreen();
 		gui.println("Choose an activity:");
-		return gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+		return gui.numericalMenu(activitiesNames(activities)) - 1;
 	}
 
 
