@@ -22,6 +22,8 @@ public class ActivitySteps {
 	private NonProjectActivity nonProjectActivity;
 	private Project project;
 	private String projectID;
+	private int activityCount = 0;
+	private int[] overlaps;
 
 	
 	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg, ActivityAssigner activityAssigner) {
@@ -142,6 +144,41 @@ public class ActivitySteps {
 	    assertTrue(project.getActivities().size()==1);
 	}
 	
+	@Given("worker {string} is on projectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
+	public void workerIsOnProjectactivityWithStartYearStartWeekEndyearAndEndweek(String workerId, Integer startYear,
+			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
+		ProjectActivity tempActivity = new ProjectActivity("test" + activityCount, startYear, startWeek, endYear, endWeek);
+	    project.addActivity(tempActivity);
+	    schedulingApp.assignActivity(workerId, tempActivity);
+	    activityCount++;
+	    assertTrue(activityCount==schedulingApp.getWorkersProjectActivities(workerId).size());
+	}
+
+	@Given("there is a projectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
+	public void thereIsAProjectactivityWithStartYearStartWeekEndyearAndEndweek(Integer startYear,
+			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
+	    activity = new ProjectActivity("testact", startYear, startWeek, endYear, endWeek);
+	    project.addActivity(activity);
+	}
+
+	@When("the user checks availibility of worker {string} for the projectactivity")
+	public void theUserChecksAvailibilityOfWorkerForTheProjectactivity(String workerId) throws WorkerDoesNotExistException {
+	    overlaps = schedulingApp.getOverLaps(workerId, activity);
+	}
+
+	@Then("{int} projectactivity overlaps and {int} nonprojectactivity overlaps are returned")
+	public void projectactivityOverlapsAndNonprojectactivityOverlapsAreReturned(Integer projectOverlaps, Integer nonProjectOverlaps) {
+		System.out.println(overlaps[0]);
+		System.out.println(overlaps[1]);
+	    assertTrue(overlaps[0] == projectOverlaps && overlaps[1] == nonProjectOverlaps);
+	}
+	
+	@Given("worker {string} is on nonprojectactivity with start year {int}, start week {int}, endyear {int} and endweek {int}")
+	public void workerIsOnNonprojectactivityWithStartYearStartWeekEndyearAndEndweek(String workerId, Integer startYear,
+			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
+		schedulingApp.addNonProjectActivity(workerId, startYear, startWeek, endYear, endWeek);
+	    assertTrue(1==schedulingApp.getWorkersNonProjectActivities(workerId).size());
+	}
 	
 	
 

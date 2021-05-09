@@ -113,7 +113,7 @@ public class Main {
 	}
 
 	private static void registerHoursScene() {
-		List<ProjectActivity> activities = schedulingApp.getWorkersActivities();
+		List<ProjectActivity> activities = schedulingApp.getCurrentUsersActivities();
 		
 		gui.clearScreen();
 		gui.println("Choose one of your assigned activities:");
