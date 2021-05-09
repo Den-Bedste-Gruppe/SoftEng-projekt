@@ -1,10 +1,16 @@
 // Author: Kristian Sofus Knudsen
 
-package dtu.scheduler;
-import java.util.List;
+package dtu.ui;
 
+import java.util.List;
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
+import dtu.scheduler.Activity;
+import dtu.scheduler.DateHelper;
+import dtu.scheduler.Project;
+import dtu.scheduler.ProjectActivity;
+import dtu.scheduler.SchedulingApp;
+import dtu.scheduler.Worker;
 
 public class Main {
 
