@@ -432,7 +432,7 @@ public class Main {
 					List<Worker> assignedWorkers = activity.getAssignedWorkers();
 					
 					gui.clearScreen();
-					gui.println(activity.getName());
+					gui.println("Activity: " + activity.getName() + "\n");
 					if (activity.getTimeframe().isEmpty()) {
 						gui.println("No timeframe set yet.");
 					} else {
