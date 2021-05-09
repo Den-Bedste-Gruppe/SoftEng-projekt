@@ -127,6 +127,7 @@ public class Main {
 		}
 	}
 	
+	//Philip Hviid
 	private static void requestAssistanceScene() {
 		List<ProjectActivity> activities = schedulingApp.getCurrentUsersActivities();
 		gui.clearScreen();
@@ -143,6 +144,7 @@ public class Main {
 		}
 	}
 	
+	//Philip Hviid
 	private static void checkAssistanceRequestsScene() throws WorkerDoesNotExistException {
 		List<AssistRequest> requests = schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID());
 		gui.println("Choose requests to to be assigned to activity:");
@@ -157,7 +159,7 @@ public class Main {
 		
 	}
 	
-
+	//Philip Hviid
 	private static String[] displayRequests(List<AssistRequest> requests) {
 		String[] requestDisplay = new String[requests.size()];
 		for (int i=0; i < requests.size(); i++) {
@@ -395,6 +397,7 @@ public class Main {
 			"Add activity",
 			"Assign worker to activity",
 			"Set activity timeframe",
+			"Set activity budgeted time",
 			"View activity details",
 			"Return"
 		};
@@ -501,8 +504,10 @@ public class Main {
 					gui.println("\nPress ENTER to return");
 					gui.inputString();
 					break;
-
 				case 5:
+					budgetTimeScene();
+					break;
+				case 6:
 					managingActivities = false;
 					break;
 			}
@@ -511,6 +516,10 @@ public class Main {
 
 	}
 
+	private static void budgetTimeScene() {
+		//TODO implement
+		return;
+	}
 
 
 	private static void printProjects(List<Project> projects) {
