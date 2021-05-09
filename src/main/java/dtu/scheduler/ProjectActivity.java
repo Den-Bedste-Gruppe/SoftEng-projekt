@@ -17,7 +17,6 @@ public class ProjectActivity extends Activity {
 		this.parentProject = parentProject;
 	}
 
-
 	public double getTotalHoursSpent() {
 		return hoursSpent;
 	}
@@ -50,7 +49,7 @@ public class ProjectActivity extends Activity {
 		return assignedWorkers;
 	}
 
-
+	//Philip Hviid
 	public void setBudgetedTime(int hours) {
 		if(hours<=0) {
 			throw new IllegalArgumentException("budgeted time must be positive integer");

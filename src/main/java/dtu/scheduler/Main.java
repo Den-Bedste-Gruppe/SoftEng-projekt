@@ -47,7 +47,7 @@ public class Main {
 	//Main menu scene
 	//Remember to update both the options *and* switch statement
 	//If we had more time we would do it in a less manual-labor way (separate class)
-	private static void mainMenuScene() {
+	private static void mainMenuScene() throws WorkerDoesNotExistException {
 		gui.clearScreen();
 
 		gui.println("Welcome " + schedulingApp.getCurrentUser());
@@ -80,13 +80,15 @@ public class Main {
 
 
 
-	private static void personalSchedulingScene() {
+	private static void personalSchedulingScene() throws WorkerDoesNotExistException {
 		gui.clearScreen();
 
 		String[] personalMenuOptions = {
 				"Register hours",
 				"Change registered hours",
 				"Register nonproject activity",
+				"Request assistance for activity",
+				"Check assistance requests: " + schedulingApp.getCurrentUser().getRequests().size(),
 				"Return"
 		};
 
@@ -101,15 +103,62 @@ public class Main {
 				break;
 
 			case 2:
-
+				
 				break;
 			case 3:
 				nonProjectSchedulingScene();
 				break;
 			case 4:
+				requestAssistanceScene();
+				break;
+			case 5:
+				checkAssistanceRequestsScene();
+				break;
+			case 6:
 				return; //Return to main menu
 			}
 		}
+	}
+	
+	private static void requestAssistanceScene() {
+		List<ProjectActivity> activities = schedulingApp.getCurrentUsersActivities();
+		gui.clearScreen();
+		gui.println("Choose one of your assigned activities:");
+		int choice = gui.numericalMenu(activitiesNames(activities)) - 1;
+		ProjectActivity activity;
+		try {
+			activity = activities.get(choice);
+			gui.println("Input workerId to request assistance");
+			String targetWorkerId = gui.inputString();
+			schedulingApp.requestAssistance(activity, targetWorkerId);;
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
+		}
+	}
+	
+	private static void checkAssistanceRequestsScene() throws WorkerDoesNotExistException {
+		List<AssistRequest> requests = schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID());
+		gui.println("Choose requests to to be assigned to activity:");
+		int choice = gui.numericalMenu(displayRequests(requests)) - 1;
+		AssistRequest request;
+		try {
+			request = requests.get(choice);
+			schedulingApp.acceptRequest(request);
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
+		}
+		
+	}
+	
+
+	private static String[] displayRequests(List<AssistRequest> requests) {
+		String[] requestDisplay = new String[requests.size()];
+		for (int i=0; i < requests.size(); i++) {
+			requestDisplay[i] = "Assist with activity " + requests.get(i).getActivity().getName();
+			requestDisplay[i] += ", requested by " + requests.get(i).getSenderId();
+		}
+		return requestDisplay;
+		
 	}
 
 	private static void registerHoursScene() {

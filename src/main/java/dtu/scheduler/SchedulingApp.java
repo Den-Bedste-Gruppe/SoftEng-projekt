@@ -227,5 +227,6 @@ public class SchedulingApp {
 	public void acceptRequest(AssistRequest assistRequest) throws Exception {
 		assignActivity(getCurrentUserID(), assistRequest.getActivity());
 		assistRequest.toggleStatus();
+		currentUser.getRequests().remove(assistRequest);
 	}
 }
