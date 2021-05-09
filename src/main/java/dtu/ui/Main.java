@@ -134,7 +134,7 @@ public class Main {
 		int choice = gui.numericalMenu(activitiesNames(activities)) - 1;
 		if (choice == -2) {
 			gui.printErrorAndContinue("No activities!");
-			break;
+			return;
 		}
 		ProjectActivity activity;
 		try {
@@ -153,7 +153,7 @@ public class Main {
 		int choice = gui.numericalMenu(displayRequests(requests)) - 1;
 		if (choice == -2) {
 			gui.printErrorAndContinue("No requests!");
-			break;
+			return;
 		}
 		AssistRequest request;
 		try {
