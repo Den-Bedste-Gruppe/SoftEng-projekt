@@ -92,14 +92,13 @@ public class Main {
 
 	private static void personalSchedulingScene() throws WorkerDoesNotExistException {
 		gui.clearScreen();
-		int requestCount = schedulingApp.getCurrentUser().getRequests().size();
 
 		String[] personalMenuOptions = {
 				"Register hours",
 				"Change registered hours",
 				"Register nonproject activity",
 				"Request assistance for activity",
-				"Check assistance requests: " + requestCount,
+				"Check assistance requests: " + schedulingApp.getCurrentUser().getRequests().size(),
 				"Return"
 		};
 
