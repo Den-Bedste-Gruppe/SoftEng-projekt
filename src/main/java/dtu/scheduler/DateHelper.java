@@ -7,6 +7,7 @@ import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Locale;
 
+// Mads Harder
 public class DateHelper {
 	
 	public static int thisWeek() {
@@ -27,7 +28,6 @@ public class DateHelper {
 		return (LocalDate.now().getDayOfWeek().equals(DayOfWeek.WEDNESDAY));
 	}
 	
-	// Mads Harder
 	public static int getWeeksInYear(int year) {
 		// I hate time, timezone and dates...
 		// Hours spent on this = 2.5
@@ -46,7 +46,6 @@ public class DateHelper {
 	    }
 	}
 
-	// Mads Harder
 	public static boolean isEndDateBeforeStartDate(int startYear, int startWeek, int endYear, int endWeek) {
 		// I hate time, timezone and dates...
 		// Hours spent on this = 1.5
