@@ -92,7 +92,7 @@ public class AssignWorkerSteps {
         assertTrue(errMsg.getErrorMessage().equals("No user with exists with initials " + fakeID));
     }
 	
-	
+	//Philip Hviid
 	@Given("the worker has a request for assistance")
 	public void aWorkerHasARequestForAssistance() throws Exception {
 		project = new Project("P1");
@@ -104,7 +104,7 @@ public class AssignWorkerSteps {
 	    schedulingApp.logIn("ZXCV");
 	    assertTrue(schedulingApp.getCurrentUser().getRequests().size()==1);
 	}
-	
+	//Philip Hviid
 	@When("another worker sends assist request for same activity")
 	public void anotherWorkerSendsAssistRequestForSameActivity() throws WorkerDoesNotExistException {
 	    schedulingApp.logOut();
@@ -117,12 +117,12 @@ public class AssignWorkerSteps {
 	    
 	}
 
-
+	//Philip Hviid
 	@When("the worker accepts the requests")
 	public void theWorkerAcceptsTheRequests() throws Exception {
 	    schedulingApp.acceptRequest(schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID()).get(0));
 	}
-	
+	//Philip Hviid
 	@When("the user requests assistance to himself")
 	public void theUserRequestsAssistanceToHimself() {
 		try {
@@ -132,14 +132,14 @@ public class AssignWorkerSteps {
 		}
 
 	}
-	
+	//Philip Hviid
 	@When("worker is assigned to the on the same activity as he has a request for")
 	public void workerIsAssignedToTheOnTheSameActivityAsHeHasARequestFor() throws Exception {
 		schedulingApp.logOut();
 		schedulingApp.logIn("QWER");
 	    schedulingApp.assignWorkerToActivity("ZXCV", activity);
 	}
-
+	//Philip Hviid
 	@Then("the request is removed")
 	public void theRequestIsRemoved() throws WorkerDoesNotExistException {
 	    assertFalse(schedulingApp.getWorkerById("ZXCV").hasRequestForActivity(activity));
