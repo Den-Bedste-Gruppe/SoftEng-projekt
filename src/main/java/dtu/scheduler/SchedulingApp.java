@@ -23,9 +23,10 @@ public class SchedulingApp {
 	    currentUser = workerRepository.getWorkerById(workerId);		
 	}
 	
-	
 	public void createProjectActivity(String activityName, String projectId) throws Exception {
-		ProjectActivity activity = new ProjectActivity(activityName);
+		Project parrentProject = searchProject(projectId);
+		if (parrentProject == null) throw new Exception("There is no project with id " + projectId);
+		ProjectActivity activity = new ProjectActivity(activityName, parrentProject);
 		searchProject(projectId).addActivity(activity);
 	}
 	
@@ -37,10 +38,7 @@ public class SchedulingApp {
 	}
 
 	public Worker getCurrentUser() {
-		if(isUserLoggedIn()) {
-			return currentUser;
-		}
-		return null;
+		return currentUser;
 	}	
 
 	public Boolean isUserLoggedIn() {
@@ -61,7 +59,17 @@ public class SchedulingApp {
 		} else {
 			throw new WorkerDoesNotExistException("No user with exists with initials " + workerId);
 		}
-		
+	}
+	
+	public void setAcivityTimeFrame(Project project, Activity activity, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
+		if (!currentUser.equals(project.getProjectLeader())) {
+			throw new Exception("The current worker is not a project leader and can't set time frame");
+		}
+		activity.setTimeFrame(startYear, startWeek, endYear, endWeek);
+	}
+	
+	public int[] getAcivityTimeFrame(Activity activity) throws Exception {
+		return activity.getTimeframe().getTimeFrameAsList();
 	}
 	
 	public double getWeeklyRegisteredHours() {
@@ -99,31 +107,37 @@ public class SchedulingApp {
 		newTimeRegistration.register();
 	}
 	
+	
 	//This is used from clientside when scheduling nonprojectactivities, as they will always be both created and registered
 	public void scheduleNonProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
 		NonProjectActivity npa = new NonProjectActivity(name, startYear, startWeek, endYear, endWeek);
-		createNonProjectActivity(npa);
-		registerNonProjectActivity(npa);
+		createNonProjectActivity(npa, currentUser);
+		registerNonProjectActivity(npa, currentUser);
 	}
 	
 	public void changeHoursOnActivity(double new_hours, ProjectActivity activity) throws Exception {
-		currentUser.changeHours(new_hours, activity);
+		TimeRegistration registration = currentUser.getTimeRegistrationByActivity(activity);
+		currentUser.changeHours(new_hours, registration);
 
 	}
 
 	//used by scheduleNonProjectActivity, not by client
-	public void registerNonProjectActivity(NonProjectActivity nonProjectActivity) {
-		NonProjectRegistration newNonProjectRegistration = new NonProjectRegistration(nonProjectActivity, currentUser);
+	public void registerNonProjectActivity(NonProjectActivity nonProjectActivity, Worker worker) {
+		NonProjectRegistration newNonProjectRegistration = new NonProjectRegistration(nonProjectActivity, worker);
 		newNonProjectRegistration.register();	
 	}
 	
-	
 	//used by scheduleNonProjectActivity, not by client
-	public void createNonProjectActivity(NonProjectActivity nonProjectActivity) {
-		currentUser.addNonProjectActivity(nonProjectActivity);
+	public void createNonProjectActivity(NonProjectActivity nonProjectActivity, Worker worker) {
+		worker.addNonProjectActivity(nonProjectActivity);
 		
 	}
 	
+	public void addNonProjectActivity(String workerId, Integer startYear,
+			Integer startWeek, Integer endYear, Integer endWeek) throws Exception {
+		NonProjectActivity npa = new NonProjectActivity("testname", startYear, startWeek, endYear, endWeek);
+		getWorkerById(workerId).addNonProjectActivity(npa);
+	}
 
 	public void assignProjectLeader(String projectID, String leaderID) throws WorkerDoesNotExistException, ProjectDoesNotExistException {
 		Worker worker = workerRepository.getWorkerById(leaderID);
@@ -134,7 +148,7 @@ public class SchedulingApp {
 		project.assignLeader(worker);
 	}
   
-	private Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
+	public Worker getWorkerById(String workerId) throws WorkerDoesNotExistException {
 		return workerRepository.getWorkerById(workerId);
 	}
 
@@ -153,26 +167,67 @@ public class SchedulingApp {
 
 	}
 
-
 	public List<NonProjectRegistration> getNonProjectRegistrations() {
 		return currentUser.getNonProjectRegistrations();
 	}
 
-	public List<NonProjectActivity> getWorkersNonProjectActivities() {
+	public List<NonProjectActivity> getCurrentUsersNonProjectActivities() {
 		return currentUser.getNonProjectActivies();
 	}
 
-	public List<ProjectActivity> getWorkersActivities() {
+	public List<ProjectActivity> getCurrentUsersActivities() {
 		return currentUser.getActivities();
 	}
-
+	
+	public List<NonProjectActivity> getWorkersNonProjectActivities(String workerId) throws WorkerDoesNotExistException{
+		return getWorkerById(workerId).getNonProjectActivies();
+	}
+	
+	public List<ProjectActivity> getWorkersProjectActivities(String workerId) throws WorkerDoesNotExistException{
+		return getWorkerById(workerId).getActivities();
+	}
+	
+	//The following methods' logic should be delegated to other classes, but budget is a bitch (not the method)
+	//Philip Hviid
+	public int [] getOverLaps(Worker worker, ProjectActivity activity) {
+		if(activity.getTimeframe().isEmpty()) {
+			int[] answ = {0,0};
+			return answ;
+		}
+		return worker.activitiesInTimeFrame(activity.getTimeframe());
+	}
+	
+	//Philip Hviid
 	public void setBudgetedTime(int int1, ProjectActivity activity, Project parentProject) throws Exception {
 		if(!currentUser.equals(parentProject.getProjectLeader())) {
 			throw new Exception("only project leader can assign budgeted time");
 		}
 		activity.setBudgetedTime(int1);
 	}
+	//TODO should really be refactored
+	//Philip Hviid
+	public String displayWorkerOverview(ProjectActivity activity) {
+		int[] overLaps;
+		String s = "";
 
-	
-	
+		if(activity.getTimeframe().isEmpty()) {
+			s+="Current activity has no set timeframe!\n";
+		}
+
+		Worker[] allWorkers = workerRepository.getAllWorkers();
+		for(Worker worker : allWorkers) {
+			overLaps = getOverLaps(worker, activity);
+			s+="Worker: " + worker.getWorkerId() + " has " + overLaps[0] + " project activites and "
+			+ overLaps[1] + " nonproject activites overlapping with timeframe of current activity.\n";
+		}
+		
+		return s;
+	}
+
+	//possibly refactor into AssistRequest along with code from requestHadler
+	public void acceptRequest(AssistRequest assistRequest) throws Exception {
+		assignActivity(getCurrentUserID(), assistRequest.getActivity());
+		assistRequest.toggleStatus();
+		currentUser.getRequests().remove(assistRequest);
+	}
 }

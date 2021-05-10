@@ -19,6 +19,8 @@ public class AssignWorkerSteps {
 	private ActivityAssigner activityAssigner;
 	private ProjectActivity activity;
 	private String activityName = "Test Activity";
+	private int activityCount = 0;
+	private Project project;
 
 	
 	public AssignWorkerSteps(SchedulingApp app, ErrorMessageHolder errMsg, ActivityAssigner activityAssigner) {
@@ -38,34 +40,37 @@ public class AssignWorkerSteps {
 	}
 	
 	@Given("that there is an activity")
-	public void thatThereIsAnActivity() {
-	    activity = new ProjectActivity(activityName);
+	public void thatThereIsAnActivity() throws Exception {
+		project = new Project("P1");
+		schedulingApp.addProject(project);
+		schedulingApp.createProjectActivity("testname", project.getProjectID());
+		activity = project.searchActivity("testname");
 	}
 
 	@When("the user assigns themselves to the activity")
 	public void theUserAssignsThemselvesToTheActivity() throws Exception {
-			worker.addActivity(activity);
+		schedulingApp.assignActivity(schedulingApp.getCurrentUserID(), activity);
 	}
 
 	@Then("the user is assigned to the activity")
 	public void theUserIsAssignedToTheActivity() {
-		assertTrue(worker.getActivities().contains(activity));
+		assertTrue(schedulingApp.getCurrentUser().getActivities().contains(activity));
 	}
 	
 	
 	
-	@Given("the worker has {int} activities this week")
-	public void theWorkerHasActivitiesThisWeek(Integer int1) throws Exception {
-	    for (int i = 0; i < int1; i++) {
-			worker.addActivity(new ProjectActivity("Mock Activity " + (i + 1)));
-		}
+//	@Given("the worker has {int} activities this week")
+//	public void theWorkerHasActivitiesThisWeek(Integer int1) throws Exception {
+//	    for (int i = 0; i < int1; i++) {
+//			worker.addActivity(new ProjectActivity("Mock Activity " + (i + 1)));
+//		}
 	    
 //	    Debug:
 //	    for (Activity activity : worker.getActivities()) {
 //			System.out.println(activity.getName());
 //		}
-	    
-	}
+//	    
+//	}
 
 	@Then("the user is informed that they are busy")
 	public void theUserIsInformedThatTheyAreBusy() {
@@ -82,12 +87,29 @@ public class AssignWorkerSteps {
 			errMsg.setErrorMessage(e.getMessage());
 		} 
 	}
-
+	
 	@Then("the user is informed that no worker with the initials {string} exists")
-	public void theUserIsInformedThatNoWorkerWithTheInitialsExists(String string) {
-		assertTrue(errMsg.getErrorMessage().equals("No user with exists with initials " + fakeID));
+    public void theUserIsInformedThatNoWorkerWithTheInitialsExists(String string) {
+        assertTrue(errMsg.getErrorMessage().equals("No user with exists with initials " + fakeID));
+    }
+	
+	
+	@Given("the worker has a request for assistance")
+	public void aWorkerHasARequestForAssistance() throws Exception {
+		project = new Project("P1");
+		schedulingApp.addProject(project);
+		schedulingApp.createProjectActivity("testname", project.getProjectID());
+		activity = project.searchActivity("testname");
+	    schedulingApp.requestAssistance(activity, schedulingApp.getCurrentUserID());
+	    assertTrue(schedulingApp.getCurrentUser().getRequests().size()==1);
 	}
+
+	@When("the worker accepts the requests")
+	public void theWorkerAcceptsTheRequests() throws Exception {
+	    schedulingApp.acceptRequest(schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID()).get(0));
+	}
+
 	
-	
+
 	
 }

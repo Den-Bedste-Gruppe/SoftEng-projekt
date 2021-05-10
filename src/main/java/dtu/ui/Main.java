@@ -1,10 +1,17 @@
 // Author: Kristian Sofus Knudsen
 
-package dtu.scheduler;
-import java.util.List;
+package dtu.ui;
 
+import java.util.List;
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
+import dtu.scheduler.Activity;
+import dtu.scheduler.AssistRequest;
+import dtu.scheduler.DateHelper;
+import dtu.scheduler.Project;
+import dtu.scheduler.ProjectActivity;
+import dtu.scheduler.SchedulingApp;
+import dtu.scheduler.Worker;
 
 public class Main {
 
@@ -47,7 +54,7 @@ public class Main {
 	//Main menu scene
 	//Remember to update both the options *and* switch statement
 	//If we had more time we would do it in a less manual-labor way (separate class)
-	private static void mainMenuScene() {
+	private static void mainMenuScene() throws WorkerDoesNotExistException {
 		gui.clearScreen();
 
 		gui.println("Welcome " + schedulingApp.getCurrentUser());
@@ -80,13 +87,15 @@ public class Main {
 
 
 
-	private static void personalSchedulingScene() {
+	private static void personalSchedulingScene() throws WorkerDoesNotExistException {
 		gui.clearScreen();
 
 		String[] personalMenuOptions = {
 				"Register hours",
 				"Change registered hours",
 				"Register nonproject activity",
+				"Request assistance for activity",
+				"Check assistance requests: " + schedulingApp.getCurrentUser().getRequests().size(),
 				"Return"
 		};
 
@@ -101,23 +110,82 @@ public class Main {
 				break;
 
 			case 2:
-
+				
 				break;
 			case 3:
 				nonProjectSchedulingScene();
 				break;
 			case 4:
+				requestAssistanceScene();
+				break;
+			case 5:
+				checkAssistanceRequestsScene();
+				break;
+			case 6:
 				return; //Return to main menu
 			}
 		}
 	}
+	
+	//Philip Hviid
+	private static void requestAssistanceScene() {
+		List<ProjectActivity> activities = schedulingApp.getCurrentUsersActivities();
+		int choice = chooseProjectActivity(activities);
+		if (choice == -2) {
+			gui.printErrorAndContinue("No activities!");
+			return;
+		}
+		ProjectActivity activity;
+		try {
+			activity = activities.get(choice);
+			gui.println("Input workerId to request assistance");
+			String targetWorkerId = gui.inputString();
+			schedulingApp.requestAssistance(activity, targetWorkerId);;
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
+		}
+	}
+	
+	//Philip Hviid
+	private static void checkAssistanceRequestsScene() throws WorkerDoesNotExistException {
+		List<AssistRequest> requests = schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID());
+		gui.println("Choose requests to to be assigned to activity:");
+		int choice = gui.numericalMenu(displayRequests(requests)) - 1;
+		if (choice == -2) {
+			gui.printErrorAndContinue("No requests!");
+			return;
+		}
+		AssistRequest request;
+		try {
+			request = requests.get(choice);
+			schedulingApp.acceptRequest(request);
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
+		}
+		
+	}
+	
+	//Philip Hviid
+	private static String[] displayRequests(List<AssistRequest> requests) {
+		String[] requestDisplay = new String[requests.size()];
+		for (int i=0; i < requests.size(); i++) {
+			requestDisplay[i] = "Assist with activity " + requests.get(i).getActivity().getName();
+			requestDisplay[i] += ", requested by " + requests.get(i).getSenderId();
+		}
+		return requestDisplay;
+		
+	}
 
 	private static void registerHoursScene() {
-		List<ProjectActivity> activities = schedulingApp.getWorkersActivities();
+		List<ProjectActivity> activities = schedulingApp.getCurrentUsersActivities();
 		
 		gui.clearScreen();
 		gui.println("Choose one of your assigned activities:");
 		int choice = gui.numericalMenu(activitiesNames(activities)) - 1;
+		if (choice == -2) {
+			gui.printErrorAndContinue("No activities!");
+			return;
+		}
 		ProjectActivity activity;
 		try {
 			activity = activities.get(choice);
@@ -250,30 +318,22 @@ public class Main {
 
 		gui.clearScreen();	
 		printProjects(schedulingApp.getProjects());
-		Project currProject;
-		
-		// TODO why is this new project created. It could just be assigned null
-		try {
-			currProject = new Project("INITIALISATION");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		gui.println("Enter project ID:");
 		String projectID = gui.inputString();
 		
+		Project project;
 		if(schedulingApp.searchProject(projectID) != null) {
-			currProject = schedulingApp.searchProject(projectID);
+			project = schedulingApp.searchProject(projectID);
 		} else {
 			gui.printErrorAndContinue("No project found with given ID");
 			return;
 		}
 
-		double hours = currProject.getProjectHours();
-		int numOfActivities = currProject.getNumOfProjectActivities();
+		double hours = project.getProjectHours();
+		int numOfActivities = project.getNumOfProjectActivities();
 
-		String projectHoursInfo = "The Project with ID \"" + currProject.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
+		String projectHoursInfo = "The Project with ID \"" + project.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
 
 		gui.println(projectHoursInfo);
 		gui.pressEnterToReturn();
@@ -282,16 +342,8 @@ public class Main {
 	private static void createProjectScene() {
 		gui.clearScreen();
 		
-		
-		String projectName = "";
-		
-		// Makes sure that project name is at least 2 characters
-//		while (projectName.length() < 2) {
 		gui.println("Enter new project name:");
-		projectName = gui.inputString();
-//			if (projectName.length() >= 2) break;
-//			gui.println("Project name must be at least 2 characters or more");
-//		}
+		String projectName = gui.inputString();
 
 		Project new_project = null;
 
@@ -311,6 +363,8 @@ public class Main {
 		} catch (ProjectAlreadyExistsException e) {
 			gui.printErrorAndContinue(e);
 		}
+		gui.println("\nPress ENTER to return");
+		gui.inputString();
 	}
 
 	private static void assignLeaderScene() {
@@ -326,6 +380,8 @@ public class Main {
 		} catch (Exception e) {
 			gui.printErrorAndContinue(e);
 		}
+		gui.println("\nPress ENTER to return");
+		gui.inputString();
 	}
 
 	private static void activityManagementScene() {
@@ -346,6 +402,8 @@ public class Main {
 		String[] activityOptions = {
 			"Add activity",
 			"Assign worker to activity",
+			"Set activity timeframe",
+			"Set activity budgeted time",
 			"View activity details",
 			"Return"
 		};
@@ -363,6 +421,7 @@ public class Main {
 
 			//Declaring some reused variable names
 			int activityChoice;
+			int[] timeframe = new int[4];
 			ProjectActivity activity;
 			
 			int choice = gui.numericalMenu(activityOptions);
@@ -378,17 +437,23 @@ public class Main {
 					} catch (Exception e) {
 						gui.printErrorAndContinue(e);
 					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
 					break;
 				
 				//Assign worker to activity
 				///////////////////////////
 				case 2:
-					gui.clearScreen();
-					gui.println("Choose an activity:");
-					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					activityChoice = chooseProjectActivity(project.getActivities());
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
 					activity = project.getActivities().get(activityChoice);
 
 					gui.clearScreen();
+					gui.println(schedulingApp.displayWorkerOverview(activity));
+
 					gui.println("Enter worker ID:");
 					String workerID = gui.inputString();
 
@@ -397,17 +462,54 @@ public class Main {
 					} catch (Exception e) {
 						gui.printErrorAndContinue(e);
 					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
 					break;
-					
+				
+				//Set activity timeframe
+				////////////////////////
 				case 3:
+					activityChoice = chooseProjectActivity(project.getActivities());
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
+					activity = project.getActivities().get(activityChoice);
+
 					gui.clearScreen();
-					gui.println("Choose an activity:");
-					activityChoice = gui.numericalMenu(activitiesNames(project.getActivities())) - 1;
+					gui.println("Enter four numbers like so: 'start-year start-week end-year end-week'");
+					timeframe[0] = gui.inputInt();
+					timeframe[1] = gui.inputInt();
+					timeframe[2] = gui.inputInt();
+					timeframe[3] = gui.inputInt();
+					try {
+						activity.setTimeFrame(timeframe[0], timeframe[1], timeframe[2], timeframe[3]);
+					} catch (Exception e) {
+						gui.printErrorAndContinue(e);
+					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
+					break;
+				
+				//View activity details
+				///////////////////////
+				case 4:
+					activityChoice = chooseProjectActivity(project.getActivities());
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
 					activity = project.getActivities().get(activityChoice);
 					List<Worker> assignedWorkers = activity.getAssignedWorkers();
 					
 					gui.clearScreen();
-					gui.println(activity.getName());
+					gui.println("Activity: " + activity.getName() + "\n");
+					if (activity.getTimeframe().isEmpty()) {
+						gui.println("No timeframe set yet.");
+					} else {
+						timeframe = activity.getTimeframe().getTimeFrameAsList();
+						gui.println(String.format("Scheduled from %d week %d to %d week %d", timeframe[0], timeframe[1], timeframe[2], timeframe[3]));
+					}
 					gui.println("Total hours registered: " + activity.getTotalHoursSpent()); //If we ever get around to budgeted time, do "5.5/30.0" for example
 					gui.println("Assigned workers:");
 					for (Worker w : assignedWorkers) {
@@ -420,8 +522,25 @@ public class Main {
 					gui.println("\nPress ENTER to return");
 					gui.inputString();
 					break;
-
-				case 4:
+				
+				//Budget Time
+				case 5:
+					activityChoice = chooseProjectActivity(project.getActivities());
+					if (activityChoice == -2) {
+						gui.printErrorAndContinue("No activities!");
+						break;
+					}
+					activity = project.getActivities().get(activityChoice);
+					gui.clearScreen();
+					int newTimebudget = gui.inputInt();
+					try {
+						schedulingApp.setBudgetedTime(newTimebudget, activity, project);
+					} catch (Exception e) {
+						gui.printErrorAndContinue(e);
+					}
+					gui.println("\nPress ENTER to return");
+					gui.inputString();
+				case 6:
 					managingActivities = false;
 					break;
 			}
@@ -429,7 +548,12 @@ public class Main {
 		}
 
 	}
-
+	
+	private static int chooseProjectActivity(List<ProjectActivity> activities) {
+		gui.clearScreen();
+		gui.println("Choose an activity:");
+		return gui.numericalMenu(activitiesNames(activities)) - 1;
+	}
 
 
 	private static void printProjects(List<Project> projects) {

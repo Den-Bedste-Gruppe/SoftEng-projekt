@@ -26,25 +26,25 @@ public class NonProjectSchedulingSteps {
 	
 	@When("the worker creates a nonproject activity")
 	public void theWorkerCreatesANonprojectActivity() {
-	    schedulingApp.createNonProjectActivity(nonProjectActivity);
+	    schedulingApp.createNonProjectActivity(nonProjectActivity, schedulingApp.getCurrentUser());
 	}
 
 	@Then("the nonproject activity is added to the workers activities")
 	public void theNonprojectActivityIsAddedToTheWorkersActivities() {
-	    assertTrue(schedulingApp.getWorkersNonProjectActivities().size()==amounthOfNonProjectActivities+1);
+	    assertTrue(schedulingApp.getCurrentUsersNonProjectActivities().size()==amounthOfNonProjectActivities+1);
 	}
 	
 	@Given("that worker is on a nonproject activity")
 	public void thatWorkerIsOnANonprojectActivity() throws Exception {
 		nonProjectActivity = new NonProjectActivity("Test", 2021, 1, 2021, 1);
-		schedulingApp.createNonProjectActivity(nonProjectActivity);
+		schedulingApp.createNonProjectActivity(nonProjectActivity, schedulingApp.getCurrentUser());
 	    assert(schedulingApp.workerHasNonProjectActivity(nonProjectActivity));
 	}
 
 	@When("the worker registers nonproject activity")
 	public void theWorkerRegistersHoursOnTheNonprojectActivity() {
 	    try {
-			schedulingApp.registerNonProjectActivity(nonProjectActivity);
+			schedulingApp.registerNonProjectActivity(nonProjectActivity, schedulingApp.getCurrentUser());
 		} catch (Exception e) {
 			msg.setErrorMessage(e.getMessage());
 		}
@@ -82,7 +82,7 @@ public class NonProjectSchedulingSteps {
 	
 	@When("worker schedules {string} activity")
 	public void workerSchedulesActivity(String string) {
-		amounthOfNonProjectActivities = schedulingApp.getWorkersNonProjectActivities().size();
+		amounthOfNonProjectActivities = schedulingApp.getCurrentUsersNonProjectActivities().size();
 		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
 		try {
 		    schedulingApp.scheduleNonProjectActivity(string, 2021, 1, 2021, 1);
@@ -94,12 +94,12 @@ public class NonProjectSchedulingSteps {
 	
 	@Given("that the worker has {int} nonproject activities")
 	public void thatTheWorkerHasNonprojectActivities(Integer int1) {
-	    assertTrue(schedulingApp.getWorkersNonProjectActivities().size()==0);
+	    assertTrue(schedulingApp.getCurrentUsersNonProjectActivities().size()==0);
 	}
 	
 	@When("worker schedules nonproject activity without name")
 	public void workerSchedulesNonprojectActivityWithoutName() {
-		amounthOfNonProjectActivities = schedulingApp.getWorkersNonProjectActivities().size();
+		amounthOfNonProjectActivities = schedulingApp.getCurrentUsersNonProjectActivities().size();
 		amounthOfNonProjectRegistrations = schedulingApp.getNonProjectRegistrations().size();
 	    try {
 			schedulingApp.scheduleNonProjectActivity("", 2021, 1, 2021, 1);
@@ -110,7 +110,7 @@ public class NonProjectSchedulingSteps {
 
 	@Then("no nonproject activity is added to the workers activities")
 	public void noNonprojectActivityIsAddedToTheWorkersActivities() {
-		assertTrue(schedulingApp.getWorkersNonProjectActivities().size()==amounthOfNonProjectActivities);
+		assertTrue(schedulingApp.getCurrentUsersNonProjectActivities().size()==amounthOfNonProjectActivities);
 	}
 	
 }

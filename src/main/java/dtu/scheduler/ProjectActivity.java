@@ -1,6 +1,4 @@
 // Author: Kristian Sofus Knudsen
-//
-// Simple implementation to pass the tests in which it is involved
 
 package dtu.scheduler;
 
@@ -8,23 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectActivity extends Activity {
-	//doubles default to 0, no need to set it
 	private double hoursSpent;
 	private List<TimeRegistration> registrationList = new ArrayList<>();
 	private List<Worker> assignedWorkers = new ArrayList<>();
 	private int budgetedTime;
+	private Project parentProject;
 	
-	
-	
-	public ProjectActivity(String name, int startYear, int startWeek, int endYear, int endWeek) throws Exception {
-		super(name, startYear, startWeek, endYear, endWeek);
+	public ProjectActivity(String name, Project parentProject) throws Exception {
+		super(name);
+		this.parentProject = parentProject;
 	}
-	
-
-	public ProjectActivity(String activityName) {
-		super(activityName);
-	}
-
 
 	public double getTotalHoursSpent() {
 		return hoursSpent;
@@ -58,7 +49,7 @@ public class ProjectActivity extends Activity {
 		return assignedWorkers;
 	}
 
-
+	//Philip Hviid
 	public void setBudgetedTime(int hours) {
 		if(hours<=0) {
 			throw new IllegalArgumentException("budgeted time must be positive integer");

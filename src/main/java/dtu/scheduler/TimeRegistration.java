@@ -5,6 +5,7 @@ package dtu.scheduler;
 import java.time.LocalDate;
 
 public class TimeRegistration extends ActivityRegistration {
+	// TODO
 	//Code smell, should be defined as Activity field in super class, but gave problems with change hours
 	//will try to figure out later -- philip
 	private ProjectActivity parentActivity;
@@ -19,25 +20,33 @@ public class TimeRegistration extends ActivityRegistration {
 		this.parentActivity = parentActivity;
 		date = DateHelper.today();
 		this.hours = hours;
-		parentActivity.addRegistration(this);
 	}
 
 	public double getHours() {
 		return hours;
 	}
-	public void changeHours(double new_hours) {
+	public void changeHours(double new_hours) throws Exception {
+		if (new_hours <= 0 || new_hours > 24) {
+			throw new Exception("Invalid amount of hours");
+		}
 		hours = new_hours;
 		parentActivity.updateTotalHoursSpent();
+		getParentWorker().updateWeeklyHoursSpent();
 	}
 	
 	public void register() {
+		parentActivity.addRegistration(this);
 		getParentWorker().addTimeRegistration(this);
-		getParentWorker().updateWeeklyHoursSpent(hours);
+		getParentWorker().updateWeeklyHoursSpent();
 	}
 
 	@Override
 	Activity getParentActivity() {
 		return parentActivity;
+	}
+
+	public int getWeek() {
+		return DateHelper.getWeekFromDate(date);
 	}
 	
 	public LocalDate getDate() {

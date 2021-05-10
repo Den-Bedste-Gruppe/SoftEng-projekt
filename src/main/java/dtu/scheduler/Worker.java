@@ -33,23 +33,23 @@ public class Worker {
 		return week_hours;
 	}
 
-	public void updateWeeklyHoursSpent(double i) {
-		week_hours += i;
-	}
-
-
-
-	public void changeHours(double new_hours, ProjectActivity activity) throws Exception {
+	public void updateWeeklyHoursSpent() { //Only does the current week for now
 		// By Kristian Sofus Knudsen
-		TimeRegistration registration = getTimeRegistrationByActivity(activity);
-		if (new_hours <= 0 || new_hours > 24) {
-			throw new Exception("Invalid amount of hours");
+		week_hours = 0;
+		int currentWeek = DateHelper.thisWeek();
+		for (TimeRegistration r : registrationList) {
+			if (r.getWeek() == currentWeek) {
+				week_hours += r.getHours();
+			}
 		}
-		double old_hours = registration.getHours();
-		registration.changeHours(new_hours);
-		updateWeeklyHoursSpent(new_hours-old_hours);
 	}
 
+	public void changeHours(double new_hours, TimeRegistration registration) throws Exception {
+		// By Kristian Sofus Knudsen
+		registration.changeHours(new_hours);
+	}
+
+	@Deprecated
 	public TimeRegistration getTimeRegistrationByActivity(ProjectActivity activity) throws Exception {
 		// By Kristian Sofus Knudsen
 		for (TimeRegistration r : registrationList) {
@@ -62,7 +62,6 @@ public class Worker {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return workerId;
 	}
 
@@ -71,6 +70,7 @@ public class Worker {
 	}
 	
 	public void addActivity(ProjectActivity activity) throws Exception {
+		// By Kristian Sofus Knudsen
 		for (Activity a : activities) {
 			if (a.equals(activity)) {
 				throw new Exception("Activity already assigned");
@@ -111,4 +111,24 @@ public class Worker {
 	public List<NonProjectActivity> getNonProjectActivies() {
 		return nonProjectActivies;
 	}
+	
+	//Phili Hviid
+	//for finding how many activities a worker has  in given period
+	public int[] activitiesInTimeFrame(TimeFrame timeFrame) {
+		int projectActivityOverlaps = 0;
+		int nonProjectActivityOverlaps = 0;
+		for(ProjectActivity activity : activities) {
+			if(timeFrame.hasOverlap(activity.getTimeframe())){
+				projectActivityOverlaps++;
+			}
+		}
+		for(NonProjectActivity activity : nonProjectActivies) {
+			if(timeFrame.hasOverlap(activity.getTimeframe())){
+				nonProjectActivityOverlaps++;
+			}
+		}
+		int[] overlaps = {projectActivityOverlaps, nonProjectActivityOverlaps};
+		return overlaps;
+	}
+	
 }

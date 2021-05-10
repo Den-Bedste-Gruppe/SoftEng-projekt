@@ -1,4 +1,4 @@
-#Author: Emil Krarup
+#Author: Philip Hviid
 Feature: Create Activity
 	Description: The project leader creates an activity
 	Actors: Worker

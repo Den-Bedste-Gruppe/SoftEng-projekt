@@ -15,6 +15,10 @@ public class AssistRequest {
 		return senderId;
 	}
 	
+	public ProjectActivity getActivity() {
+		return activity;
+	}
+	
 	public void toggleStatus() {
 		accepted =! accepted;
 	}

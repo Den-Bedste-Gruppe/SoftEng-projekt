@@ -48,5 +48,9 @@ public class WorkerRepositoryInMemory implements WorkerRepository {
 		}
 		return null;
 	}
+	
+	public Worker[] getAllWorkers() {
+		return workers;
+	}
 
 }

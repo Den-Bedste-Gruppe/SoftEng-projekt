@@ -68,15 +68,15 @@ public class SetTimeFrameTest {
 	public void theProjectLeaderSetsATimeWithCurrentYearStartWeekAndEndWeekForAnActivity(Integer startWeek, Integer endWeek) throws Exception {
 	    int currentYear = 2021;
 	    ProjectActivity curentActivity = testProject.searchActivity(activityName);
-	    curentActivity.setTimeFrame(currentYear, startWeek, currentYear, endWeek);
+	    schedulingApp.setAcivityTimeFrame(testProject, curentActivity, currentYear, startWeek, currentYear, endWeek);
 	}
 
 	// Mads Harder
 	@Then("The activity is given a time frame with current year, start week {int} and end week {int}")
-	public void theActivityIsGivenATimeFrameWithCurrentYearStartWeekAndEndWeek(Integer startWeek, Integer endWeek) {
+	public void theActivityIsGivenATimeFrameWithCurrentYearStartWeekAndEndWeek(Integer startWeek, Integer endWeek) throws Exception {
 	    int currentYear = 2021;
 	    ProjectActivity curentActivity = testProject.searchActivity(activityName);
-		int[] timeframe = curentActivity.getTimeframe();
+		int[] timeframe = schedulingApp.getAcivityTimeFrame(curentActivity);
 		assertTrue(timeframe[0] == currentYear);
 		assertTrue(timeframe[1] == startWeek);
 		assertTrue(timeframe[2] == currentYear);
@@ -104,11 +104,28 @@ public class SetTimeFrameTest {
 	    }
 	}
 	
+	// Mads Harder 
+	@Given("the project leader is set to null on current activity")
+	public void theProjectLeaderIsSetToNullOnCurrentActivity() {
+		testProject.assignLeader(null);
+	}
+
+	// Mads Harder 
+	@When("the worker tries to set a start and end date on current activity")
+	public void theWorkerTriesToSetAStartAndEndDateOnCurrentActivity() {
+		ProjectActivity curentActivity = testProject.searchActivity(activityName);
+	    try {
+	    	schedulingApp.setAcivityTimeFrame(testProject, curentActivity, 2021, 1, 2021, 4);
+		} catch (Exception e) {
+	    	errorMessageHolder.setErrorMessage(e.getMessage());
+		}
+	}
+	
 	@When("The project leader sets an illegible time frame")
 	public void the_project_leader_sets_an_illegible_time_frame() {
 		ProjectActivity curentActivity = testProject.searchActivity(activityName);
 		try {
-			curentActivity.setTimeFrame(2021, -2, 2021, 55);
+			schedulingApp.setAcivityTimeFrame(testProject, curentActivity, 2021, -2, 2021, 55);
 		} catch (Exception e) {
 			errorMessageHolder.setErrorMessage(e.getMessage()); 
 		}

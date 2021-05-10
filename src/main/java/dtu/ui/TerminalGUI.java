@@ -1,6 +1,6 @@
 // Author: Kristian Sofus Knudsen
 
-package dtu.scheduler;
+package dtu.ui;
 
 import java.util.Scanner;
 
@@ -33,18 +33,31 @@ public class TerminalGUI {
 		return res.toLowerCase().charAt(0);
 	}
 	public int inputInt() {
-		print(inputMarker);
 		input = new Scanner(System.in);
-		return input.nextInt();
+		while (true) {
+			print(inputMarker);
+			if (input.hasNextInt()) {
+				return input.nextInt();
+			}
+			input.next();
+		}
 	}
 	public double inputDouble() {
-		print(inputMarker);
 		input = new Scanner(System.in);
-		return input.nextDouble();
+		while (true) {
+			print(inputMarker);
+			if (input.hasNextDouble()) {
+				return input.nextDouble();
+			}
+			input.next();
+		}
 	}
 
 	//Displays menu, takes integer answer
 	public int numericalMenu(String[] options) {
+		if (options.length == 0) {
+			return -1; //Return -1 to mark empty array
+		}
 		Integer i = 1;
 		for (String option : options) {
 			println(i.toString() + ": " + option);

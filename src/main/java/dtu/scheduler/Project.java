@@ -10,12 +10,9 @@ public class Project {
 
 	private String projectID;
 	private String name;
-	private Worker projectLeader;
+	private Worker projectLeader = null;
 	private List<ProjectActivity> activities = new ArrayList<>();
 	
-	// TODO "På oprettelsestidspunktet er information om aktiviteter og starttidspunkt ikke fuldstændige"
-	// Maybe timefram should be null
-	//private int[] timeframe = new int[2]; //Start and end weeks
 	private TimeFrame timeFrame;
 
 	public Project(String name) throws Exception {
@@ -35,8 +32,10 @@ public class Project {
 		int currentYear = DateHelper.thisYear();
 		int currentWeek = DateHelper.thisWeek();
 		this.projectLeader = projectLeader;
-		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID);
+
+		projectID = String.format("%d%03d", DateHelper.thisYear(), running_ID); //Automatic ID
 		running_ID++;
+		
 		timeFrame = new TimeFrame();
 		timeFrame.setTimeFrame(currentYear, currentWeek, currentYear, currentWeek);
 	}
@@ -70,10 +69,10 @@ public class Project {
 		return projectLeader;
 	}
 	
-	private boolean activityWithNameExists(String name) {
+	public boolean activityWithNameExists(String name) {
 		ProjectActivity activity;
-		for(int i = activities.size(); i>0; i--){
-			activity = activities.get(i-1);
+		for (int i = 0; i < activities.size(); i++){
+			activity = activities.get(i);
 			if(activity.getName().equals(name)) {
 				return true;
 			}
@@ -91,7 +90,7 @@ public class Project {
 		return null;
 	}
 	
-	public void addActivity(ProjectActivity activity) throws Exception {
+	public void addActivity(ProjectActivity activity) throws IllegalArgumentException, Exception {
 		if(activityWithNameExists(activity.getName())) {
 			throw new Exception("Project with same name already exists in project");
 		} else if(activity.getName().isEmpty()) {
