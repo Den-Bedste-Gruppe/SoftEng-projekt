@@ -81,6 +81,7 @@ public class DateHelper {
 	
 	//padding with 0 in case it is under 10, to make sure year 2020 week 9 is not lower than 2019 week 10
 	//yes, i know it is shitty, we are pretty damn low on time...
+	//Philip Hviid
 	public static int concatDates(int year, int week) {
 		return  Integer.valueOf(String.valueOf(year) 
 				+ (week>10? "0" : "") + String.valueOf(week));

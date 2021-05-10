@@ -249,7 +249,7 @@ public class Main {
 				schedulingApp.scheduleNonProjectActivity(name, timeframe[0], timeframe[1], timeframe[2], timeframe[3]);
 				break;
 			} catch (Exception e) {
-				System.out.println(e.getMessage() + ", try again:");
+				gui.printErrorAndContinue(e);
 			}
 		}
 	}
@@ -261,9 +261,8 @@ public class Main {
 			System.out.println("Enter name/description of nonproject activity");
 			String name = gui.inputString();
 			if(!name.isBlank()) {
-				return name;
+				gui.printErrorAndContinue("name cannot be blank");
 			}
-
 
 		}
 	}
@@ -373,8 +372,6 @@ public class Main {
 		} catch (ProjectAlreadyExistsException e) {
 			gui.printErrorAndContinue(e);
 		}
-		gui.println("\nPress ENTER to return");
-		gui.inputString();
 	}
 
 	private static void assignLeaderScene() {
@@ -390,8 +387,6 @@ public class Main {
 		} catch (Exception e) {
 			gui.printErrorAndContinue(e);
 		}
-		gui.println("\nPress ENTER to return");
-		gui.inputString();
 	}
 
 	private static void activityManagementScene() {
@@ -447,8 +442,6 @@ public class Main {
 				} catch (Exception e) {
 					gui.printErrorAndContinue(e);
 				}
-				gui.println("\nPress ENTER to return");
-				gui.inputString();
 				break;
 
 				//Assign worker to activity
@@ -472,8 +465,6 @@ public class Main {
 				} catch (Exception e) {
 					gui.printErrorAndContinue(e);
 				}
-				gui.println("\nPress ENTER to return");
-				gui.inputString();
 				break;
 
 				//Set activity timeframe
@@ -494,8 +485,6 @@ public class Main {
 				} catch (Exception e) {
 					gui.printErrorAndContinue(e);
 				}
-				gui.println("\nPress ENTER to return");
-				gui.inputString();
 				break;
 
 				//Budget Time
@@ -514,8 +503,6 @@ public class Main {
 				} catch (Exception e) {
 					gui.printErrorAndContinue(e);
 				}
-				gui.println("\nPress ENTER to return");
-				gui.inputString();
 
 				//View activity details
 				///////////////////////
