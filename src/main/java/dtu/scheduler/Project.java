@@ -90,7 +90,7 @@ public class Project {
 		return null;
 	}
 	
-	public void addActivity(ProjectActivity activity) throws Exception {
+	public void addActivity(ProjectActivity activity) throws IllegalArgumentException, Exception {
 		if(activityWithNameExists(activity.getName())) {
 			throw new Exception("Project with same name already exists in project");
 		} else if(activity.getName().isEmpty()) {

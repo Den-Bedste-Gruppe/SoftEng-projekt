@@ -57,20 +57,24 @@ public class TimeFrame {
 		return endWeek;
 	}
 	
-	//WIP, could be made simpler, but not enough time
+	//Should use dates instead, would be a lot nicer, but not enough time
 	//Philip Hviid
 	public boolean hasOverlap(TimeFrame timeFrame) {
 		if(timeFrame.isEmpty()) {
 			return false;
 		}
-		int s1,s2, e1,e2;
+		int start1,start2, end1,end2;
 		//concatting years and weeks, to easier compare dates
-		s1 = Integer.valueOf(String.valueOf(startYear) + String.valueOf(startWeek));
-		e1 = Integer.valueOf(String.valueOf(endYear) + String.valueOf(endWeek));
-		s2 = Integer.valueOf(String.valueOf(timeFrame.getStartYear()) + String.valueOf(timeFrame.getStartWeek()));
-		e2 = Integer.valueOf(String.valueOf(timeFrame.getEndYear()) + String.valueOf(timeFrame.getEndWeek()));
+		start1 = Integer.valueOf(String.valueOf(startYear) 
+				+ String.valueOf(startWeek));
+		end1 = Integer.valueOf(String.valueOf(endYear) 
+				+ String.valueOf(endWeek));
+		start2 = Integer.valueOf(String.valueOf(timeFrame.getStartYear())
+				+ String.valueOf(timeFrame.getStartWeek()));
+		end2 = Integer.valueOf(String.valueOf(timeFrame.getEndYear())
+				+ String.valueOf(timeFrame.getEndWeek()));
 		//checks if either one ends before the other starts
-		if(s1>e2 || s2>e1) {
+		if(start1>end2 || start2>end1) {
 			return false;
 		}
 		
