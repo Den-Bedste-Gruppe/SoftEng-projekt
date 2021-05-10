@@ -152,7 +152,10 @@ public class SchedulingApp {
 		return workerRepository.getWorkerById(workerId);
 	}
 
-	public void requestAssistance(ProjectActivity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+	public void requestAssistance(ProjectActivity activity, String targetWorkerId) throws Exception {
+		if(targetWorkerId.equals(currentUser.getWorkerId())) {
+			throw new Exception("cannot request assistance from yourself");
+		}
 		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
 		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
 		

@@ -22,3 +22,8 @@ Scenario: Worker accepts request for assistrance
   Given the worker has a request for assistance
   When the worker accepts the requests
   Then the user is assigned to the activity
+
+Scenario: Worker requests assistance:
+  And the worker is on an activity
+  When the user requests assistance to himself
+  Then the error message "cannot request assistance from yourself" is given

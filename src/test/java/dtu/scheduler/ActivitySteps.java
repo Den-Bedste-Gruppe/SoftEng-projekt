@@ -43,7 +43,7 @@ public class ActivitySteps {
 	}
 
 	@When("the user requests assistance")
-	public void theUserRequestsAssistance() throws WorkerDoesNotExistException {
+	public void theUserRequestsAssistance() throws Exception {
 	    schedulingApp.requestAssistance(activity, targetWorkerId);
 	}
 
@@ -53,7 +53,7 @@ public class ActivitySteps {
 	}
 
 	@When("the worker requests assistance from invalid signature")
-	public void theWorkerRequestsAssistanceFromInvalidSignature() {
+	public void theWorkerRequestsAssistanceFromInvalidSignature() throws Exception {
 	    try {
 			schedulingApp.requestAssistance(activity, "ASDFG");
 		} catch (WorkerDoesNotExistException e) {

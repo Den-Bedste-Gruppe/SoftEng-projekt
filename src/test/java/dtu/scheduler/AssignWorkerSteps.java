@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
-
 import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -101,13 +100,25 @@ public class AssignWorkerSteps {
 		schedulingApp.addProject(project);
 		schedulingApp.createProjectActivity("testname", project.getProjectID());
 		activity = project.searchActivity("testname");
-	    schedulingApp.requestAssistance(activity, schedulingApp.getCurrentUserID());
+	    schedulingApp.requestAssistance(activity, "ZXCV");
+	    schedulingApp.logOut();
+	    schedulingApp.logIn("ZXCV");
 	    assertTrue(schedulingApp.getCurrentUser().getRequests().size()==1);
 	}
 
 	@When("the worker accepts the requests")
 	public void theWorkerAcceptsTheRequests() throws Exception {
 	    schedulingApp.acceptRequest(schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID()).get(0));
+	}
+	
+	@When("the user requests assistance to himself")
+	public void theUserRequestsAssistanceToHimself() {
+		try {
+		    schedulingApp.requestAssistance(new ProjectActivity("test",new Project("test")), schedulingApp.getCurrentUserID());
+		} catch (Exception e) {
+			errMsg.setErrorMessage(e.getMessage());
+		}
+
 	}
 
 	
