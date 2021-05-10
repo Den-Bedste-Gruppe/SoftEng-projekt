@@ -69,7 +69,7 @@ public class Project {
 		return projectLeader;
 	}
 	
-	private boolean activityWithNameExists(String name) {
+	public boolean activityWithNameExists(String name) {
 		ProjectActivity activity;
 		for (int i = 0; i < activities.size(); i++){
 			activity = activities.get(i);
