@@ -71,8 +71,8 @@ public class Project {
 	
 	private boolean activityWithNameExists(String name) {
 		ProjectActivity activity;
-		for(int i = activities.size(); i>0; i--){
-			activity = activities.get(i-1);
+		for (int i = 0; i < activities.size(); i++){
+			activity = activities.get(i);
 			if(activity.getName().equals(name)) {
 				return true;
 			}

@@ -318,30 +318,22 @@ public class Main {
 
 		gui.clearScreen();	
 		printProjects(schedulingApp.getProjects());
-		Project currProject;
-		
-		// TODO why is this new project created. It could just be assigned null
-		try {
-			currProject = new Project("INITIALISATION");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		gui.println("Enter project ID:");
 		String projectID = gui.inputString();
 		
+		Project project;
 		if(schedulingApp.searchProject(projectID) != null) {
-			currProject = schedulingApp.searchProject(projectID);
+			project = schedulingApp.searchProject(projectID);
 		} else {
 			gui.printErrorAndContinue("No project found with given ID");
 			return;
 		}
 
-		double hours = currProject.getProjectHours();
-		int numOfActivities = currProject.getNumOfProjectActivities();
+		double hours = project.getProjectHours();
+		int numOfActivities = project.getNumOfProjectActivities();
 
-		String projectHoursInfo = "The Project with ID \"" + currProject.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
+		String projectHoursInfo = "The Project with ID \"" + project.getProjectID() + "\" has " + hours + " hours spent over " + numOfActivities + " activities.";
 
 		gui.println(projectHoursInfo);
 		gui.pressEnterToReturn();
