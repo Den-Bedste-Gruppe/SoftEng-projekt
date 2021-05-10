@@ -49,7 +49,7 @@ public class AssignWorkerSteps {
 
 	@When("the user assigns themselves to the activity")
 	public void theUserAssignsThemselvesToTheActivity() throws Exception {
-		schedulingApp.assignActivity(schedulingApp.getCurrentUserID(), activity);
+		schedulingApp.assignWorkerToActivity(schedulingApp.getCurrentUserID(), activity);
 	}
 
 	@Then("the user is assigned to the activity")
@@ -82,7 +82,7 @@ public class AssignWorkerSteps {
 	public void theUserAssignsAUserWithIDToTheActivity(String string) throws Exception {
 		fakeID = string;
 	    try {
-			schedulingApp.assignActivity(fakeID, activity);
+			schedulingApp.assignWorkerToActivity(fakeID, activity);
 		} catch (WorkerDoesNotExistException e) {
 			errMsg.setErrorMessage(e.getMessage());
 		} 

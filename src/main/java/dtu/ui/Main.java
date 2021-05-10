@@ -463,7 +463,7 @@ public class Main {
 				String workerID = gui.inputString();
 
 				try {
-					schedulingApp.assignActivity(workerID, activity);	
+					schedulingApp.assignWorkerToActivity(workerID, activity);	
 				} catch (Exception e) {
 					gui.printErrorAndContinue(e);
 				}

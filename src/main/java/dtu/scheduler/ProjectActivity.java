@@ -62,4 +62,9 @@ public class ProjectActivity extends Activity {
 		return budgetedTime;
 	}
 	
+	public void assignWorker(Worker worker) throws Exception {
+		addWorker(worker);
+		worker.addActivity(this);
+	}
+	
 }

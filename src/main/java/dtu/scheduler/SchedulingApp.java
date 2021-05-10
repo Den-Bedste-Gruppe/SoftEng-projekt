@@ -11,12 +11,10 @@ public class SchedulingApp {
 	private WorkerRepository workerRepository;
 	private ProjectRepository projectRepository = new ProjectRepositoryInMemory();
 	private ActivityAssigner activityAssigner;
-	private AssistRequestHandler requestHandler;
 
 	public SchedulingApp() {
 		this.workerRepository = new WorkerRepositoryInMemory();
 		this.activityAssigner = new ActivityAssigner();
-		this.requestHandler = new AssistRequestHandler();
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
@@ -53,9 +51,9 @@ public class SchedulingApp {
 		return workerRepository.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String workerId, ProjectActivity activity) throws Exception {
+	public void assignWorkerToActivity(String workerId, ProjectActivity activity) throws Exception {
 		if (isUserInDatabase(workerId)) {
-			activityAssigner.assignActivity(getWorkerById(workerId), activity);
+			activity.assignWorker(getWorkerById(workerId));
 		} else {
 			throw new WorkerDoesNotExistException("No user with exists with initials " + workerId);
 		}
@@ -157,7 +155,7 @@ public class SchedulingApp {
 			throw new Exception("cannot request assistance from yourself");
 		}
 		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
-		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
+		newRequest.deliverRequest(getWorkerById(targetWorkerId));
 		
 	}
 	
@@ -233,8 +231,7 @@ public class SchedulingApp {
 
 	//possibly refactor into AssistRequest along with code from requestHadler
 	public void acceptRequest(AssistRequest assistRequest) throws Exception {
-		assignActivity(getCurrentUserID(), assistRequest.getActivity());
-		assistRequest.toggleStatus();
-		currentUser.getRequests().remove(assistRequest);
+		assistRequest.acceptRequest(currentUser);
+
 	}
 }

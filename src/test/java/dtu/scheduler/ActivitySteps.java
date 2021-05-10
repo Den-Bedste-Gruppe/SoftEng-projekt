@@ -34,7 +34,7 @@ public class ActivitySteps {
 	public void theWorkerIsOnAnActivity() throws Exception {
 		String currUser = schedulingApp.getCurrentUserID();
 		activity = new ProjectActivity("Test", project);
-		schedulingApp.assignActivity(currUser, activity);
+		schedulingApp.assignWorkerToActivity(currUser, activity);
 	}
 
 	@Given("there is another worker")
@@ -147,7 +147,7 @@ public class ActivitySteps {
 		ProjectActivity tempActivity = new ProjectActivity("test" + activityCount, project);
 		tempActivity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	    project.addActivity(tempActivity);
-	    schedulingApp.assignActivity(workerId, tempActivity);
+	    schedulingApp.assignWorkerToActivity(workerId, tempActivity);
 	    activityCount++;
 	    assertTrue(activityCount==schedulingApp.getWorkersProjectActivities(workerId).size());
 	}
