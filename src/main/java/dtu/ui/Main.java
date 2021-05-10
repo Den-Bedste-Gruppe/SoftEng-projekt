@@ -102,9 +102,8 @@ public class Main {
 
 		while (true) {
 			//have to redefine, so it updates when you accept a request, without you having to leave the scene
-			requestCount = schedulingApp.getCurrentUser().getRequests().size();
+			personalMenuOptions[4]="Check assistance requests: " +  schedulingApp.getCurrentUser().getRequests().size();
 			gui.clearScreen();
-
 			int menuChoice = gui.numericalMenu(personalMenuOptions);
 			switch (menuChoice) {
 
