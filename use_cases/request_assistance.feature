@@ -32,3 +32,8 @@ Scenario: Worker gets 2 requests for same activity:
   Given the worker has a request for assistance
   When another worker sends assist request for same activity
   Then the error message "Worker already has request for assistance on this activity" is given
+
+Scenario: Worker is assigned to an activity, that he has a assist request for
+  Given the worker has a request for assistance
+  When worker is assigned to the on the same activity as he has a request for
+  Then the request is removed

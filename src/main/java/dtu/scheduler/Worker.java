@@ -112,7 +112,7 @@ public class Worker {
 		return nonProjectActivies;
 	}
 	
-	//Phili Hviid
+	//Philip Hviid
 	//for finding how many activities a worker has  in given period
 	public int[] activitiesInTimeFrame(TimeFrame timeFrame) {
 		if(timeFrame.isEmpty()) {
@@ -135,6 +135,7 @@ public class Worker {
 		return overlaps;
 	}
 
+	//Philip Hviid
 	public boolean hasRequestForActivity(ProjectActivity activity) {
 		for(AssistRequest request : requests) {
 			if(request.getActivity().equals(activity)) {
@@ -142,6 +143,16 @@ public class Worker {
 			}
 		}
 		return false;
+	}
+
+	//Philip Hviid
+	public void removeRequestByActivity(ProjectActivity projectActivity) {
+		for(AssistRequest request : requests) {
+			if(request.getActivity().equals(projectActivity)) {
+				requests.remove(request);
+				return;
+			}
+		}
 	}
 	
 }

@@ -65,6 +65,7 @@ public class ProjectActivity extends Activity {
 	public void assignWorker(Worker worker) throws Exception {
 		addWorker(worker);
 		worker.addActivity(this);
+		worker.removeRequestByActivity(this);
 	}
 	
 }

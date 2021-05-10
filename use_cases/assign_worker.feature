@@ -11,7 +11,7 @@ Scenario: Add worker to an activity
 	Given that there is an activity
 	When the user assigns themselves to the activity
 	Then the user is assigned to the activity
-	
+
 Scenario: Add a worker who does not exist to an activity
 	Given that there is an activity
 	When the user assigns a user with ID "MLJE" to the activity
