@@ -2,6 +2,7 @@
 
 package dtu.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import dtu.errors.ProjectAlreadyExistsException;
 import dtu.errors.WorkerDoesNotExistException;
@@ -11,6 +12,7 @@ import dtu.scheduler.DateHelper;
 import dtu.scheduler.Project;
 import dtu.scheduler.ProjectActivity;
 import dtu.scheduler.SchedulingApp;
+import dtu.scheduler.TimeRegistration;
 import dtu.scheduler.Worker;
 
 public class Main {
@@ -114,20 +116,58 @@ public class Main {
 				break;
 
 			case 2:
-
+				changeRegisteredHoursScene();
 				break;
+
 			case 3:
 				nonProjectSchedulingScene();
 				break;
+
 			case 4:
 				requestAssistanceScene();
 				break;
+
 			case 5:
 				checkAssistanceRequestsScene();
 				break;
+				
 			case 6:
 				return; //Return to main menu
 			}
+		}
+	}
+
+	private static void changeRegisteredHoursScene() {
+		gui.clearScreen();
+
+		List<TimeRegistration> registrations = schedulingApp.getCurrentUser().getTimeRegistrations();
+		List<TimeRegistration> weeklyRegistrations = new ArrayList<>();
+		for (TimeRegistration r : registrations) {
+			if (r.getWeek() == DateHelper.thisWeek()) {
+				weeklyRegistrations.add(r);
+			}
+		}
+		String[] registrationOptions = new String[weeklyRegistrations.size()];
+		for (int i = 0; i < weeklyRegistrations.size(); i++) {
+			registrationOptions[i] = weeklyRegistrations.get(i).toString();
+		}
+
+		int choice = gui.numericalMenu(registrationOptions) - 1;
+		if (choice == -2) {
+			gui.printErrorAndContinue("You have no timeregistrations this week!");
+			return;
+		}
+		gui.println("\nPick one of your time registrations for this week:");
+
+		gui.clearScreen();
+		gui.println("Selected: " + weeklyRegistrations.get(choice).toString());
+
+		gui.println("Enter new amount of hours (0-24):");
+		double new_hours = gui.inputDouble();
+		try {
+			weeklyRegistrations.get(choice).changeHours(new_hours);
+		} catch (Exception e) {
+			gui.printErrorAndContinue(e);
 		}
 	}
 
@@ -345,7 +385,7 @@ public class Main {
 
 		for(ProjectActivity activity : project.getActivities()) {
 			s+=activity.getName() + ": Hours registered on project " + activity.getTotalHoursSpent() + " out of "
-					+ activity.getBudgetedTime() + " hours budgedet for activity";
+					+ activity.getBudgetedTime() + " hours budgeted for activity";
 		}
 		return s;
 	}
@@ -498,7 +538,7 @@ public class Main {
 				}
 				activity = project.getActivities().get(activityChoice);
 				gui.clearScreen();
-				System.out.println("Input new time budget for activity: " + activity);
+				System.out.println("Input new time budget for activity: " + activity.getName());
 				int newTimebudget = gui.inputInt();
 				try {
 					schedulingApp.setBudgetedTime(newTimebudget, activity, project);

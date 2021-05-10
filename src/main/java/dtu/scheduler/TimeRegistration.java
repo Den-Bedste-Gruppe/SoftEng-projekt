@@ -57,4 +57,12 @@ public class TimeRegistration extends ActivityRegistration {
 		this.date = date;
 	}
 
+	@Override
+	public String toString() {
+		String s = date.toString();
+		s += " " + parentActivity.getName();
+		s += " Hours: " + hours;
+		return s;
+	}
+
 }
