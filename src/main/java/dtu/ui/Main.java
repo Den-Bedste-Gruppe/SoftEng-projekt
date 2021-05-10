@@ -61,6 +61,8 @@ public class Main {
 		if(DateHelper.isItWednessDay()) {
 			System.out.println("It is wednessday my dude");
 		}
+		System.out.println("Press enter to continue");
+		gui.inputString();
 
 		String[] mainMenuOptions = { //Examples, more to be added. Remember to update the switch case below
 				"Personal scheduling",
@@ -81,7 +83,8 @@ public class Main {
 			case 3:
 				schedulingApp.logOut();
 				return; // Return to main, initiates new login
-			}}
+			}
+		}
 	}
 
 
