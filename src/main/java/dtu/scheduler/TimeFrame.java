@@ -1,5 +1,9 @@
 package dtu.scheduler;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 // Mads Harder
 public class TimeFrame {
 	private int startYear;
@@ -60,30 +64,34 @@ public class TimeFrame {
 	//Should use dates instead, would be a lot nicer, but not enough time
 	//Philip Hviid
 	public boolean hasOverlap(TimeFrame timeFrame) {
-		if(timeFrame.isEmpty()) {
-			return false;
-		}
+		//pre condition
+		assertFalse(timeFrame.equals(null) && anyNegative(timeFrame.getTimeFrameAsList())
+				&& anyNegative(this.getTimeFrameAsList()));
+		boolean hasOverLap = true;
 		int start1,start2, end1,end2;
 		//concatting years and weeks, to easier compare dates
-		start1 = concatDates(startYear, startWeek);
-		end1 = concatDates(endYear, endWeek);
-		start2 = concatDates(timeFrame.getStartYear(), timeFrame.getStartWeek());
-		end2 = concatDates(timeFrame.getEndYear(), timeFrame.getEndWeek());
-		//checks if either one ends before the other starts
-		if(start1>end2 || start2>end1) {
-			return false;
-		}
+		start1 = DateHelper.concatDates(startYear, startWeek);
+		end1 = DateHelper.concatDates(endYear, endWeek);
+		start2 = DateHelper.concatDates(timeFrame.getStartYear(), timeFrame.getStartWeek());
+		end2 = DateHelper.concatDates(timeFrame.getEndYear(), timeFrame.getEndWeek());
 		
-		return true;
+		//checks if either one ends before the other starts
+		if(timeFrame.isEmpty() || start1>end2 || start2>end1) {
+			hasOverLap = false;
+		}
+		//post condition
+		assertTrue(!hasOverLap==(timeFrame.isEmpty() || start1>end2 || start2>end1));
+		return hasOverLap;
 	}
 	
-	//padding with 0 in case it is under 10, to make sure year 2020 week 9 is not lower than 2019 week 10
-	//yes, i know it is shitty, we are pretty damn low on time...
-	private int concatDates(int year, int week) {
-		return  Integer.valueOf(String.valueOf(year) 
-				+ (startWeek>10? "0" : "") + String.valueOf(week));
+	private boolean anyNegative(int[] array) {
+		for(int i : array) {
+			if(i<0) return true;
+		}
+		return false;
 	}
 	
+
 	public boolean isEmpty() {
 		if(startWeek==0) {
 			return true;

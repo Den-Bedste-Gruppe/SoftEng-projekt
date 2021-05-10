@@ -14,7 +14,6 @@ public class ActivitySteps {
 	private String targetWorkerId;
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder msg;
-	private ActivityAssigner activityAssigner;
 	private ProjectActivity activity;
 	private int amounthOfNonProjectRegistrations;
 	private NonProjectActivity nonProjectActivity;
@@ -24,17 +23,16 @@ public class ActivitySteps {
 	private int[] overlaps;
 
 	
-	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg, ActivityAssigner activityAssigner) {
+	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg) {
 		this.schedulingApp = app;
 		this.msg = msg;
-		this.activityAssigner = activityAssigner;
 	}
 	
 	@Given("the worker is on an activity")
 	public void theWorkerIsOnAnActivity() throws Exception {
 		String currUser = schedulingApp.getCurrentUserID();
 		activity = new ProjectActivity("Test", project);
-		schedulingApp.assignActivity(currUser, activity);
+		schedulingApp.assignWorkerToActivity(currUser, activity);
 	}
 
 	@Given("there is another worker")
@@ -43,7 +41,7 @@ public class ActivitySteps {
 	}
 
 	@When("the user requests assistance")
-	public void theUserRequestsAssistance() throws WorkerDoesNotExistException {
+	public void theUserRequestsAssistance() throws Exception {
 	    schedulingApp.requestAssistance(activity, targetWorkerId);
 	}
 
@@ -53,7 +51,7 @@ public class ActivitySteps {
 	}
 
 	@When("the worker requests assistance from invalid signature")
-	public void theWorkerRequestsAssistanceFromInvalidSignature() {
+	public void theWorkerRequestsAssistanceFromInvalidSignature() throws Exception {
 	    try {
 			schedulingApp.requestAssistance(activity, "ASDFG");
 		} catch (WorkerDoesNotExistException e) {
@@ -147,7 +145,7 @@ public class ActivitySteps {
 		ProjectActivity tempActivity = new ProjectActivity("test" + activityCount, project);
 		tempActivity.setTimeFrame(startYear, startWeek, endYear, endWeek);
 	    project.addActivity(tempActivity);
-	    schedulingApp.assignActivity(workerId, tempActivity);
+	    schedulingApp.assignWorkerToActivity(workerId, tempActivity);
 	    activityCount++;
 	    assertTrue(activityCount==schedulingApp.getWorkersProjectActivities(workerId).size());
 	}

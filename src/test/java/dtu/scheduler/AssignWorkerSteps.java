@@ -1,32 +1,31 @@
 package dtu.scheduler;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Iterator;
-
 import dtu.errors.WorkerDoesNotExistException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+// Lucas Maac
 public class AssignWorkerSteps {
 	
 	private String fakeID;
 	private Worker worker;
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder errMsg;
-	private ActivityAssigner activityAssigner;
 	private ProjectActivity activity;
 	private String activityName = "Test Activity";
 	private int activityCount = 0;
 	private Project project;
 
 	
-	public AssignWorkerSteps(SchedulingApp app, ErrorMessageHolder errMsg, ActivityAssigner activityAssigner) {
+	public AssignWorkerSteps(SchedulingApp app, ErrorMessageHolder errMsg) {
 		this.schedulingApp = app;
 		this.errMsg = errMsg;
-		this.activityAssigner = activityAssigner;
 	}
 	
 	@Given("there is a worker with ID {string}")
@@ -49,7 +48,7 @@ public class AssignWorkerSteps {
 
 	@When("the user assigns themselves to the activity")
 	public void theUserAssignsThemselvesToTheActivity() throws Exception {
-		schedulingApp.assignActivity(schedulingApp.getCurrentUserID(), activity);
+		schedulingApp.assignWorkerToActivity(schedulingApp.getCurrentUserID(), activity);
 	}
 
 	@Then("the user is assigned to the activity")
@@ -82,7 +81,7 @@ public class AssignWorkerSteps {
 	public void theUserAssignsAUserWithIDToTheActivity(String string) throws Exception {
 		fakeID = string;
 	    try {
-			schedulingApp.assignActivity(fakeID, activity);
+			schedulingApp.assignWorkerToActivity(fakeID, activity);
 		} catch (WorkerDoesNotExistException e) {
 			errMsg.setErrorMessage(e.getMessage());
 		} 
@@ -100,15 +99,51 @@ public class AssignWorkerSteps {
 		schedulingApp.addProject(project);
 		schedulingApp.createProjectActivity("testname", project.getProjectID());
 		activity = project.searchActivity("testname");
-	    schedulingApp.requestAssistance(activity, schedulingApp.getCurrentUserID());
+	    schedulingApp.requestAssistance(activity, "ZXCV");
+	    schedulingApp.logOut();
+	    schedulingApp.logIn("ZXCV");
 	    assertTrue(schedulingApp.getCurrentUser().getRequests().size()==1);
 	}
+	
+	@When("another worker sends assist request for same activity")
+	public void anotherWorkerSendsAssistRequestForSameActivity() throws WorkerDoesNotExistException {
+	    schedulingApp.logOut();
+	    schedulingApp.logIn("QWER");
+	    try {
+			schedulingApp.requestAssistance(activity, "ZXCV");
+		} catch (Exception e) {
+			errMsg.setErrorMessage(e.getMessage());
+		}
+	    
+	}
+
 
 	@When("the worker accepts the requests")
 	public void theWorkerAcceptsTheRequests() throws Exception {
 	    schedulingApp.acceptRequest(schedulingApp.getWorkerRequests(schedulingApp.getCurrentUserID()).get(0));
 	}
+	
+	@When("the user requests assistance to himself")
+	public void theUserRequestsAssistanceToHimself() {
+		try {
+		    schedulingApp.requestAssistance(new ProjectActivity("test",new Project("test")), schedulingApp.getCurrentUserID());
+		} catch (Exception e) {
+			errMsg.setErrorMessage(e.getMessage());
+		}
 
+	}
+	
+	@When("worker is assigned to the on the same activity as he has a request for")
+	public void workerIsAssignedToTheOnTheSameActivityAsHeHasARequestFor() throws Exception {
+		schedulingApp.logOut();
+		schedulingApp.logIn("QWER");
+	    schedulingApp.assignWorkerToActivity("ZXCV", activity);
+	}
+
+	@Then("the request is removed")
+	public void theRequestIsRemoved() throws WorkerDoesNotExistException {
+	    assertFalse(schedulingApp.getWorkerById("ZXCV").hasRequestForActivity(activity));
+	}
 	
 
 	

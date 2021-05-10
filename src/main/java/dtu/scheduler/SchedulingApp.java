@@ -10,13 +10,9 @@ public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerRepository workerRepository;
 	private ProjectRepository projectRepository = new ProjectRepositoryInMemory();
-	private ActivityAssigner activityAssigner;
-	private AssistRequestHandler requestHandler;
 
 	public SchedulingApp() {
 		this.workerRepository = new WorkerRepositoryInMemory();
-		this.activityAssigner = new ActivityAssigner();
-		this.requestHandler = new AssistRequestHandler();
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{
@@ -53,9 +49,9 @@ public class SchedulingApp {
 		return workerRepository.isUserInDatabase(workerId);
 	}
 	
-	public void assignActivity(String workerId, ProjectActivity activity) throws Exception {
+	public void assignWorkerToActivity(String workerId, ProjectActivity activity) throws Exception {
 		if (isUserInDatabase(workerId)) {
-			activityAssigner.assignActivity(getWorkerById(workerId), activity);
+			activity.assignWorker(getWorkerById(workerId));
 		} else {
 			throw new WorkerDoesNotExistException("No user with exists with initials " + workerId);
 		}
@@ -152,12 +148,22 @@ public class SchedulingApp {
 		return workerRepository.getWorkerById(workerId);
 	}
 
-	public void requestAssistance(ProjectActivity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+	public void requestAssistance(ProjectActivity activity, String targetWorkerId) throws Exception {
+		if(targetWorkerId.equals(currentUser.getWorkerId())) {
+			throw new Exception("cannot request assistance from yourself");
+		}
+		if(workerHasRequestForActivity(activity, targetWorkerId)) {
+			throw new Exception("Worker already has request for assistance on this activity");
+		}
 		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
-		requestHandler.deliverRequest(newRequest, getWorkerById(targetWorkerId));
+		newRequest.deliverRequest(getWorkerById(targetWorkerId));
 		
 	}
 	
+	private boolean workerHasRequestForActivity(ProjectActivity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+		return getWorkerById(targetWorkerId).hasRequestForActivity(activity);
+	}
+
 	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
 		return getWorkerById(workerId).getRequests();
 	}
@@ -190,10 +196,6 @@ public class SchedulingApp {
 	//The following methods' logic should be delegated to other classes, but budget is a bitch (not the method)
 	//Philip Hviid
 	public int [] getOverLaps(Worker worker, ProjectActivity activity) {
-		if(activity.getTimeframe().isEmpty()) {
-			int[] answ = {0,0};
-			return answ;
-		}
 		return worker.activitiesInTimeFrame(activity.getTimeframe());
 	}
 	
@@ -204,18 +206,23 @@ public class SchedulingApp {
 		}
 		activity.setBudgetedTime(int1);
 	}
-	//TODO should really be refactored
+	
+	//TODO should really moved somewhere else if we got time
 	//Philip Hviid
-	public String displayWorkerOverview(ProjectActivity activity) {
+	public String getWorkerOverview(ProjectActivity activity, boolean fromRequestScene) {
 		int[] overLaps;
 		String s = "";
 
 		if(activity.getTimeframe().isEmpty()) {
-			s+="Current activity has no set timeframe!\n";
+			return "Cannot display worker availibility, as activity has no timeframe\n";
 		}
 
 		Worker[] allWorkers = workerRepository.getAllWorkers();
 		for(Worker worker : allWorkers) {
+			//so it doesn't show worker already assigned
+			if(activity.getAssignedWorkers().contains(worker) || (fromRequestScene && worker.hasRequestForActivity(activity))) {
+				continue;
+			}
 			overLaps = getOverLaps(worker, activity);
 			s+="Worker: " + worker.getWorkerId() + " has " + overLaps[0] + " project activites and "
 			+ overLaps[1] + " nonproject activites overlapping with timeframe of current activity.\n";
@@ -226,8 +233,7 @@ public class SchedulingApp {
 
 	//possibly refactor into AssistRequest along with code from requestHadler
 	public void acceptRequest(AssistRequest assistRequest) throws Exception {
-		assignActivity(getCurrentUserID(), assistRequest.getActivity());
-		assistRequest.toggleStatus();
-		currentUser.getRequests().remove(assistRequest);
+		assistRequest.acceptRequest(currentUser);
+
 	}
 }

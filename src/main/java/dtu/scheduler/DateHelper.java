@@ -7,6 +7,7 @@ import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Locale;
 
+// Mads Harder
 public class DateHelper {
 	
 	public static int thisWeek() {
@@ -27,7 +28,6 @@ public class DateHelper {
 		return (LocalDate.now().getDayOfWeek().equals(DayOfWeek.WEDNESDAY));
 	}
 	
-	// Mads Harder
 	public static int getWeeksInYear(int year) {
 		// I hate time, timezone and dates...
 		// Hours spent on this = 2.5
@@ -46,7 +46,6 @@ public class DateHelper {
 	    }
 	}
 
-	// Mads Harder
 	public static boolean isEndDateBeforeStartDate(int startYear, int startWeek, int endYear, int endWeek) {
 		// I hate time, timezone and dates...
 		// Hours spent on this = 1.5
@@ -78,5 +77,13 @@ public class DateHelper {
 
 	public static int getWeekFromDate(LocalDate date) {
 		return date.get(WeekFields.of(DayOfWeek.MONDAY, 7).weekOfYear());
+	}
+	
+	//padding with 0 in case it is under 10, to make sure year 2020 week 9 is not lower than 2019 week 10
+	//yes, i know it is shitty, we are pretty damn low on time...
+	//Philip Hviid
+	public static int concatDates(int year, int week) {
+		return  Integer.valueOf(String.valueOf(year) 
+				+ (week>10? "0" : "") + String.valueOf(week));
 	}
 }

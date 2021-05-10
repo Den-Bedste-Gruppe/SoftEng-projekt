@@ -103,6 +103,10 @@ public class Worker {
 	public void addNonProjectRegistration(NonProjectRegistration new_registration) {
 		nonprojectregistrationList.add(new_registration);
 	}
+
+	public List<TimeRegistration> getTimeRegistrations()  {
+		return registrationList;
+	}
 	
 	public List<NonProjectRegistration> getNonProjectRegistrations() {
 		return nonprojectregistrationList;
@@ -112,9 +116,13 @@ public class Worker {
 		return nonProjectActivies;
 	}
 	
-	//Phili Hviid
+	//Philip Hviid
 	//for finding how many activities a worker has  in given period
 	public int[] activitiesInTimeFrame(TimeFrame timeFrame) {
+		if(timeFrame.isEmpty()) {
+			int[] answ = {0,0};
+			return answ;
+		}
 		int projectActivityOverlaps = 0;
 		int nonProjectActivityOverlaps = 0;
 		for(ProjectActivity activity : activities) {
@@ -129,6 +137,26 @@ public class Worker {
 		}
 		int[] overlaps = {projectActivityOverlaps, nonProjectActivityOverlaps};
 		return overlaps;
+	}
+
+	//Philip Hviid
+	public boolean hasRequestForActivity(ProjectActivity activity) {
+		for(AssistRequest request : requests) {
+			if(request.getActivity().equals(activity)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//Philip Hviid
+	public void removeRequestByActivity(ProjectActivity projectActivity) {
+		for(AssistRequest request : requests) {
+			if(request.getActivity().equals(projectActivity)) {
+				requests.remove(request);
+				return;
+			}
+		}
 	}
 	
 }

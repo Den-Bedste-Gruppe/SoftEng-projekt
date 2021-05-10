@@ -23,4 +23,15 @@ public class AssistRequest {
 		accepted =! accepted;
 	}
 	
+	public void deliverRequest(Worker worker) {
+		worker.addRequest(this);
+	}
+	
+	public void acceptRequest(Worker worker) throws Exception {
+		ProjectActivity activity = getActivity();
+		activity.assignWorker(worker);
+		toggleStatus();
+		worker.getRequests().remove(this);
+	}
+	
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+// Mads Harder
 public class activityWithNameExistsTest {
 
 	static Project project;
