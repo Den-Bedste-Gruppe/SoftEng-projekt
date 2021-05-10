@@ -214,7 +214,7 @@ public class SchedulingApp {
 		String s = "";
 
 		if(activity.getTimeframe().isEmpty()) {
-			return "Current activity has no set timeframe!\n";
+			return "Cannot display worker availibility, as activity has no timeframe\n";
 		}
 
 		Worker[] allWorkers = workerRepository.getAllWorkers();

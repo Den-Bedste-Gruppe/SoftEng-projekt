@@ -77,9 +77,7 @@ public class TimeFrame {
 		return true;
 	}
 	
-	//padding with 0 in case it is under 10, to make sure year 2020 week 9 is not lower than 2019 week 10
-	//yes, i know it is shitty, we are pretty damn low on time...
-	
+
 	public boolean isEmpty() {
 		if(startWeek==0) {
 			return true;
