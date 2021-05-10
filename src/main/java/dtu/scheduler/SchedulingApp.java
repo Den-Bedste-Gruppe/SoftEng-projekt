@@ -214,11 +214,15 @@ public class SchedulingApp {
 		String s = "";
 
 		if(activity.getTimeframe().isEmpty()) {
-			s+="Current activity has no set timeframe!\n";
+			return "Current activity has no set timeframe!\n";
 		}
 
 		Worker[] allWorkers = workerRepository.getAllWorkers();
 		for(Worker worker : allWorkers) {
+			//so it doesn't show worker already assigned
+			if(activity.getAssignedWorkers().contains(worker)) {
+				continue;
+			}
 			overLaps = getOverLaps(worker, activity);
 			s+="Worker: " + worker.getWorkerId() + " has " + overLaps[0] + " project activites and "
 			+ overLaps[1] + " nonproject activites overlapping with timeframe of current activity.\n";
