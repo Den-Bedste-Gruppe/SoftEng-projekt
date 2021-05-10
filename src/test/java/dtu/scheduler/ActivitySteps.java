@@ -14,7 +14,6 @@ public class ActivitySteps {
 	private String targetWorkerId;
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder msg;
-	private ActivityAssigner activityAssigner;
 	private ProjectActivity activity;
 	private int amounthOfNonProjectRegistrations;
 	private NonProjectActivity nonProjectActivity;
@@ -24,10 +23,9 @@ public class ActivitySteps {
 	private int[] overlaps;
 
 	
-	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg, ActivityAssigner activityAssigner) {
+	public ActivitySteps(SchedulingApp app, ErrorMessageHolder msg) {
 		this.schedulingApp = app;
 		this.msg = msg;
-		this.activityAssigner = activityAssigner;
 	}
 	
 	@Given("the worker is on an activity")

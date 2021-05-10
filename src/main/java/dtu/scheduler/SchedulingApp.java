@@ -10,11 +10,9 @@ public class SchedulingApp {
 	private Worker currentUser;
 	private WorkerRepository workerRepository;
 	private ProjectRepository projectRepository = new ProjectRepositoryInMemory();
-	private ActivityAssigner activityAssigner;
 
 	public SchedulingApp() {
 		this.workerRepository = new WorkerRepositoryInMemory();
-		this.activityAssigner = new ActivityAssigner();
 	}
 	
 	public void logIn(String workerId) throws WorkerDoesNotExistException{

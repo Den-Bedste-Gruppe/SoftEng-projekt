@@ -16,17 +16,15 @@ public class AssignWorkerSteps {
 	private Worker worker;
 	private SchedulingApp schedulingApp;
 	private ErrorMessageHolder errMsg;
-	private ActivityAssigner activityAssigner;
 	private ProjectActivity activity;
 	private String activityName = "Test Activity";
 	private int activityCount = 0;
 	private Project project;
 
 	
-	public AssignWorkerSteps(SchedulingApp app, ErrorMessageHolder errMsg, ActivityAssigner activityAssigner) {
+	public AssignWorkerSteps(SchedulingApp app, ErrorMessageHolder errMsg) {
 		this.schedulingApp = app;
 		this.errMsg = errMsg;
-		this.activityAssigner = activityAssigner;
 	}
 	
 	@Given("there is a worker with ID {string}")
