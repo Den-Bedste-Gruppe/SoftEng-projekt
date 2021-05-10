@@ -1,11 +1,26 @@
-This project can be used as a starting project for your own projects.
+# 02161 - Software Engineering 2021 - Group 7 Project
 
-It contains all the necessary libraries to run Cucumber tests, JUnit 5 tests, and JUnit 4 tests. In addition, it contains the reference to the Mockito libraries.
+Project is based on Java 11.
 
-It is a good idea to change the name of the project. Don't forget to also change the name in the `pom.xml` file. 
+## Run Instructions
 
-If you use a different version than Java 11, then change the `maven.compiler.source` and `maven.compiler.target` properties in the `pom.xml` file. This should only be needed if you want to use Java 8. The setting Java 11 is compatible with all installed JDK's of version 11 or higher.
+### General:
 
-It can be run through Maven, e.g., `mvn clean test`, Eclipse (run as JUnit test), and ItelliJ. 
+Run the `main()` method in the `Main` class of the `dtu.ui` package.
 
-In case of Eclipse, if the run configuratiom for the test is set to JUnit 4, all the Cucumber tests and all the JUnit 4 tests are run, but not the JUnit 5 tests. If the setting is set to JUnit 5, then all the tests are run.
+### Eclipse:
+
+"Run project" in `Main` class in the `dtu.ui` package
+
+NB: Clearing the screen fails in the built-in terminal on Eclipse.
+This does not break the program, but does make the UI cluttered and confusing.
+
+## Automated Tests
+
+### Eclipse:
+
+Install a Cucumber runner plugin, run tests as JUnit tests.
+
+### Maven:
+
+Run `mvn test`.
