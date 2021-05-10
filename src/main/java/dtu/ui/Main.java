@@ -371,7 +371,7 @@ public class Main {
 		int numOfActivities = project.getNumOfProjectActivities();
 
 		String projectHoursInfo = getProjectOverview(project);
-		System.out.println("Num of activites: " + numOfActivities + "with a total of " + hours + "spent");
+		System.out.println("The project has : " + numOfActivities + " activities with a total of " + hours + " spent");
 		gui.println(projectHoursInfo);
 		gui.pressEnterToReturn();
 	}
