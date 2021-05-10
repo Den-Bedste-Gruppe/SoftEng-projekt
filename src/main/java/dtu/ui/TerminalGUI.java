@@ -98,4 +98,18 @@ public class TerminalGUI {
 		System.out.println("Press enter to return");
 		inputString();
 	}
+	
+	//Philip Hviid
+	public int[] inputTimeFrame() {
+		System.out.println("Enter start year:");
+		int startYear = inputInt();
+		System.out.println("Enter start week:");
+		int startWeek = inputInt();
+		System.out.println("Enter end year");
+		int endYear = inputInt();
+		System.out.println("Enter end week");
+		int endWeek = inputInt();
+		int[] timeframes = {startYear,startWeek,endYear,endWeek};
+		return timeframes;
+	}
 }

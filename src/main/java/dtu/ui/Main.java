@@ -244,16 +244,9 @@ public class Main {
 	private static void inputTimeFrameScene(String name) {
 		while(true) {
 			gui.clearScreen();
-			System.out.println("Enter start year:");
-			int startYear = gui.inputInt();
-			System.out.println("Enter start week:");
-			int startWeek = gui.inputInt();
-			System.out.println("Enter end year");
-			int endYear = gui.inputInt();
-			System.out.println("Enter end week");
-			int endWeek = gui.inputInt();
+			int[] timeframe = gui.inputTimeFrame();
 			try {
-				schedulingApp.scheduleNonProjectActivity(name, startYear, startWeek, endYear, endWeek);
+				schedulingApp.scheduleNonProjectActivity(name, timeframe[0], timeframe[1], timeframe[2], timeframe[3]);
 				break;
 			} catch (Exception e) {
 				System.out.println(e.getMessage() + ", try again:");
@@ -494,11 +487,8 @@ public class Main {
 				activity = project.getActivities().get(activityChoice);
 
 				gui.clearScreen();
-				gui.println("Enter four numbers like so: 'start-year start-week end-year end-week'");
-				timeframe[0] = gui.inputInt();
-				timeframe[1] = gui.inputInt();
-				timeframe[2] = gui.inputInt();
-				timeframe[3] = gui.inputInt();
+				
+				timeframe=gui.inputTimeFrame();
 				try {
 					activity.setTimeFrame(timeframe[0], timeframe[1], timeframe[2], timeframe[3]);
 				} catch (Exception e) {
