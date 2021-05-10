@@ -1,5 +1,5 @@
 # Philip Hviid
-Feature: Worker Login
+Feature: Budget Time
   Description: A woker sets budgeted time on activity
   Actors: Worker
 
