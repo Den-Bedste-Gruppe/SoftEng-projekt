@@ -65,10 +65,10 @@ public class TimeFrame {
 		}
 		int start1,start2, end1,end2;
 		//concatting years and weeks, to easier compare dates
-		start1 = concatDates(startYear, startWeek);
-		end1 = concatDates(endYear, endWeek);
-		start2 = concatDates(timeFrame.getStartYear(), timeFrame.getStartWeek());
-		end2 = concatDates(timeFrame.getEndYear(), timeFrame.getEndWeek());
+		start1 = DateHelper.concatDates(startYear, startWeek);
+		end1 = DateHelper.concatDates(endYear, endWeek);
+		start2 = DateHelper.concatDates(timeFrame.getStartYear(), timeFrame.getStartWeek());
+		end2 = DateHelper.concatDates(timeFrame.getEndYear(), timeFrame.getEndWeek());
 		//checks if either one ends before the other starts
 		if(start1>end2 || start2>end1) {
 			return false;
@@ -79,10 +79,6 @@ public class TimeFrame {
 	
 	//padding with 0 in case it is under 10, to make sure year 2020 week 9 is not lower than 2019 week 10
 	//yes, i know it is shitty, we are pretty damn low on time...
-	private int concatDates(int year, int week) {
-		return  Integer.valueOf(String.valueOf(year) 
-				+ (startWeek>10? "0" : "") + String.valueOf(week));
-	}
 	
 	public boolean isEmpty() {
 		if(startWeek==0) {
