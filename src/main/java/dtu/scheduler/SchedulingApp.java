@@ -209,7 +209,7 @@ public class SchedulingApp {
 	
 	//TODO should really moved somewhere else if we got time
 	//Philip Hviid
-	public String getWorkerOverview(ProjectActivity activity) {
+	public String getWorkerOverview(ProjectActivity activity, boolean fromRequestScene) {
 		int[] overLaps;
 		String s = "";
 
@@ -220,7 +220,7 @@ public class SchedulingApp {
 		Worker[] allWorkers = workerRepository.getAllWorkers();
 		for(Worker worker : allWorkers) {
 			//so it doesn't show worker already assigned
-			if(activity.getAssignedWorkers().contains(worker)) {
+			if(activity.getAssignedWorkers().contains(worker) || (fromRequestScene && worker.hasRequestForActivity(activity))) {
 				continue;
 			}
 			overLaps = getOverLaps(worker, activity);

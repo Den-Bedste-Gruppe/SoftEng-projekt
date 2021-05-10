@@ -1,5 +1,6 @@
 package dtu.scheduler;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -131,7 +132,18 @@ public class AssignWorkerSteps {
 		}
 
 	}
+	
+	@When("worker is assigned to the on the same activity as he has a request for")
+	public void workerIsAssignedToTheOnTheSameActivityAsHeHasARequestFor() throws Exception {
+		schedulingApp.logOut();
+		schedulingApp.logIn("QWER");
+	    schedulingApp.assignWorkerToActivity("ZXCV", activity);
+	}
 
+	@Then("the request is removed")
+	public void theRequestIsRemoved() throws WorkerDoesNotExistException {
+	    assertFalse(schedulingApp.getWorkerById("ZXCV").hasRequestForActivity(activity));
+	}
 	
 
 	
