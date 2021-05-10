@@ -134,5 +134,14 @@ public class Worker {
 		int[] overlaps = {projectActivityOverlaps, nonProjectActivityOverlaps};
 		return overlaps;
 	}
+
+	public boolean hasRequestForActivity(ProjectActivity activity) {
+		for(AssistRequest request : requests) {
+			if(request.getActivity().equals(activity)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

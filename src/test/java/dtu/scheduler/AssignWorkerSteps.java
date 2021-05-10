@@ -103,6 +103,19 @@ public class AssignWorkerSteps {
 	    schedulingApp.logIn("ZXCV");
 	    assertTrue(schedulingApp.getCurrentUser().getRequests().size()==1);
 	}
+	
+	@When("another worker sends assist request for same activity")
+	public void anotherWorkerSendsAssistRequestForSameActivity() throws WorkerDoesNotExistException {
+	    schedulingApp.logOut();
+	    schedulingApp.logIn("QWER");
+	    try {
+			schedulingApp.requestAssistance(activity, "ZXCV");
+		} catch (Exception e) {
+			errMsg.setErrorMessage(e.getMessage());
+		}
+	    
+	}
+
 
 	@When("the worker accepts the requests")
 	public void theWorkerAcceptsTheRequests() throws Exception {

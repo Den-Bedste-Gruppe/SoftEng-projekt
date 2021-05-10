@@ -152,11 +152,18 @@ public class SchedulingApp {
 		if(targetWorkerId.equals(currentUser.getWorkerId())) {
 			throw new Exception("cannot request assistance from yourself");
 		}
+		if(workerHasRequestForActivity(activity, targetWorkerId)) {
+			throw new Exception("Worker already has request for assistance on this activity");
+		}
 		AssistRequest newRequest = new AssistRequest(currentUser.getWorkerId(), activity);
 		newRequest.deliverRequest(getWorkerById(targetWorkerId));
 		
 	}
 	
+	private boolean workerHasRequestForActivity(ProjectActivity activity, String targetWorkerId) throws WorkerDoesNotExistException {
+		return getWorkerById(targetWorkerId).hasRequestForActivity(activity);
+	}
+
 	public List<AssistRequest> getWorkerRequests(String workerId) throws WorkerDoesNotExistException {
 		return getWorkerById(workerId).getRequests();
 	}
