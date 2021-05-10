@@ -189,10 +189,6 @@ public class SchedulingApp {
 	//The following methods' logic should be delegated to other classes, but budget is a bitch (not the method)
 	//Philip Hviid
 	public int [] getOverLaps(Worker worker, ProjectActivity activity) {
-		if(activity.getTimeframe().isEmpty()) {
-			int[] answ = {0,0};
-			return answ;
-		}
 		return worker.activitiesInTimeFrame(activity.getTimeframe());
 	}
 	
@@ -203,9 +199,10 @@ public class SchedulingApp {
 		}
 		activity.setBudgetedTime(int1);
 	}
-	//TODO should really be refactored
+	
+	//TODO should really moved somewhere else if we got time
 	//Philip Hviid
-	public String displayWorkerOverview(ProjectActivity activity) {
+	public String getWorkerOverview(ProjectActivity activity) {
 		int[] overLaps;
 		String s = "";
 

@@ -142,7 +142,7 @@ public class Main {
 		ProjectActivity activity;
 		try {
 			activity = activities.get(choice);
-			gui.println(schedulingApp.displayWorkerOverview(activity));
+			gui.println(schedulingApp.getWorkerOverview(activity));
 			gui.println("Input workerId to request assistance");
 			String targetWorkerId = gui.inputString();
 			schedulingApp.requestAssistance(activity, targetWorkerId);;
@@ -457,7 +457,7 @@ public class Main {
 				activity = project.getActivities().get(activityChoice);
 
 				gui.clearScreen();
-				gui.println(schedulingApp.displayWorkerOverview(activity));
+				gui.println(schedulingApp.getWorkerOverview(activity));
 
 				gui.println("Enter worker ID:");
 				String workerID = gui.inputString();

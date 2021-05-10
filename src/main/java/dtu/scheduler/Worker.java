@@ -115,6 +115,10 @@ public class Worker {
 	//Phili Hviid
 	//for finding how many activities a worker has  in given period
 	public int[] activitiesInTimeFrame(TimeFrame timeFrame) {
+		if(timeFrame.isEmpty()) {
+			int[] answ = {0,0};
+			return answ;
+		}
 		int projectActivityOverlaps = 0;
 		int nonProjectActivityOverlaps = 0;
 		for(ProjectActivity activity : activities) {
